@@ -7,7 +7,7 @@ var pg = require('pg');
 //or native libpq bindings
 //var pg = require('pg').native
 
-var conString = "" //Can be found in the Details page
+var conString = "postgres://cteqpbzs:1MAOFF85TL4mmD724pDHxnD_1CSpKQ1d@bubble.db.elephantsql.com/cteqpbzs" //Can be found in the Details page
 var client = new pg.Client(conString);
 client.connect(function(err) {
   if(err) {
