@@ -1,31 +1,23 @@
-import React, {useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import logo from './logo.svg';
 import './App.css';
 
 import { Login } from "./Login";
 import { Register } from "./Register";
+import { Dashboard } from "./Dashboard";
 
+// update README.md to include dependencies to download as well as guide on naviagaton (if environement should be updated)
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-
-  // setting Form Name using Form Hook
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
 
   return (
-    <div className="App">
-      <div className="login-register-page">
-      { 
-      // Toggle Login / Register Page
-      // CHANGE LATER to Routing Instead
-        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
-      }
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/Dashboard" element={<Dashboard />} />
+    </Routes>
   );
+
 }
 
 export default App;

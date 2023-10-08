@@ -22,6 +22,7 @@ button {
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
+  width: 10rem;
 }
 
 /* Login / Register Page */ 
@@ -37,6 +38,8 @@ button {
 .auth-form, .login-form, .register-form {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  color: white;
 }
 
 .auth-form {
@@ -46,7 +49,12 @@ button {
   margin: 1rem;
 }
 
-.link-btn {
+.link {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
   background: none;
   color: whitesmoke;
   text-decoration: underline;
