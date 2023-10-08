@@ -45,12 +45,13 @@ Storyboard for our project - https://www.figma.com/file/MNTATDopW3ck9dOnc8lbaC/N
 Dependencies that will be Downloaded:
 - ReactJS
 - Next.js
-- react-dom
+- react-router-dom
 
 How to Run Locally:
 In it's current state the Volleyball Ladder System can only be run locally. Here are the steps.
 1. Download the NG-Volleyball-Ladder-Repo to your device.
-2. Open your terminal and run the following: 
-    cd NG-Volleyball-Ladder-Repo
-    cd frontend
-    npm start
+2. Open your terminal and run the following:
+   - cd NG-Volleyball-Ladder-Repo
+   - cd frontend
+   - npm i react-router-dom
+   - npm start
