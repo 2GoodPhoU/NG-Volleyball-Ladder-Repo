@@ -46,7 +46,12 @@ button {
   margin: 1rem;
 }
 
-.link-btn {
+.link {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
   background: none;
   color: whitesmoke;
   text-decoration: underline;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // we want useState, because we want to store the data the user inputs
 
@@ -7,6 +8,7 @@ export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
 
     // onSubmit display in console
     const handleSubmit = (e) => {
@@ -15,42 +17,52 @@ export const Register = (props) => {
     }
 
     return (
-        <div className="auth-form">
-            <h2>Create an Account</h2>
+        <div className="login-register-page">
+            <div className="auth-form">
+                <h2>Create an Account</h2>
 
-            <form
-                className="register-form"
-                onSubmit={handleSubmit}>
+                <form
+                    className="register-form"
+                    onSubmit={handleSubmit}>
 
-                <label>Full Name</label>
-                <input value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Full Name"
-                    name="name"
-                    id="name" />
+                    <label>Username</label>
+                    <input value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username"
+                        name="username"
+                        id="username" />
 
+                    <label htmlFor="password">Password</label>
+                    <input value={pass}
+                        onChange={(e) => setPass(e.target.value)}
+                        placeholder="********"
+                        type="password"
+                        id="password"
+                        name="password" />
 
+                    <label>Full Name</label>
+                    <input value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Full Name"
+                        name="name"
+                        id="name" />
 
-                <label htmlFor="email">Email</label>
-                <input value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="example@email.com"
-                    type="email"
-                    id="email"
-                    name="email" />
+                    <label htmlFor="email">Email</label>
+                    <input value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="example@email.com"
+                        type="email"
+                        id="email"
+                        name="email" />
 
-                <label htmlFor="password">Password</label>
-                <input value={pass}
-                    onChange={(e) => setPass(e.target.value)}
-                    placeholder="********"
-                    type="password"
-                    id="password"
-                    name="password" />
-
-                <button>Register</button>
-            </form>
-            <button className="link-btn"
-                     onClick={() => props.onFormSwitch("login")}>Already have an account? Login here.</button>
+                    
+                    <Link to="/" className="link">
+                        <button>Register</button>
+                    </Link>
+                   
+                </form>
+                
+            </div>
         </div>
     )
 }
