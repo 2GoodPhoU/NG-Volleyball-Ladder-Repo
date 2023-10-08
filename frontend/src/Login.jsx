@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import './App.css';
 
+// add popup alert (when user successfully creates an account)
+// add popup for information?
 
 export const Login = (props) => {
     // useState initally empty
@@ -39,12 +41,14 @@ export const Login = (props) => {
                         id="password"
                         name="password" />
 
-                    <button>Login</button>
+                    <Link to="/Dashboard" className="link">
+                        <button>Login</button>
+                    </Link>
                 </form>
 
                 <Link to="/Register" className="link"> Create Account </Link>
                 <Link to="/Dashboard" className="link"> Continue as Guest </Link>
-                <Link to="/Information" className="link"> Information </Link>
+                <div className="link"> Information </div>
 
                 </div>
         </div>

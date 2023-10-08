@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 
 export const Register = (props) => {
     // useState initally empty
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    
 
     // onSubmit display in console
     const handleSubmit = (e) => {
@@ -19,7 +20,7 @@ export const Register = (props) => {
     return (
         <div className="login-register-page">
             <div className="auth-form">
-                <h2>Create an Account</h2>
+                <h2>Account Information</h2>
 
                 <form
                     className="register-form"
