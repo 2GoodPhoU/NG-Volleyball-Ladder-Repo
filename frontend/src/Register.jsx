@@ -16,12 +16,9 @@ export const Register = (props) => {
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
 
+    
     // add password requirements
     // check if username is already in use
-
-
-    // disable button if not all info filled in
-    // make sure user reads terms and conditions
 
 
     // onSubmit display in console
@@ -51,7 +48,8 @@ export const Register = (props) => {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
                         name="username"
-                        id="username" />
+                        id="username"
+                        required />
 
                     <label htmlFor="password">Password</label>
                     <input value={password}
@@ -59,14 +57,16 @@ export const Register = (props) => {
                         placeholder="********"
                         type="password"
                         id="password"
-                        name="password" />
+                        name="password"
+                        required />
 
                     <label>Full Name</label>
                     <input value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Full Name"
                         name="name"
-                        id="name" />
+                        id="name"
+                        required />
 
                     <label htmlFor="email">Email</label>
                     <input value={email}
@@ -74,7 +74,8 @@ export const Register = (props) => {
                         placeholder="example@email.com"
                         type="email"
                         id="email"
-                        name="email" />
+                        name="email"
+                        required />
 
                     {/* Popup */}
                     <div className="link" onClick={() => togglePopup(true)}> Terms & Conditions </div>
