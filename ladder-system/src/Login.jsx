@@ -59,7 +59,9 @@ export const Login = (props) => {
 
     return (
         <div className="login-register-page">
+
             <div className="auth-form">
+                <p>TO LOG IN USE UN: thomaslenguyenasian@gmail.com and PW: nicejob</p>
                 <h2>Volleyball Ladder System</h2>
 
                 <form className="login-form">
