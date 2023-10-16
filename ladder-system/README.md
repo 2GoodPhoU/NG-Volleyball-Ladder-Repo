@@ -7,3 +7,7 @@ In it's current state the Volleyball Ladder System can only be run locally. Here
    - npm i react-router-dom
    - npm i @supabase/supabase-js
    - npm start
+
+If you get an error:
+1. rm package-lock.json
+2. npm install
