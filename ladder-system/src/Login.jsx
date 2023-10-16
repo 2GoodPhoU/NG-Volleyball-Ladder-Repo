@@ -48,11 +48,11 @@ export const Login = (props) => {
         console.log(pass);
 
         for (var i = 0; i < users.length; i++)
-            if (users[i].email === username)
+            if (users[i].username === username)
                 break;
 
-        if (i >= users.length && users[i - 1].email !== username) {
-            console.log("email invalid, create an account!")
+        if (i >= users.length && users[i - 1].username !== username) {
+            console.log("username invalid, create an account!")
             console.log(`loggedIn before = ${loggedIn}`);
             loggedIn = false;
             console.log(`loggedIn after = ${loggedIn}`);
@@ -77,7 +77,7 @@ export const Login = (props) => {
         <div className="login-register-page">
 
             <div className="auth-form">
-                <p>TO LOG IN USE UN: thomaslenguyenasian@gmail.com and PW: nicejob</p>
+                <p>TO LOG IN USE UN: admin1 and PW: passwordadmin1</p>
                 <h2>Volleyball Ladder System</h2>
 
                 <form className="login-form">
