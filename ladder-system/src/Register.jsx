@@ -1,26 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Popup from "./Popup";
+
+import './App.css';
 
 // we want useState, because we want to store the data the user inputs
 
 export const Register = (props) => {
     // useState initally empty
     const [username, setUsername] = useState('');
-    const [pass, setPass] = useState('');
+    const [password, setPass] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+
+    // Popup State
+    const [isPopupOpen, togglePopup] = useState(false);
+
     
+    // add password requirements
+    // check if username is already in use
+
 
     // onSubmit display in console
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
+        const data = new FormData(e.currentTarget);
+        console.log({
+            username: data.get("username"),
+            password: data.get("password"),
+            name: data.get("name"),
+            email: data.get("email"),
+        });
+        // API call here
     }
 
     return (
         <div className="login-register-page">
             <div className="auth-form">
-                <h2>Account Information</h2>
+                <h2>Create Account</h2>
 
                 <form
                     className="register-form"
@@ -31,22 +48,25 @@ export const Register = (props) => {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
                         name="username"
-                        id="username" />
+                        id="username"
+                        required />
 
                     <label htmlFor="password">Password</label>
-                    <input value={pass}
+                    <input value={password}
                         onChange={(e) => setPass(e.target.value)}
                         placeholder="********"
                         type="password"
                         id="password"
-                        name="password" />
+                        name="password"
+                        required />
 
                     <label>Full Name</label>
                     <input value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Full Name"
                         name="name"
-                        id="name" />
+                        id="name"
+                        required />
 
                     <label htmlFor="email">Email</label>
                     <input value={email}
@@ -54,15 +74,26 @@ export const Register = (props) => {
                         placeholder="example@email.com"
                         type="email"
                         id="email"
-                        name="email" />
+                        name="email"
+                        required />
 
-                    
-                    <Link to="/" className="link">
-                        <button>Register</button>
-                    </Link>
-                   
+                    {/* Popup */}
+                    <div className="link" onClick={() => togglePopup(true)}> Terms & Conditions </div>
+                    {isPopupOpen ? <Popup
+                                    title="Terms & Conditions" 
+                                    text="*insert terms here*"
+                                    closePopup={() => togglePopup(false)} /> : null}
+
+
+                    <button type="submit">Register</button>
+
                 </form>
-                
+
+
+                <Link to="/" className="link">
+                    <div type="submit">Already Have an Account</div>
+                </Link>
+
             </div>
         </div>
     )

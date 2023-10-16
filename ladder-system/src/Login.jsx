@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import './App.css';
@@ -6,10 +6,6 @@ import './App.css';
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient("https://wrelwyuqbbtagdszesuh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWx3eXVxYmJ0YWdkc3plc3VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNTI0MzYsImV4cCI6MjAxMjkyODQzNn0.A16btjC6Ukht9JYSwn3bsmPNl3xsysv-9hjUJR7QR2g");
-
-
-// add popup alert (when user successfully creates an account)
-// add popup for information?
 
 /*
 CREATE TABLE users (
@@ -37,9 +33,13 @@ export const Login = (props) => {
         setUsers(data);
     }
 
+
     // onSubmit display in console
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(username);
+        console.log(pass);
+
         console.log("are we in?");
 
         for (var i = 0; i < users.length; i++)
@@ -80,7 +80,7 @@ export const Login = (props) => {
                         name="password" />
 
                     <Link to="/Dashboard" className="link">
-                        <button onClick={handleSubmit} >Login</button>
+                        <button onClick={handleSubmit}>Login</button>
                     </Link>
                 </form>
 
@@ -88,11 +88,6 @@ export const Login = (props) => {
                 <Link to="/Dashboard" className="link"> Continue as Guest </Link>
                 <div className="link"> Information </div>
 
-                <ul>
-                    { users.map((user) => (
-                        <li key={ user }> { user.email } { user.password } </li>
-                    )) }
-                </ul>
                 </div>
         </div>
     )
