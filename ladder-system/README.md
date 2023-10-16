@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# NG-Volleyball-Ladder-Repo
+CS 490 Capstone Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Volley-Ladder project
 
-## Available Scripts
+Overview:
+Northrop Grumman has a very competitive volleyball community that regularly competes and
+wins in city leagues in the SLC area. However not everyone wants to play at that level of
+commitment and skill, therefore we have created a company volleyball ladder system. At a
+large scale, team management, court scheduling, and matchmaking is be pretty tedious and
+error-prone if done manually. So the company club is looking for an application that can help
+automate and organize our events. Your work will be used or around 1000 employees and can
+affect up to 23,000 employes.
 
-In the project directory, you can run:
+What:
+An app to manage a volleyball ladder system.
+This project will cover areas such as UI development, database management, networking, agile
+practices, and version control. There will be a high emphasis planning and execution using
+agile practices. Since this effort will focus on transferable software development skills, the
+participants can choose the tools used as long as it’s done in a timely manner and the tools our
+requirements. The product will eventually be open source for the public to use so you’re able to
+build-up your personal GitHub to aid you in future interviews.
 
-### `npm start`
+Project Objetives/Requirements:
+- The team shall use industry standard trade studies to select the tools used.
+- The team shall create requirements specifications, software designs, source code
+documentation, test requirements.
+- The contributors shall learn GIT fundamentals.
+- The contributors shall practice agile methodologies.
+- The contributors shall create UI mockups.
+- The contributors shall create system architecture visuals.
+- The application code contributions shall be reviewed and recorded.
+- The application shall be accessible to all company employees.
+- The application shall have zero monetary cost for implementation and maintenance.
+- The application shall have an intuitive look and feel.
+- The application shall have account management.
+- The application shall use user permission levels and security
+- The application shall have a team management system.
+- The application shall have a matchmaker/scheduling system.
+- The application shall display the ladder rankings.
+- The application shall automate the current process
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Storyboard for our project - https://www.figma.com/file/MNTATDopW3ck9dOnc8lbaC/NG-Volleyball-Ladder-Figma?type=design&node-id=0%3A1&mode=design&t=YGr30mmsEcY8Cy5W-1
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Dependencies that will be Downloaded:
+- ReactJS
+- Next.js
+- react-router-dom
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+How to Run Locally:
+In it's current state the Volleyball Ladder System can only be run locally. Here are the steps.
+1. Download the NG-Volleyball-Ladder-Repo to your device.
+2. Open your terminal and run the following:
+   - cd NG-Volleyball-Ladder-Repo
+   - cd ladder-system
+   - npm i react-router-dom
+   - npm i @supabase/supabase-js
+   - npm start
