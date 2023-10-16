@@ -11,7 +11,6 @@ import { Team } from "./Team";
 // update README.md to include dependencies to download as well as guide on naviagaton (if environement should be updated)
 
 function App() {
-  // let loggedIn = false;
   return (
     <Routes>
       <Route exact path="/" element={<Login />} />

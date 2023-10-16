@@ -33,10 +33,13 @@ export const Login = (props) => {
     }, []);
 
     async function getUsers() {
-        const { data } = await supabase.from("users").select();
+        const { data } = await supabase
+        .from('users')
+        .select();
+        
         setUsers(data);
-    }
 
+    }
 
     // onSubmit display in console
     const handleSubmit = (e) => {

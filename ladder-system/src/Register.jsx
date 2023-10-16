@@ -4,6 +4,11 @@ import Popup from "./Popup";
 
 import './App.css';
 
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient("https://wrelwyuqbbtagdszesuh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWx3eXVxYmJ0YWdkc3plc3VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNTI0MzYsImV4cCI6MjAxMjkyODQzNn0.A16btjC6Ukht9JYSwn3bsmPNl3xsysv-9hjUJR7QR2g");
+
+
 // we want useState, because we want to store the data the user inputs
 
 export const Register = (props) => {
@@ -15,11 +20,17 @@ export const Register = (props) => {
 
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
-
     
     // add password requirements
     // check if username is already in use
 
+    async function insertUser(e, pw, un, n) {
+        const { error } = await supabase
+        .from('users')
+        .insert({ email: e, password: pw, username: un, first_name: n });
+
+        console.log(`Was there an error? ${error}`);
+    }
 
     // onSubmit display in console
     const handleSubmit = (e) => {
@@ -31,7 +42,9 @@ export const Register = (props) => {
             name: data.get("name"),
             email: data.get("email"),
         });
+
         // API call here
+        insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('name'));
     }
 
     return (
