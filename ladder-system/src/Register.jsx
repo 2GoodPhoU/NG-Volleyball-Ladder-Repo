@@ -25,11 +25,20 @@ export const Register = (props) => {
     // check if username is already in use
 
     async function insertUser(e, pw, un, n) {
+        // const unExists = usernameExists(un)
+
+        // if (unExists) {
+        //     console.log(`did not add user ${un}`);
+        //     return false;
+        // }
+
         const { error } = await supabase
         .from('users')
         .insert({ email: e, password: pw, username: un, first_name: n });
 
-        console.log(`Was there an error? ${error}`);
+        console.log(`added user ${un}`);
+
+        return true;
     }
 
     // onSubmit display in console
@@ -44,8 +53,32 @@ export const Register = (props) => {
         });
 
         // API call here
-        insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('name'));
+        // const unExists = usernameExists(data.get('username'));
+        // if (!unExists)
+            var iUN = insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('name'));
+
+        // if (iUN) console.log('inserted');
+        // else console.log('nothing happened');
     }
+
+    // async function usernameExists(un) {
+    //     const { data, error } = await supabase
+    //     .from('users')
+    //     .select()
+    //     .eq('username', un)
+
+    //     console.log(`this is what is inside of data===\n${JSON.stringify(data, null, 2)}`);
+    //     console.log(`this is what is inside of error===\n${JSON.stringify(error, null, 2)}`);
+    //     // THIS IS GARGAGE FIGURE THIS OUT ASAP BRUH MOMENT
+    //     console.log(`the length of the data is: ${data.length}`);
+
+    //     if (data.length === 1)
+    //         console.log("username exists");
+    //     else
+    //         console.log("username does not exist");
+
+    //     return (data.length === 1) ? true : false;
+    // }
 
     return (
         <div className="login-register-page">
