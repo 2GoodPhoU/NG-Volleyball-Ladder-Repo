@@ -1,15 +1,6 @@
 import { Link } from "react-router-dom";
 import './App.css';
 
-const testbutton = () => {
-    console.log('you click a thing!')
-}
-
-// Popup State
-function ruleBox() {
-    alert("Only 6 players on the floor at any given time: 3 in the front row and 3 in the back row.");
-  }
-
 export function Dashboard() {
     return (
         <div>
@@ -37,11 +28,11 @@ export function Dashboard() {
                 <br></br>
                 <br></br>
                 <Link to="/">
-                    <a href="" class="dash_lnk">Rules</a>
+                    <a href="\#" class="dash_lnk">Rules</a>
                 </Link>
                 <br></br>
                 <Link to="/">
-                <a href="" class="dash_lnk">Back</a>
+                <a href="\#" class="dash_lnk">Back</a>
                 </Link>
                 </div>
     )
