@@ -4,6 +4,11 @@ import Popup from "./Popup";
 
 import './App.css';
 
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient("https://wrelwyuqbbtagdszesuh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWx3eXVxYmJ0YWdkc3plc3VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNTI0MzYsImV4cCI6MjAxMjkyODQzNn0.A16btjC6Ukht9JYSwn3bsmPNl3xsysv-9hjUJR7QR2g");
+
+
 // we want useState, because we want to store the data the user inputs
 
 export const Register = (props) => {
@@ -15,11 +20,26 @@ export const Register = (props) => {
 
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
-
     
     // add password requirements
     // check if username is already in use
 
+    async function insertUser(e, pw, un, n) {
+        // const unExists = usernameExists(un)
+
+        // if (unExists) {
+        //     console.log(`did not add user ${un}`);
+        //     return false;
+        // }
+
+        const { error } = await supabase
+        .from('users')
+        .insert({ email: e, password: pw, username: un, first_name: n });
+
+        console.log(`added user ${un}`);
+
+        return true;
+    }
 
     // onSubmit display in console
     const handleSubmit = (e) => {
@@ -31,8 +51,34 @@ export const Register = (props) => {
             name: data.get("name"),
             email: data.get("email"),
         });
+
         // API call here
+        // const unExists = usernameExists(data.get('username'));
+        // if (!unExists)
+            var iUN = insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('name'));
+
+        // if (iUN) console.log('inserted');
+        // else console.log('nothing happened');
     }
+
+    // async function usernameExists(un) {
+    //     const { data, error } = await supabase
+    //     .from('users')
+    //     .select()
+    //     .eq('username', un)
+
+    //     console.log(`this is what is inside of data===\n${JSON.stringify(data, null, 2)}`);
+    //     console.log(`this is what is inside of error===\n${JSON.stringify(error, null, 2)}`);
+    //     // THIS IS GARGAGE FIGURE THIS OUT ASAP BRUH MOMENT
+    //     console.log(`the length of the data is: ${data.length}`);
+
+    //     if (data.length === 1)
+    //         console.log("username exists");
+    //     else
+    //         console.log("username does not exist");
+
+    //     return (data.length === 1) ? true : false;
+    // }
 
     return (
         <div className="login-register-page">
