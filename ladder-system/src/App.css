@@ -99,3 +99,37 @@ button {
   background: white;
   color: #000000;
 }
+
+.dash_btn {
+  background-color: #C0C0C0;
+  border: 2px solid black;
+  border-radius: 8px;
+  width: 400px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  margin: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.dash_btn:active {
+  background-color: #808080; /* Change the background color when clicked */
+}
+
+.dash_lnk {
+
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.dash_lnk:link{
+  color: rgb(0, 95, 16);
+}
+.dash_lnk:visited{
+  color: rgb(51, 0, 66);
+}
+
