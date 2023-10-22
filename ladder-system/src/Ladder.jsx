@@ -20,6 +20,16 @@ const ladderTeams = [
     {name: 'Team 15', wins: '1', lossess: '14'},
 ];
 
+const handleAcceptChallenge = (e) => {
+    e.preventDefault();
+    console.log("Challenge Accepted!");
+}
+
+const handleSendInvite = (e) => {
+    e.preventDefault();
+    console.log("Invite Sent!");
+}
+
 export function Ladder() {
     return (
         <div className="page">
@@ -31,13 +41,19 @@ export function Ladder() {
 
             <body>
                 {ladderTeams.map((team) => (
-                    <div className= "ladder-list-container" key={team.name}>
-                        <div>{team.wins} - {team.lossess}</div>
-                        <h4>{team.name}</h4>
-                        <button>Challenge</button>
+                    <div className= "ladder-outer-container" key={team.name}>
+                        <div className="ladder-left-btn">
+                            <button onClick={handleAcceptChallenge}><h3>Accept</h3></button>
+                        </div>
+                        <div className="ladder-center-div">
+                            <h5>{team.wins} - {team.lossess}</h5>
+                            <h3>{team.name}</h3>
+                        </div>
+                        <div className="ladder-right-btn">
+                            <button onClick={handleSendInvite}><h3>Send</h3></button>
+                        </div>
                     </div>
                 ))}
-                
             </body>
 
             <footer>

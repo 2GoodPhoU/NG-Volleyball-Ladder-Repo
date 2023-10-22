@@ -1,20 +1,21 @@
-/* *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-} */
-
 *{
     font-family:"Poppins";
-    padding:0.5%;
     text-align: center;
 }
 
-header, body , footer{
+header{
+    font-weight: 400;
+    padding-bottom: 10px;
+}
+
+body{
     font-weight: 400;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+footer{
+    font-weight: 400;
+    padding-top: 10px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -40,6 +41,7 @@ small {font-size: 0.750rem; /* 12px */}
 .page {
     background-color: #f2fdfd;
     color:#041616;
+    min-width: 40rem;
 }
 
 /* Ladder css */
@@ -49,46 +51,50 @@ small {font-size: 0.750rem; /* 12px */}
     box-shadow: 0px 5px 5px 1px gray;
 }
 
-.ladder-list-container {
-    display:grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    
-    margin-top: 10px;
-    /* background-color:#1e66ae; */
-    border-radius: 250px;
+.ladder-outer-container {
+    display: grid;
+    grid-template-columns: 1fr 6fr 1fr;
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+    align-items: center;
+    min-width: 40rem;
+
+    border-radius: 25px;
     box-shadow: 0px 5px 5px 1px gray;
 }
 
-.ladder-list-container > div {
-    background-color: #acacf1;
-    border-radius: 250px;
 
-    border: none;
-    padding: 20px;
-
-    cursor: pointer;
-    width: 5rem;
-
-    font-size: 1.777rem;
-    font-weight: 700;
+.ladder-center-div {
+    background-color: #42094e;
+    width: 100%;
+    min-width: 15rem;
+    color:#f2fdfd;
+    border-radius: 6rem;
 }
 
-.ladder-list-container > button {
+.ladder-left-btn {
     background-color: #1e66ae;
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
+    display:flex;
+    border-radius: 6rem;
+}
 
-    border: none;
-    padding: 20px;
-
+.ladder-left-btn button{
+    background-color: #008B8B;
+    border-radius: 6rem;
     cursor: pointer;
+}
 
-    float: right;
-    
+.ladder-right-btn {
+    background-color: #1e66ae;
+    display:flex;
+    border-radius: 6rem;
+}
 
-    font-size: 1.777rem;
-    font-weight: 700;
+.ladder-right-btn button{
+    background-color: #DC143C;
+    border-radius: 6rem;
+    cursor: pointer;
 }
 
 .ladder-footer-container{
