@@ -16,35 +16,28 @@ export function Team() {
     return (
         <div className="page">
             <header>
-                <div className="ladder-name-container">
+                <div className="team-name-container">
                     <h3>{teamName}</h3>
                     <h3>{teamWins} - {teamLosses}</h3>
                 </div>
             </header>
 
-            <body>
+            <main>
                 {teamMembers.map((member) => (
-                    <div className= "ladder-list-container" key={member.name}>
-                        <div>{member.pfp}</div>
-                        <h4>{member.name}</h4>
+                    <div className= "team-list-container" key={member.name}>
+                        <div className="team-list-pfp"><h4>{member.pfp}</h4></div>
+                        <div className="team-list-name"><h4>{member.name}</h4></div>
                     </div>
                 ))}
                 
-            </body>
+            </main>
             <footer>
-                <div className="ladder-footer-container">
-                    <h5>About Us</h5>
-                    <h5>Contact Us</h5>
-                    <h5>Terms of Service</h5> 
+                <div className="team-footer-container">
+                    <h4>About Us</h4>
+                    <h4>Contact Us</h4>
+                    <h4>Terms of Service</h4> 
                 </div>
             </footer>
-
-            <Link to="/Dashboard" className="link">
-                    <button>Dashboard</button>
-                </Link>
-            <Link to="/Ladder" className="link">
-                <button>Ladder</button>
-            </Link>
         </div>
     )
 }
