@@ -1,5 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import './ladder_team.css';
+
+import { Join } from "./components/join";
+
+
 
 const ladderName = "Ladder Name";
 const ladderTeams = [
@@ -20,10 +25,6 @@ const ladderTeams = [
     {teamID: '15', name: 'Team 15', wins: '1', lossess: '14'},
 ];
 
-const handleAcceptChallenge = (e) => {
-    e.preventDefault();
-    console.log("Challenge Accepted!");
-};
 
 const handleSendInvite = (e) => {
     e.preventDefault();
@@ -31,6 +32,8 @@ const handleSendInvite = (e) => {
 };
 
 export function Ladder() {
+    const [isToggled, setIsToggled] = useState(false);
+
     return (
         <div className="page">
             <header>
@@ -54,11 +57,13 @@ export function Ladder() {
                 ))}
             </main>
 
+            <button onClick={() => setIsToggled(!isToggled)}>Join</button>
             <footer>
                 <div className="ladder-footer-container">
                     <div className="ladder-footer-div"><h4>Ladder Match History</h4></div>
-                    <h4></h4>
-                    <div className="ladder-footer-div"><h4>Join</h4> </div>
+                    <div></div>
+                    {/* {isToggled && <Join />} */}
+                    {isToggled ? <Join /> : null}
                 </div>
             </footer>
 
