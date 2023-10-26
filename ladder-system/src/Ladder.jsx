@@ -60,37 +60,17 @@ export function Ladder() {
                 </div>
             </header>
 
-            <main>
-                {ladderTeams.map((team) => (
-                    <div className= "ladder-outer-container" key={team.name}>
-                        <div className="ladder-team-id">
-                            <h4>{team.teamID}</h4>
-                        </div>
-                        <div className="ladder-center-div">
-                            <h4>{team.name}</h4>
-                            <small>{team.wins} - {team.lossess}</small>
-                        </div>
-                        <button onClick={handleSendInvite}><h5>Challenge</h5></button>
-                    </div>
-                ))}
-            </main>
-
             <div>
                 {tournament.map((team, i) =>
-                    <div className="ladder-list-container" key={i}>
-                        <p> {team.team_wins_score} - {team.team_lose_score} </p>
-                        <h4> {team.team_name} </h4>
-                        <button>Challenge</button>
-                    </div>
-                )}
-            </div>
-
-            <div>
-                {ladderTeams.map((team) =>
-                    <div className="ladder-list-container" key={team.name}>
-                        <div>{team.wins} - {team.lossess}</div>
-                        <h4>{team.name}</h4>
-                        <button>Challenge</button>
+                    <div className="ladder-outer-container" key={i}>
+                        <div className="ladder-team-id">
+                            <h4>{team.team_position}</h4>
+                        </div>
+                        <div className="ladder-center-div">
+                            <h4> {team.team_name} </h4>
+                            <small> {team.team_wins_score} - {team.team_lose_score} </small>
+                        </div>
+                        <button onClick={handleSendInvite}><h5>Challenge</h5></button>
                     </div>
                 )}
             </div>
