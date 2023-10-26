@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import './ladder_team.css';
 
+import { useState, useEffect } from "react";
+
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient("https://wrelwyuqbbtagdszesuh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWx3eXVxYmJ0YWdkc3plc3VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNTI0MzYsImV4cCI6MjAxMjkyODQzNn0.A16btjC6Ukht9JYSwn3bsmPNl3xsysv-9hjUJR7QR2g");
+
+
 const ladderName = "Ladder Name";
 const ladderTeams = [
     {teamID: '1', name: 'Team 1', wins: '15', lossess: '0'},
@@ -31,6 +38,20 @@ const handleSendInvite = (e) => {
 };
 
 export function Ladder() {
+    const [tournament, setTournament] = useState([]);
+
+    useEffect(() => {
+        getTournament();
+    }, []);
+
+    async function getTournament() {
+        const { data } = await supabase
+        .from('teams')
+        .select();
+        
+        setTournament(data);
+    }
+
     return (
         <div className="page">
             <header>
@@ -39,6 +60,7 @@ export function Ladder() {
                 </div>
             </header>
 
+<<<<<<< Updated upstream
             <main>
                 {ladderTeams.map((team) => (
                     <div className= "ladder-outer-container" key={team.name}>
@@ -53,6 +75,27 @@ export function Ladder() {
                     </div>
                 ))}
             </main>
+=======
+            <div>
+                {tournament.map((team, i) =>
+                    <div className="ladder-list-container" key={i}>
+                        <p> {team.team_wins_score} - {team.team_lose_score} </p>
+                        <h4> {team.team_name} </h4>
+                        <button>Challenge</button>
+                    </div>
+                )}
+            </div>
+
+            <div>
+                {ladderTeams.map((team) =>
+                    <div className="ladder-list-container" key={team.name}>
+                        <div>{team.wins} - {team.lossess}</div>
+                        <h4>{team.name}</h4>
+                        <button>Challenge</button>
+                    </div>
+                )}
+            </div>
+>>>>>>> Stashed changes
 
             <footer>
                 <div className="ladder-footer-container">
