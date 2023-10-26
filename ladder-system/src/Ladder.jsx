@@ -60,7 +60,6 @@ export function Ladder() {
                 </div>
             </header>
 
-<<<<<<< Updated upstream
             <main>
                 {ladderTeams.map((team) => (
                     <div className= "ladder-outer-container" key={team.name}>
@@ -75,7 +74,7 @@ export function Ladder() {
                     </div>
                 ))}
             </main>
-=======
+
             <div>
                 {tournament.map((team, i) =>
                     <div className="ladder-list-container" key={i}>
@@ -95,7 +94,6 @@ export function Ladder() {
                     </div>
                 )}
             </div>
->>>>>>> Stashed changes
 
             <footer>
                 <div className="ladder-footer-container">
