@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import './ladder_team.css';
 
-import { Join } from "./components/join";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
 
+import { Join } from "./components/join";
 
 
 const ladderName = "Ladder Name";
@@ -25,14 +26,53 @@ const ladderTeams = [
     {teamID: '15', name: 'Team 15', wins: '1', lossess: '14'},
 ];
 
+const handleAcceptChallenge = (e) => {
+    e.preventDefault();
+    console.log("Challenge Accepted!");
+};
 
 const handleSendInvite = (e) => {
     e.preventDefault();
     console.log("Invite Sent!");
 };
 
+
+// const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const{data, error} = await supabase
+//         .from('teams')
+//         .update({team_wins_score: 1})
+//         .eq('team_name', 1);
+
+//     if(error) {
+//         console.log(error);
+//     }
+
+//     if(data) {
+//         console.log(data);
+//     }
+// };
+
+
+
+
 export function Ladder() {
+    const [tournament, setTournament] = useState([]);
     const [isToggled, setIsToggled] = useState(false);
+
+    useEffect(() => {
+        getTournament();
+    }, []);
+
+    async function getTournament() {
+        const { data } = await supabase
+        .from('teams')
+        .select();
+        
+        setTournament(data);
+    }
+
 
     return (
         <div className="page">
@@ -42,28 +82,37 @@ export function Ladder() {
                 </div>
             </header>
 
-            <main>
-                {ladderTeams.map((team) => (
-                    <div className= "ladder-outer-container" key={team.name}>
+            <div>
+                {tournament.map((team, i) =>
+                    <div className="ladder-outer-container" key={i}>
                         <div className="ladder-team-id">
-                            <h4>{team.teamID}</h4>
+                            <h4>{team.team_position}</h4>
                         </div>
                         <div className="ladder-center-div">
-                            <h4>{team.name}</h4>
-                            <small>{team.wins} - {team.lossess}</small>
+                            <h4> {team.team_name} </h4>
+                            <small> {team.team_wins_score} - {team.team_lose_score} </small>
                         </div>
                         <button onClick={handleSendInvite}><h5>Challenge</h5></button>
                     </div>
-                ))}
-            </main>
+                )}
+            </div>
 
-            <button onClick={() => setIsToggled(!isToggled)}>Join</button>
+            {/* <button onClick={() => setIsToggled(!isToggled)}>Join</button>
+            <div>
+                <form onSubmit = {handleSubmit}>
+                    <label>Score</label>
+                    <input type="text" placeholder="Your score"/>
+                    <input type="text" placeholder="Opponent score"/>
+                    <button type="submit">Submit</button>
+                </form>
+            </div> */}
+            
             <footer>
                 <div className="ladder-footer-container">
                     <div className="ladder-footer-div"><h4>Ladder Match History</h4></div>
-                    <div></div>
-                    {/* {isToggled && <Join />} */}
-                    {isToggled ? <Join /> : null}
+                    <h4></h4>
+                    {/* {isToggled && <Join />}
+                    {isToggled ? <Join /> : null} */}
                 </div>
             </footer>
 
