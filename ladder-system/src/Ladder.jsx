@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import './ladder_team.css';
 
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
 
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient("https://wrelwyuqbbtagdszesuh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWx3eXVxYmJ0YWdkc3plc3VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNTI0MzYsImV4cCI6MjAxMjkyODQzNn0.A16btjC6Ukht9JYSwn3bsmPNl3xsysv-9hjUJR7QR2g");
+import { Join } from "./components/join";
 
 
 const ladderName = "Ladder Name";
@@ -37,8 +36,30 @@ const handleSendInvite = (e) => {
     console.log("Invite Sent!");
 };
 
+
+// const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const{data, error} = await supabase
+//         .from('teams')
+//         .update({team_wins_score: 1})
+//         .eq('team_name', 1);
+
+//     if(error) {
+//         console.log(error);
+//     }
+
+//     if(data) {
+//         console.log(data);
+//     }
+// };
+
+
+
+
 export function Ladder() {
     const [tournament, setTournament] = useState([]);
+    const [isToggled, setIsToggled] = useState(false);
 
     useEffect(() => {
         getTournament();
@@ -75,11 +96,22 @@ export function Ladder() {
                 )}
             </div>
 
+            {/* <button onClick={() => setIsToggled(!isToggled)}>Join</button>
+            <div>
+                <form onSubmit = {handleSubmit}>
+                    <label>Score</label>
+                    <input type="text" placeholder="Your score"/>
+                    <input type="text" placeholder="Opponent score"/>
+                    <button type="submit">Submit</button>
+                </form>
+            </div> */}
+            
             <footer>
                 <div className="ladder-footer-container">
                     <div className="ladder-footer-div"><h4>Ladder Match History</h4></div>
                     <h4></h4>
-                    <div className="ladder-footer-div"><h4>Join</h4> </div>
+                    {/* {isToggled && <Join />}
+                    {isToggled ? <Join /> : null} */}
                 </div>
             </footer>
 
