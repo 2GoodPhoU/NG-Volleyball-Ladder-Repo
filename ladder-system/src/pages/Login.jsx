@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "./supabaseClient";
-
-import './App.css';
-
+import { supabase } from "../supabaseClient";
 
 /*
 CREATE TABLE users (

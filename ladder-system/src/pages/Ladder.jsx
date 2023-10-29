@@ -1,10 +1,8 @@
-import './ladder_team.css';
-
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../supabaseClient";
 
-import { Join } from "./components/join";
+import { Join } from "../components/join";
 
 
 const ladderName = "Ladder Name";
@@ -60,6 +58,7 @@ const handleSendInvite = (e) => {
 export function Ladder() {
     const [tournament, setTournament] = useState([]);
     const [isToggled, setIsToggled] = useState(false);
+    const [teamView, setTeamView] = useState(false);
 
     useEffect(() => {
         getTournament();
@@ -74,7 +73,7 @@ export function Ladder() {
     }
 
     return (
-        <div className="page">
+        <div className="ladder-team-page">
             <header>
                 <div className="ladder-name-container">
                     <h3>{ladderName}</h3>
@@ -87,11 +86,13 @@ export function Ladder() {
                         <div className="ladder-team-id">
                             <h4>{team.team_position}</h4>
                         </div>
-                        <div className="ladder-center-div">
-                            <h4> {team.team_name} </h4>
-                            <small> {team.team_wins_score} - {team.team_lose_score} </small>
-                        </div>
-                        <button onClick={handleSendInvite}><h5>Challenge</h5></button>
+                        <Link to="/Team">
+                            <div className="ladder-center-div">
+                                <h4> {team.team_name} </h4>
+                                <small> {team.team_wins_score} - {team.team_lose_score} </small>
+                            </div>
+                        </Link>
+                        <button className = "ladder-btn" onClick={handleSendInvite}><h5>Challenge</h5></button>
                     </div>
                 )}
             </div>
@@ -109,15 +110,11 @@ export function Ladder() {
             <footer>
                 <div className="ladder-footer-container">
                     <div className="ladder-footer-div"><h4>Ladder Match History</h4></div>
-                    <h4></h4>
+                    <div className="ladder-footer-div"><h4>Team Match History</h4></div>
                     {/* {isToggled && <Join />}
                     {isToggled ? <Join /> : null} */}
                 </div>
             </footer>
-
-            <Link to="/Team" className="link">
-                <button>Team</button>
-            </Link>
         </div>
     )
 }

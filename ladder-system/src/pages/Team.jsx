@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import './ladder_team.css';
 
 const teamName = "Team Name";
 const teamWins = 0;
@@ -14,7 +13,7 @@ const teamMembers = [
 ];
 export function Team() {
     return (
-        <div className="page">
+        <div className="ladder-team-page">
             <header>
                 <div className="team-name-container">
                     <h3>{teamName}</h3>
@@ -33,9 +32,9 @@ export function Team() {
             </main>
             <footer>
                 <div className="team-footer-container">
-                    <h4>About Us</h4>
-                    <h4>Contact Us</h4>
-                    <h4>Terms of Service</h4> 
+                    <h3>About Us</h3>
+                    <h3>Contact Us</h3>
+                    <div className= "team-footer-div">Team Match History</div> 
                 </div>
             </footer>
         </div>

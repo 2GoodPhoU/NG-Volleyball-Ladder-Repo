@@ -1,13 +1,8 @@
-import './App.css';
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../supabaseClient";
 
-import Popup from "./Popup";
-
-
-
+import Popup from "../components/Popup";
 
 // we want useState, because we want to store the data the user inputs
 

@@ -1,8 +1,6 @@
-import './App.css';
-
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../supabaseClient";
 
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
