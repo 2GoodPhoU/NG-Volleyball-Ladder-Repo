@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 
+import MailIcon from '@mui/icons-material/Mail';
+
 import './App.css';
 
 
@@ -100,6 +102,11 @@ export const Login = (props) => {
                 <Link to="/Register" className="link"> Create Account </Link>
                 <Link to="/Dashboard" className="link"> Continue as Guest </Link>
                 <div className="link"> Information </div>
+
+                <button className="link">
+                 <MailIcon/>
+                </button>
+
 
                 </div>
         </div>
