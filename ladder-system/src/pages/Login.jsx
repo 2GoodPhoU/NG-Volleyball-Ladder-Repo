@@ -4,8 +4,6 @@ import { supabase } from "../supabaseClient";
 
 import MailIcon from '@mui/icons-material/Mail';
 
-
-
 /* Login */
 // MUI overhaul (login) (v1 or v2)
 // Remove Information div
