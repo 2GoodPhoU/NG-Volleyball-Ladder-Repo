@@ -2,8 +2,22 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 
+import MailIcon from '@mui/icons-material/Mail';
+
 import './App.css';
 
+/* Login */
+// MUI overhaul (login) (v1 or v2)
+// Remove Information div
+
+/* Register */
+// MUI overhaul (register)
+// add fName, lName
+// edit terms and conditions (boolean)
+
+/* Style */
+// add default font (*)
+// move Popup to components folder
 
 /*
 CREATE TABLE users (
@@ -99,7 +113,11 @@ export const Login = (props) => {
 
                 <Link to="/Register" className="link"> Create Account </Link>
                 <Link to="/Dashboard" className="link"> Continue as Guest </Link>
-                <div className="link"> Information </div>
+
+                <button className="link">
+                 <MailIcon/>
+                </button>
+
 
                 </div>
         </div>
