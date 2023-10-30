@@ -46,7 +46,6 @@ Dependencies that will be Downloaded:
 - ReactJS
 - Next.js
 - react-router-dom
-- Material UI
 
 How to Run Locally:
 In it's current state the Volleyball Ladder System can only be run locally. Here are the steps.
