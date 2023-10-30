@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
 .App {
   text-align: center;
   color: white;
@@ -143,6 +147,8 @@ button {
   background: white;
   color: #000000;
 }
+
+/* Dashboard */
 
 .dash_btn {
   background-color: #C0C0C0;
