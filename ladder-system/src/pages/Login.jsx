@@ -4,7 +4,7 @@ import { supabase } from "../supabaseClient";
 
 import MailIcon from '@mui/icons-material/Mail';
 
-import './App.css';
+
 
 /* Login */
 // MUI overhaul (login) (v1 or v2)

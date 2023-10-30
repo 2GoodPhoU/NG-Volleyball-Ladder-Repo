@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import './settings.css';
+
 
 export function Settings() {
     const [newUsername, setNewUsername] = useState('');

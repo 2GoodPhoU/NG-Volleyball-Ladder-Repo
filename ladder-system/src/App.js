@@ -7,7 +7,7 @@ import { Register } from "./pages/Register";
 import { Dashboard } from "./pages/Dashboard";
 import { Ladder } from "./pages/Ladder";
 import { Team } from "./pages/Team";
-import { Settings } from "./Settings";
+import { Settings } from "./pages/Settings";
 
 // update README.md to include dependencies to download as well as guide on naviagaton (if environement should be updated)
 
