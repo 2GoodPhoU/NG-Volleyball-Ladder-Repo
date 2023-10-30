@@ -181,11 +181,13 @@ button {
 
 
 .ladder-team-page {
-  min-height: 90vh;
+  min-height: 100vh;
+  min-height: 100svh;
+  max-width: 100vw;
+
   background-color: #FFFFFF;
   background-image: linear-gradient(320deg, #000000 0%, #afb7b8 90%);
   color: #11290A;
-  max-width: 100%;
 
   font-family: "Poppins";
   text-align: center;

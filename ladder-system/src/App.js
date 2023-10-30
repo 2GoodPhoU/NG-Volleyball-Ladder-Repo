@@ -13,11 +13,11 @@ import { Team } from "./pages/Team";
 function App() {
   return (
     <BrowserRouter>
-      <nav>
+      {/* <nav>
           <h1>NG Volleyball Ladder</h1>
           <Link to="/Dashboard">Dashboard</Link>
           <Link to="/">Login</Link>
-      </nav>
+      </nav> */}
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
