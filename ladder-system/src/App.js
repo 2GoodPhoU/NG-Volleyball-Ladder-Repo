@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter, Link} from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import './App.css';
 
@@ -8,8 +8,6 @@ import { Dashboard } from "./pages/Dashboard";
 import { Ladder } from "./pages/Ladder";
 import { Team } from "./pages/Team";
 import { Settings } from "./pages/Settings";
-
-// update README.md to include dependencies to download as well as guide on naviagaton (if environement should be updated)
 
 function App() {
   return (

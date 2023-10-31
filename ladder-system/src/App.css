@@ -76,7 +76,7 @@ button {
 }
 
 
-/* Login / Register Page */
+/* Login / Register Page  (not needed -> remove later ) */
 
 .login-register-page {
   display: flex;
@@ -129,6 +129,7 @@ button {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
 }
 
 .popup-content {
@@ -142,6 +143,7 @@ button {
   border-radius: 1rem;
   background: white;
   color: #000000;
+  z-index: 1;
 }
 
 .dash_btn {
