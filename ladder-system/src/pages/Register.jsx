@@ -20,7 +20,7 @@ export const Register = () => {
     const [isPopupOpen, togglePopup] = useState(false);
 
 
-    async function insertUser(e, pw, un, n) {
+    async function insertUser(e, pw, un, fn, ln) {
         // const unExists = usernameExists(un)
 
         // if (unExists) {
@@ -30,7 +30,7 @@ export const Register = () => {
 
         const { error } = await supabase
             .from('users')
-            .insert({ email: e, password: pw, username: un, first_name: n });
+            .insert({ email: e, password: pw, username: un, first_name: fn , last_name: ln});
 
         console.log(`added user ${un}`);
 
@@ -44,14 +44,15 @@ export const Register = () => {
         console.log({
             username: data.get("username"),
             password: data.get("password"),
-            name: data.get("name"),
+            first_name: data.get("firstName"),
+            last_name: data.get("lastName"),
             email: data.get("email"),
         });
 
         // API call here
         // const unExists = usernameExists(data.get('username'));
         // if (!unExists)
-        var iUN = insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('name'));
+        var iUN = insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('firstName'), data.get('lastName'));
 
         // if (iUN) console.log('inserted');
         // else console.log('nothing happened');
