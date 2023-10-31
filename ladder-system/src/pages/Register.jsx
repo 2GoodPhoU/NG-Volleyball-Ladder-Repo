@@ -19,8 +19,6 @@ export const Register = () => {
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
 
-    // add password requirements
-    // check if username is already in use
 
     async function insertUser(e, pw, un, n) {
         // const unExists = usernameExists(un)
