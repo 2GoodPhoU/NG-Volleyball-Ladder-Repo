@@ -3,25 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
-import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, Link }from '@mui/material';
 
 import ng_1 from "../images/ng_1.png";
-
-/* Register */
-// MUI overhaul (register)
-// add fName, lName
-// edit terms and conditions (boolean)
-
-/* Style */
-// add default font (*)
-// move Popup to components folder
 
 /*
 CREATE TABLE users (
@@ -37,7 +21,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" align="center" {...props}>
             {'Copyright © '}
-            <Link href="https://www.northropgrumman.com/" style={{ color: "#00adb5" }} >
+            <Link href="https://www.northropgrumman.com/" style={{ color: "black", textDecoration: 'none' }} >
                 Northrop Grumman
             </Link>{' '}
             {new Date().getFullYear()}
@@ -120,7 +104,7 @@ export const Login = () => {
                     sx={{
                         height: 150,
                         width: 400,
-                        maxHeight: { xs: 250, md: 167 },
+                        maxHeight: { xs: 250, md: 160 },
                         maxWidth: { xs: 450, md: 350 },
                         paddingBottom: 2
                     }}
@@ -176,21 +160,20 @@ export const Login = () => {
                         <Grid item xs>
                             <Link  
                                 href="/Register"
-                                variant="body2" 
-                                style={{ color: "#00adb5" }}>
+                                variant="body2">
                                     
                                 {"Create Account"}
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/Dashboard" variant="body2" style={{ color: "#00adb5" }}>
+                            <Link href="/Dashboard" variant="body2">
                                 {"Login as Guest"}
                             </Link>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
-            <Copyright style={{ color: "#00adb5" }} sx={{ mt: 8, mb: 4, }} />
+            <Copyright sx={{ mt: 3, mb: 4, }} />
         </Container>
     );
 }
