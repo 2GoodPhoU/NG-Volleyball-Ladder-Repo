@@ -269,6 +269,7 @@ export const Login = (props) => {
                 <Link to="/Register" className="link"> Create Account </Link>
                 <Link to="/Dashboard" className="link"> Continue as Guest </Link>
 
+                <div className="link"> Information </div>
 
                 </div>
         </div>

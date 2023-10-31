@@ -7,6 +7,7 @@ import { Register } from "./pages/Register";
 import { Dashboard } from "./pages/Dashboard";
 import { Ladder } from "./pages/Ladder";
 import { Team } from "./pages/Team";
+import { Settings } from "./pages/Settings";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Ladder" element={<Ladder />} />
         <Route path="/Team" element={<Team />} />
+        <Route path="/Settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );
