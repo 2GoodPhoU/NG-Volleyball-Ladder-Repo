@@ -96,8 +96,8 @@ export const Register = () => {
                     sx={{
                         height: 150,
                         width: 400,
-                        maxHeight: { xs: 250, md: 160 },
-                        maxWidth: { xs: 450, md: 350 },
+                        maxHeight: { xs: 150, md: 150 },
+                        maxWidth: { xs: 400, md: 400 },
                         paddingBottom: 2
                     }}
                     src={ng_1}
