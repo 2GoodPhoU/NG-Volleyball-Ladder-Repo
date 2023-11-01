@@ -2,59 +2,118 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
+import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List }from '@mui/material';
+
 export function Dashboard() {
-    // Define state variables using the "useState" hook
-    // "iframeSRC" state variable holds the URL for an embedded iframe
-    const [iframeSRC, setIframeSrc] = useState('/Ladder');
-    // "showBackButton" state variable determines whether to display a back button
-    const [showBackButton, setShowBackButton] = useState(false);
+    const [ladderTournaments, setLadderTournaments] = useState([]);
 
-    // Handle click event to set iframe URL and show the back button
-    // and hide all other buttons
-    const handleJoinClick = () => {
-        setIframeSrc('/Register');
-        setShowBackButton(true);
-    };
-    // Same but reversed
-    const handleBackClick = () => {
-        setIframeSrc('/Ladder');
-        setShowBackButton(false);
-    };
+    useEffect(() => {
+        getLadderTournaments();
+    }, []);
+
+    async function getLadderTournaments() {
+        const { data } = await supabase
+        .from('ladder_tournaments')
+        .select();
+        
+        setLadderTournaments(data);
+    }
+
     return (
-        <div>
-                <h3>dashboard</h3>
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography component="h1" variant="h5">
+                    Dashboard
+                </Typography>
+                <ButtonGroup size="large">
+                        <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Ladder Rules/Info
+                            </Link>
+                        </Button>
+                    
+                        <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/Ladder">
+                                Join a Ladder
+                            </Link>
+                        </Button>
+                </ButtonGroup>
 
-                {showBackButton ? (//This will display when all others are hidden
-                <>
-                <iframe src={iframeSRC} title="backframe" className="dash-frame"></iframe>
-                <br></br>
-                <button id="Back" className="dash_btn" onClick={handleBackClick}>
-                    Back
-                </button>
-                </>
-            ) : ( //This is the intial page
-                <>
-                <Link to="/">
-                    <button id="rules" className="dash_btn">
-                        Ladder Rules/Info</button>
-                </Link>
-                    <button id="JoinLadder" className="dash_btn" onClick={handleJoinClick}>
-                        Join a Ladder</button>
-                <br></br>
-                <iframe src={iframeSRC} title="myFrame" className="dash-frame"></iframe>
-                <br></br>
-                <Link to="/Team">
-                    <button id="Team" className="dash_btn">
-                        My Teams</button>
-                </Link>
+                {/* can be used in the individual tournaments */}
+                {/* <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                    <List>
+                        {teamMap.map((team, i) =>
+                            <div className="ladder-outer-container" key={i}>
+                                <div className="ladder-team-id">
+                                    <h4>{team.team_id}</h4>
+                                </div>
+                                <Link to="/Team">
+                                    <div className="ladder-center-div">
+                                        <h4> {team.team_name} </h4>
+                                        <small> {team.team_wins_score} - {team.team_lose_score} </small>
+                                    </div>
+                                </Link>
+                            </div>
+                    </List>
+                Paper> */}
 
-                <Link to="/Settings">
-                    <button id="Settings" className="dash_btn">
-                        Settings</button>
-                </Link>
-                </>
-            )}
-        </div>
+                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                    <List>
+                        {ladderTournaments.map((tournament, i) =>
+                            <div className="ladder-outer-container" key={i}>
+                                <div className="ladder-team-id">
+                                    <h4>{tournament.ladder_id}</h4>
+                                </div>
+                                <Link to="/Ladder">
+                                    <div className="ladder-center-div">
+                                        <h4> {tournament.ladder_name} </h4>
+                                        <small> {tournament.ladder_size} vs {tournament.ladder_size} </small>
+                                    </div>
+                                </Link>
+                            </div>
+                        )}
+                    </List>
+                </Paper>
+
+                <ButtonGroup size="large">
+                        <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/Team">
+                                My Teams
+                            </Link>
+                        </Button>
+                    
+                        <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/Settings">
+                                Settings
+                            </Link>
+                        </Button>
+                </ButtonGroup>
+                </Box>
+        </Container>
     )
 }
 

@@ -7,16 +7,6 @@ import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, Link 
 
 import ng_1 from "../images/ng_1.png";
 
-/*
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT null,
-  password VARCHAR(255) NOT NULL
-);
-
-INSERT INTO users (email, password) VALUES ('thomaslenguyenasian@gmail.com', 'nicejob');
-*/
-
 function Copyright(props) {
     return (
         <Typography variant="body2" align="center" {...props}>
