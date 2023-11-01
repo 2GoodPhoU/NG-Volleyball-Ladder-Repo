@@ -21,24 +21,14 @@ export const Register = () => {
 
 
     async function insertUser(e, pw, un, fn, ln) {
-        // const unExists = usernameExists(un)
-
-        // if (unExists) {
-        //     console.log(`did not add user ${un}`);
-        //     return false;
-        // }
-
         const { error } = await supabase
             .from('users')
             .insert({ email: e, password: pw, username: un, first_name: fn , last_name: ln});
 
-        console.log(`added user ${un}`);
-
         return true;
     }
 
-    // onSubmit display in console
-    const handleSubmit = (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         console.log({
@@ -49,33 +39,19 @@ export const Register = () => {
             email: data.get("email"),
         });
 
-        // API call here
-        // const unExists = usernameExists(data.get('username'));
-        // if (!unExists)
-        var iUN = insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('firstName'), data.get('lastName'));
-
-        // if (iUN) console.log('inserted');
-        // else console.log('nothing happened');
+        const unExists = await usernameExists(data.get('username'));
+        if (!unExists)
+            insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('firstName'), data.get('lastName'));
     }
 
-    // async function usernameExists(un) {
-    //     const { data, error } = await supabase
-    //     .from('users')
-    //     .select()
-    //     .eq('username', un)
+    async function usernameExists(un) {
+        const { data, error } = await supabase
+        .from('users')
+        .select()
+        .eq('username', un)
 
-    //     console.log(`this is what is inside of data===\n${JSON.stringify(data, null, 2)}`);
-    //     console.log(`this is what is inside of error===\n${JSON.stringify(error, null, 2)}`);
-    //     // THIS IS GARGAGE FIGURE THIS OUT ASAP BRUH MOMENT
-    //     console.log(`the length of the data is: ${data.length}`);
-
-    //     if (data.length === 1)
-    //         console.log("username exists");
-    //     else
-    //         console.log("username does not exist");
-
-    //     return (data.length === 1) ? true : false;
-    // }
+        return (data.length === 1) ? true : false;
+    }
 
 
     return (
