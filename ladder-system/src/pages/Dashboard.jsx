@@ -4,6 +4,8 @@ import { supabase } from "../supabaseClient";
 
 import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List }from '@mui/material';
 
+import ng_1 from "../images/ng_1.png";
+
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
 
@@ -30,10 +32,22 @@ export function Dashboard() {
                     alignItems: 'center',
                 }}
             >
+                <Box
+                    component="img"
+                    sx={{
+                        height: 150,
+                        width: 400,
+                        maxHeight: { xs: 150, md: 150 },
+                        maxWidth: { xs: 400, md: 400 },
+                        paddingBottom: 2
+                    }}
+                    src= {ng_1} 
+                    alt="Northrop Grumman logo"
+                />
                 <Typography component="h1" variant="h5">
                     Dashboard
                 </Typography>
-                <ButtonGroup size="large">
+                <ButtonGroup size="medium">
                         <Button
                                 type="submit"
                                 variant="contained"
@@ -73,6 +87,10 @@ export function Dashboard() {
                     </List>
                 Paper> */}
 
+                <Typography component="h3">
+                    Ladder
+                </Typography>
+
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
                         {ladderTournaments.map((tournament, i) =>
@@ -91,7 +109,7 @@ export function Dashboard() {
                     </List>
                 </Paper>
 
-                <ButtonGroup size="large">
+                <ButtonGroup size="medium">
                         <Button
                                 type="submit"
                                 variant="contained"
