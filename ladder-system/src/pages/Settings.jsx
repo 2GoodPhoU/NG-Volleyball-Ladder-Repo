@@ -81,8 +81,12 @@ export function Settings() {
             </div>
             <button type="submit" className="note-button">Save</button>
             </form>
-
             </div>
+
+            <Link to="/UserManager">
+                <button className="dash_lnk">UserManager</button>
+            </Link>
+
             <Link to="/Dashboard">
                 <button className="dash_lnk">Back</button>
             </Link>

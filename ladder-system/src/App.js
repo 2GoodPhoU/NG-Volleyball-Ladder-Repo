@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Ladder } from "./pages/Ladder";
 import { Team } from "./pages/Team";
 import { Settings } from "./pages/Settings";
+import { UserManager } from "./pages/UserManager";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Ladder" element={<Ladder />} />
         <Route path="/Team" element={<Team />} />
         <Route path="/Settings" element={<Settings />} />
+        <Route path="/UserManager" element={<UserManager />} />
       </Routes>
     </BrowserRouter>
   );
