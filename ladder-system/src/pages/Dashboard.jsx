@@ -129,6 +129,15 @@ export function Dashboard() {
                                 Settings
                             </Link>
                         </Button>
+                        <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Log Out
+                            </Link>
+                        </Button>
                 </ButtonGroup>
                 </Box>
         </Container>
