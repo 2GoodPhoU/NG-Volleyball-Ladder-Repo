@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
-import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List }from '@mui/material';
+import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton }from '@mui/material';
 
 import ng_1 from "../images/ng_1.png";
 
@@ -94,17 +94,21 @@ export function Dashboard() {
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
                         {ladderTournaments.map((tournament, i) =>
-                            <div className="ladder-outer-container" key={i}>
-                                <div className="ladder-team-id">
-                                    <h4>{tournament.ladder_id}</h4>
-                                </div>
-                                <Link to="/Ladder">
-                                    <div className="ladder-center-div">
-                                        <h4> {tournament.ladder_name} </h4>
-                                        <small> {tournament.ladder_size} vs {tournament.ladder_size} </small>
-                                    </div>
-                                </Link>
-                            </div>
+                            <ListItem
+                                key={i}
+                                
+                            >
+                                <ListItemText> {tournament.ladder_name} </ListItemText>
+                                <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
+                                <ListItemButton selected={0}>
+                                    <Link to="/Ladder">
+                                        <ListItemText>
+                                            View
+                                        </ListItemText>
+                                    </Link>
+                                </ListItemButton>
+
+                            </ListItem>
                         )}
                     </List>
                 </Paper>
@@ -129,7 +133,7 @@ export function Dashboard() {
                                 Settings
                             </Link>
                         </Button>
-                        
+
                         <Button
                                 type="submit"
                                 variant="contained"
