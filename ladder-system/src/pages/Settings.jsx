@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { CssBaseline, TextField, Grid, Box, Typography, Container, Button }from '@mui/material';
 
 export function Settings() {
     const [newUsername, setNewUsername] = useState('');
@@ -24,6 +24,7 @@ export function Settings() {
     }
 
     return (
+        <Container component="main" maxWidth="xs">
         <div className="settings-page">
             <div className="page-form">
             <h1>Settings</h1>
@@ -87,5 +88,6 @@ export function Settings() {
                 <button className="dash_lnk">Back</button>
             </Link>
         </div>
+        </Container>
     )
 }
