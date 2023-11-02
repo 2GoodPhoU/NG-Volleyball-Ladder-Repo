@@ -5,13 +5,17 @@ import { supabase } from "../supabaseClient";
 import { Join } from "../components/join";
 */
 import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton }from '@mui/material';
-
+import Popup from "../components/Popup";
 import ng_1 from "../images/ng_1.png";
 
+/*
 const handleSendInvite = (e) => {
     e.preventDefault();
     console.log("Invite Sent!");
 };
+*/
+
+
 
 export function Dashboard() {
     //to view the list of types of ladders
@@ -21,18 +25,23 @@ export function Dashboard() {
     const [showBackButton, setShowBackButton] = useState(false);
     const [showOtherButtons, setShowOtherButtons] = useState(true); // Add this state
 
-    //Get the list of ladders
+    // Popup State
+    const [isPopupOpen, togglePopup] = useState(false);
+
+    /* not in use
+    //Get the list of Teams
     const [ladderMap, setLadderMap] = useState('');
     const [teamMap, setTeamMap] = useState([]);
     const [isToggled, setIsToggled] = useState(false);
 
     // Match variables
     const [ladderId, setLadderId] = useState('');
+    */
 
     useEffect(() => {
         getLadderTournaments();
-        getLadderMap();
-        getTeamMap();
+        //getLadderMap();
+        //getTeamMap();
     }, []);
 
     async function getLadderTournaments() {
@@ -42,6 +51,7 @@ export function Dashboard() {
         
         setLadderTournaments(data);
     }
+    /* not in use
     async function getLadderMap() {
         const { data, error } = await supabase
             .from('ladder_tournaments')
@@ -67,6 +77,7 @@ export function Dashboard() {
         
         setTeamMap(data);
     }
+    */
 
 
     // Handle click event to set iframe URL and show the back button
@@ -111,8 +122,8 @@ export function Dashboard() {
                 
 
                 <ButtonGroup size="medium">
-                    {/*  */}
-                {showBackButton ? ( //Hides the top three buttons
+                    {/* Top three buttons  */}
+                {showBackButton ? ( //Hides the top three buttons, replaces it with back button
                     
                         <Button
                             type="submit"
@@ -128,11 +139,27 @@ export function Dashboard() {
                                 type="submit"
                                 variant="contained"
                                 sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                                onClick={togglePopup}
                             >
-                                <Link to="/">
+
                                     Ladder Rules/Info
-                                </Link>
+ 
                             </Button>
+                            {isPopupOpen ? 
+                            <Popup
+                                title="Ladder Rules and Info"
+                                text="Each team consist of 6 players and 6 substitutes. Players can be substituted at any time but if they are to return can only be swapped for the player that replaced them.\n
+                                Each team can hit the ball up to three times before the ball must be returned. The defensive team can then try and block or return the ball again hitting it a maximum of three times.\n
+                                Games are played up to 25 points and must be won by 2 clear points.\n
+                                Violations will be called for the following:\n
+                                \tStepping over the base line when serving the ball.\n
+                                \tBall hits the net and fails to get over the net (If the ball hits the net and still goes over the net then this is perfectly legal).\n
+                                \tPlayers are not allowed to carry, palm or run with the ball.\n
+                                \tPlayers must not touch the net with any part of the body. If the net is said to have hit them rather than vice-versa, then this is ok.\n
+                                \tThe ball cannot travel under the net.\n
+                                \tPlayers cannot reach over the net and hit the ball.\n"
+                                closePopup={() => togglePopup(false)}
+                                 /> : null}
 
                         <Button
                             type="submit"
@@ -150,7 +177,7 @@ export function Dashboard() {
 
 
 
-                {showBackButton ? ( //Changes everything inside the 
+                {showBackButton ? ( //Changes everything inside the paper container
                      <>
                     <Typography component="h3">
                     Select a Ladder
@@ -165,14 +192,11 @@ export function Dashboard() {
                                     <ListItemText> {tournament.ladder_name} </ListItemText>
                                     <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
                                     <ListItemButton selected={0}>
-                                        <Link to="/Ladder">
-                                            <ListItemText>
-                                                View
-                                            </ListItemText>
-                                        </Link>
-                                    </ListItemButton>
 
-                                    <button className = "ladder-btn" onClick={handleSendInvite}><h5>Join</h5></button>
+                                    </ListItemButton>
+                                    <Link to="/Ladder">
+                                    <button className = "ladder-btn"><h5>Join</h5></button>
+                                    </Link>
                                     
 
                                 </ListItem>
@@ -180,7 +204,7 @@ export function Dashboard() {
                             )}
                         </List>
 
-
+                        {/* this is for a specific ladder, not a list of them
                         <div>
                             {teamMap.map((team, i) =>
                                 <div className="ladder-outer-container" key={i}>
@@ -198,12 +222,9 @@ export function Dashboard() {
                             )}
                         </div>
 
+                        */}
 
-                        
-
-                        
                     </Paper>
-
                 </>
 
                 ) : (
@@ -272,68 +293,7 @@ export function Dashboard() {
                         </>
                     )}
                 </ButtonGroup>
-                {/* Goes directly to http://localhost:3000/Ladder" */}
-                <ButtonGroup size="medium">
-                    <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                    >
-                    <Link to="/Ladder">
-                    Go to /Ladder Page
-                    </Link>
-                    </Button>
-                </ButtonGroup>
                 </Box>
         </Container>
     )
 }
-
-/*
-    /*
-
-
-    const [ladderTournaments, setLadderTournaments] = useState([]);
-
-    useEffect(() => {
-        getLadder();
-    }, []);
-
-    async function getLadder() {
-        const { data } = await supabase
-        .from('ladder_tournaments')
-        .select();
-        
-        setLadderTournaments(data);
-    }
-    return (
-        <div>
-            
-            <h3>Dashboard</h3>
-            <div>
-                {ladderTournaments.map((tournament, i) => 
-                    <div key={i}>
-                        <Link to="/Ladder">
-                            <button className="dash_btn">
-                                { tournament.ladder_tournament_name }
-                            </button>
-                        </Link>
-                    </div>
-                )}
-            </div>
-            
-            <Link to="/Team">
-                <button className="dash_btn">Team</button>
-            </Link>
-            <br></br>
-            <br></br>
-            <Link to="/">
-                <button className="dash_lnk">Rules</button>
-            </Link>
-            <br></br>
-            <Link to="/">
-                <button className="dash_lnk">Back</button>
-            </Link>
-        </div>
-        )
-        */
