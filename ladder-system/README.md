@@ -6,6 +6,8 @@ In it's current state the Volleyball Ladder System can only be run locally. Here
    - cd ladder-system
    - npm i react-router-dom
    - npm i @supabase/supabase-js
+   - npm install @mui/material @emotion/react @emotion/styled
+   - npm install @mui/icons-material
    - npm start
 
 If you get an error:
