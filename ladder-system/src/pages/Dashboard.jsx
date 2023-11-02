@@ -28,11 +28,6 @@ export function Dashboard() {
 
     // Match variables
     const [ladderId, setLadderId] = useState('');
-    const [challengerTeamId, setChallengerTeamId] = useState('');
-    const [opponentTeamId, setOpponentTeamId] = useState('');
-
-    const [challengerScore, setChallengerScore] = useState('');
-    const [opponentScore, setOpponentScore] = useState('');
 
     useEffect(() => {
         getLadderTournaments();
@@ -138,15 +133,7 @@ export function Dashboard() {
                                     Ladder Rules/Info
                                 </Link>
                             </Button>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/Ladder">
-                               Go to /Ladder Page
-                            </Link>
-                        </Button>
+
                         <Button
                             type="submit"
                             variant="contained"
@@ -162,50 +149,58 @@ export function Dashboard() {
 
 
 
-                <Typography component="h3">
-                    Ladder
-                </Typography>
+
                 {showBackButton ? ( //Changes everything inside the 
                      <>
-                    {/* Dummy list */}
-                    
+                    <Typography component="h3">
+                    Select a Ladder
+                    </Typography>
                     <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                    <div>
-                {teamMap.map((team, i) =>
-                    <div className="ladder-outer-container" key={i}>
-                        <div className="ladder-team-id">
-                            <h4>{team.team_id}</h4>
-                        </div>
-                        <Link to="/Team">
-                            <div className="ladder-center-div">
-                                <h4> {team.team_name} </h4>
-                                <small> {team.team_wins_score} - {team.team_lose_score} </small>
-                            </div>
-                        </Link>
-                        <button className = "ladder-btn" onClick={handleSendInvite}><h5>Challenge</h5></button>
-                    </div>
-                )}
-            </div>
+                        <List>
+                            {ladderTournaments.map((tournament, i) =>
+                                <ListItem
+                                    key={i}
+                                    
+                                >
+                                    <ListItemText> {tournament.ladder_name} </ListItemText>
+                                    <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
+                                    <ListItemButton selected={0}>
+                                        <Link to="/Ladder">
+                                            <ListItemText>
+                                                View
+                                            </ListItemText>
+                                        </Link>
+                                    </ListItemButton>
 
-                        {/* JUST A PLACEHOLDER FOR NOW! */}
-                        {/* ////Commented out lines below
-                        <Typography>Hello Tournaments List</Typography> 
-                        <br></br><br></br>
-                        Competitive 6v6
-                        <br></br><br></br>
-                        Casual 6v6
-                        <br></br><br></br>
-                        Competitive 2v2
-                        <br></br><br></br>
-                        Casual 2v2
-                        <br></br><br></br>
-                        Competitive 4v4
-                        <br></br><br></br>
-                        Casual 4v4
-                        <br></br><br></br>
-                        Let's Go
-                        <br></br><br></br>
-                        */}
+                                    <button className = "ladder-btn" onClick={handleSendInvite}><h5>Join</h5></button>
+                                    
+
+                                </ListItem>
+                                
+                            )}
+                        </List>
+
+
+                        <div>
+                            {teamMap.map((team, i) =>
+                                <div className="ladder-outer-container" key={i}>
+                                    <div className="ladder-team-id">
+                                        <h4>{team.team_id}</h4>
+                                    </div>
+                                    <Link to="/Team">
+                                        <div className="ladder-center-div">
+                                            <h4> {team.team_name} </h4>
+                                            <small> {team.team_wins_score} - {team.team_lose_score} </small>
+                                        </div>
+                                    </Link>
+                                    <button className = "ladder-btn" onClick={handleSendInvite}><h5>Challenge</h5></button>
+                                </div>
+                            )}
+                        </div>
+
+
+                        
+
                         
                     </Paper>
 
@@ -213,6 +208,9 @@ export function Dashboard() {
 
                 ) : (
                 <>
+                <Typography component="h3">
+                    Ladder
+                </Typography>
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
                         {ladderTournaments.map((tournament, i) =>
@@ -229,8 +227,10 @@ export function Dashboard() {
                                         </ListItemText>
                                     </Link>
                                 </ListItemButton>
+                                
 
                             </ListItem>
+                            
                         )}
                     </List>
                 </Paper>
@@ -272,6 +272,18 @@ export function Dashboard() {
                         </>
                     )}
                 </ButtonGroup>
+                {/* Goes directly to http://localhost:3000/Ladder" */}
+                <ButtonGroup size="medium">
+                    <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                    >
+                    <Link to="/Ladder">
+                    Go to /Ladder Page
+                    </Link>
+                    </Button>
+                </ButtonGroup>
                 </Box>
         </Container>
     )
@@ -279,6 +291,8 @@ export function Dashboard() {
 
 /*
     /*
+
+
     const [ladderTournaments, setLadderTournaments] = useState([]);
 
     useEffect(() => {
