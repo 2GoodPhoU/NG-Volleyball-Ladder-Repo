@@ -15,8 +15,6 @@ const handleSendInvite = (e) => {
 };
 */
 
-
-
 export function Dashboard() {
     //to view the list of types of ladders
     const [ladderTournaments, setLadderTournaments] = useState([]);
@@ -28,12 +26,10 @@ export function Dashboard() {
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
 
-    // Use state to manage the button label
+    //Switch between Join and View states
     const [joinLabel, setJoinLabel] = useState("View"); 
-    // Use state to manage the link destination
     const [ladderLink, setLadderLink] = useState("/Ladder"); 
 
-    
     /* not in use
     //Get the list of Teams
     const [ladderMap, setLadderMap] = useState('');
@@ -86,20 +82,20 @@ export function Dashboard() {
     */
 
 
-    // Handle click event to set iframe URL and show the back button
+    // Handle click event to change label and link and show the back button
     // and hide all other buttons
     const handleJoinClick = () => {
-        setShowBackButton(true);
+        setShowBackButton(true);    // Show back button
         setShowOtherButtons(false); // Hide other buttons
-        setJoinLabel("Join");
+        setJoinLabel("Join");       // Change label to Join
         setLadderLink("/Ladder");
         
     };
     // Same but reversed
     const handleBackClick = () => {
-        setShowBackButton(false);
-        setShowOtherButtons(true); // Show other button
-        setJoinLabel("View");
+        setShowBackButton(false);   // Jide back button
+        setShowOtherButtons(true);  // Show other buttons
+        setJoinLabel("View");       // Change label to View
         setLadderLink("/Ladder");
     };
 
@@ -262,6 +258,7 @@ export function Dashboard() {
                         </>
                     )}
                 </ButtonGroup>
+                
                 </Box>
         </Container>
     )
