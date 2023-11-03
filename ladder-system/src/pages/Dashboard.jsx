@@ -28,6 +28,12 @@ export function Dashboard() {
     // Popup State
     const [isPopupOpen, togglePopup] = useState(false);
 
+    // Use state to manage the button label
+    const [joinLabel, setJoinLabel] = useState("View"); 
+    // Use state to manage the link destination
+    const [ladderLink, setLadderLink] = useState("/Ladder"); 
+
+    
     /* not in use
     //Get the list of Teams
     const [ladderMap, setLadderMap] = useState('');
@@ -85,12 +91,16 @@ export function Dashboard() {
     const handleJoinClick = () => {
         setShowBackButton(true);
         setShowOtherButtons(false); // Hide other buttons
+        setJoinLabel("Join");
+        setLadderLink("/Ladder");
         
     };
     // Same but reversed
     const handleBackClick = () => {
         setShowBackButton(false);
         setShowOtherButtons(true); // Show other button
+        setJoinLabel("View");
+        setLadderLink("/Ladder");
     };
 
     return (
@@ -173,37 +183,27 @@ export function Dashboard() {
                     )}
 
                 </ButtonGroup>
-
-
-
-
-                {showBackButton ? ( //Changes everything inside the paper container
-                     <>
-                    <Typography component="h3">
-                    Select a Ladder
-                    </Typography>
-                    <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                        <List>
-                            {ladderTournaments.map((tournament, i) =>
-                                <ListItem
-                                    key={i}
-                                    
-                                >
-                                    <ListItemText> {tournament.ladder_name} </ListItemText>
-                                    <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
-                                    <ListItemButton selected={0}>
-
-                                    </ListItemButton>
-                                    <Link to="/Ladder">
-                                    <button className = "ladder-btn"><h5>Join</h5></button>
+               
+                
+                <Typography component="h3">
+                    Ladder
+                </Typography>
+                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                    <List>
+                        {ladderTournaments.map((tournament, i) =>
+                            <ListItem
+                                key={i}>
+                                <ListItemText> {tournament.ladder_name} </ListItemText>
+                                <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
+                                <ListItemButton selected={0}>
+                                    <Link to={ladderLink}>
+                                        <button className = "ladder-btn"><h5>{joinLabel}</h5></button>
                                     </Link>
-                                    
-
-                                </ListItem>
-                                
-                            )}
-                        </List>
-
+                                </ListItemButton>
+                            </ListItem>
+                            
+                        )}
+                    </List>
                         {/* this is for a specific ladder, not a list of them
                         <div>
                             {teamMap.map((team, i) =>
@@ -223,40 +223,9 @@ export function Dashboard() {
                         </div>
 
                         */}
-
-                    </Paper>
-                </>
-
-                ) : (
-                <>
-                <Typography component="h3">
-                    Ladder
-                </Typography>
-                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                    <List>
-                        {ladderTournaments.map((tournament, i) =>
-                            <ListItem
-                                key={i}
-                                
-                            >
-                                <ListItemText> {tournament.ladder_name} </ListItemText>
-                                <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
-                                <ListItemButton selected={0}>
-                                    <Link to="/Ladder">
-                                        <ListItemText>
-                                            View
-                                        </ListItemText>
-                                    </Link>
-                                </ListItemButton>
-                                
-
-                            </ListItem>
-                            
-                        )}
-                    </List>
                 </Paper>
-                </>
-                )}
+                
+                
 
                 <ButtonGroup size="medium">
                     {showOtherButtons && ( // Conditionally render these buttons
