@@ -106,11 +106,6 @@ button {
   z-index: 1;
 }
 
-.userPopup .popup-container .popup-content{
-  background: white;
-  background-color: white;
-}
-
 /* Dashboard */
 
 .dash_btn {
