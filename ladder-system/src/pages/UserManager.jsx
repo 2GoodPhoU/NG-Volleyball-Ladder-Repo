@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,7 +11,16 @@ import TableRow from '@mui/material/TableRow';
 
 import { Paper, styled, Typography, Container, Box, Button } from '@mui/material';
 
-// Cell Styling
+import IconButton from '@mui/material/IconButton';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
+import Popup from "../components/Popup";
+
+
+// page only accessible by Ladder Admin and Admin
+
+/* Cell and Row Styling */
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -21,7 +31,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-// Row Styling
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -32,23 +41,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+/* Dropdown / Popup */
+
+
+
+
+/* Testing Data */
+
 // return data
-function createData(name, userType) {
-  return { name, userType };
+function createData(name, team, role) {
+  return { name, team, role };
 }
 
 // Hardcoded Dummy Users
-const rows = [
-  createData('User1', 'Guest'),
-  createData('User2', 'Member'),
-  createData('User3', 'Team Leader'),
-  createData('User4', 'Ladder Admin'),
-  createData('User5', 'Admin'),
+const users = [
+  createData('User1', 'Team1', 'Member'),
+  createData('User2', 'Team2', 'Member'),
+  createData('User3', 'Team3', 'Team Leader'),
+  createData('User4', 'Team4', 'Ladder Admin'),
+  createData('User5', 'Team5', 'Admin'),
 ];
 
+
+/* User Manager Page */
 export function UserManager() {
+
+  // Popup State
+  const [isPopupOpen, togglePopup] = useState(false);
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="">
       <Box
         sx={{
           marginTop: 8,
@@ -59,26 +81,34 @@ export function UserManager() {
       >
 
         {/* Title */}
-        <Typography component="h1" variant="h5">
-          [team] User Manager
+
+        <Typography component="h1" variant="h5" sx={{marginBottom: 2}}>
+          User Manager
         </Typography>
 
         {/* Table */}
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <Table sx={{ minWidth: 100 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell> Username </StyledTableCell>
-                <StyledTableCell align="right">User Type</StyledTableCell>
+                <StyledTableCell align="center" sx={{ width: '25%' }}> Username </StyledTableCell>
+                <StyledTableCell align="right" sx={{ width: '25%' }}> Team </StyledTableCell>
+                <StyledTableCell align="right" sx={{ width: '45%' }}>Role</StyledTableCell>
+                <StyledTableCell align="center" sx={{ width: '5%' }}></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.userType}</StyledTableCell>
+              {users.map((user) => (
+                <StyledTableRow key={user.name}>
+                  <StyledTableCell align="center" sx={{ width: '25%' }} scope="row">{user.name}</StyledTableCell>
+                  <StyledTableCell align="right" sx={{ width: '25%' }}>{user.team}</StyledTableCell>
+                  <StyledTableCell align="right" sx={{ width: '45%' }}>{user.role}</StyledTableCell>
+                  <StyledTableCell align="right" sx={{ width: '5%' }}>  <IconButton disableRipple> <ManageAccountsIcon onClick={() => togglePopup(true)} /> </IconButton> </StyledTableCell>
+                  {isPopupOpen ? <Popup
+                                className="userPopup"
+                                title="[User]'s Account Information"
+                                text="*insert terms here*"
+                                closePopup={() => togglePopup(false)} /> : null}
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -87,7 +117,7 @@ export function UserManager() {
 
         {/* Return */}
         <Link to="/Settings">
-          <Button variant="text">Back</Button>
+          <Button variant="text" sx={{marginTop: 2}}>Back</Button>
         </Link>
 
       </Box>

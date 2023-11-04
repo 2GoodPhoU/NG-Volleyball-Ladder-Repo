@@ -84,7 +84,7 @@ export function Settings() {
             </div>
 
             <Link to="/UserManager">
-                <button className="dash_lnk">UserManager</button>
+                <button className="dash_lnk">User Manager</button>
             </Link>
 
             <Link to="/Dashboard">
