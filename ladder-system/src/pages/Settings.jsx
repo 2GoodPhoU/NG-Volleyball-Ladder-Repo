@@ -4,11 +4,16 @@ import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, Butto
 import ng_1 from "../images/ng_1.png";
 
 export function Settings() {
+    // User settings
     const [newUsername, setNewUsername] = useState('');
     const [newFirstName, setNewFirstName] = useState('');
     const [newLastName, setNewLastName] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
+    // Functionality
+    const [modeLabel, setModeLabel] = useState("General");
+    const [switchMode, setSwitchMode] = useState(false);
 
     // onSubmit display in console
     const handleSubmitChange = (e) => {
@@ -22,8 +27,17 @@ export function Settings() {
             newName: data.get("newName"),
             enewEmailmail: data.get("newEmail"),
         });
-        
     }
+
+    const handleModeChange = (event) => {
+
+        setSwitchMode(true);
+        const mode = event.target.name;
+        //switch to Notificaiton
+        setModeLabel(mode)
+    }
+
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -56,20 +70,41 @@ export function Settings() {
                 {/* Switch */}
                 <Box noValidate align="center" sx={{ mt: 3}}>
                     <ButtonGroup size="medium">
-                        <Button>General</Button>
-                        <Button>Notificaiton</Button>
+                    <Button
+                            name="General"
+                            type="button"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mr: 5}}
+                            onClick={handleModeChange}
+                        >
+                        General
+                    </Button>
+
+                    <Button
+                            name="Notification"
+                            type="button"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, ml:10}}
+                            onClick={handleModeChange}
+                    >Notificaiton
+                    </Button>
                     </ButtonGroup>
+                </Box>
+                <Box  sx={{ mt: 3 }}> 
+                    <Grid container justifyContent="flex" flexDirection='column' alignItems="center">
+                        <Grid item>
+                            <Typography component="h1" align="center" variant="h6">
+                                {modeLabel}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Box>
 
                 {/* Form */}
-                <Box component="form" noValidate onSubmit={handleSubmitChange} sx={{ mt: 3 }}>
+                <Box component="form" noValidate onSubmit={handleSubmitChange} sx={{ mt: 1 }}>
                     <Grid container spacing={2}>
                         {/*General Settings */}
-                        <Grid  item xs={12}>
-                            <Typography component="h1" align="center" variant="h5">
-                                General
-                            </Typography>
-                        </Grid>
+
                         <Grid item xs={12}>
                             <TextField
                                     value={newUsername}
@@ -142,12 +177,7 @@ export function Settings() {
                 </Box>
                 
                 <Box component="form" noValidate sx={{ mt: 3 }}>
-                    {/* Notification Settings */}
-                <Grid item xs={12}>
-                    <Typography component="h1" align="center" variant="h5">
-                        Notificaiton
-                    </Typography>
-                </Grid>
+
                     {/* Will update this later */}
                 <input type="checkbox"/>
                 <label htmlFor="results" className="note-label">

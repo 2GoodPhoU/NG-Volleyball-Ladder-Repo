@@ -132,7 +132,7 @@ export function Dashboard() {
                 {showBackButton ? ( //Hides the top three buttons, replaces it with back button
                     
                         <Button
-                            type="submit"
+                            type="button"
                             variant="contained"
                             sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
                             onClick={handleBackClick}
@@ -142,7 +142,7 @@ export function Dashboard() {
 
                     ) : (
                         <><Button
-                                type="submit"
+                                type="button"
                                 variant="contained"
                                 sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
                                 onClick={togglePopup}
@@ -168,7 +168,7 @@ export function Dashboard() {
                                  /> : null}
 
                         <Button
-                            type="submit"
+                            type="button"
                             variant="contained"
                             sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
                             onClick={handleJoinClick}
@@ -227,7 +227,7 @@ export function Dashboard() {
                     {showOtherButtons && ( // Conditionally render these buttons
                         <>
                             <Button
-                                type="submit"
+                                type="button"
                                 variant="contained"
                                 sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
                             >
@@ -237,7 +237,7 @@ export function Dashboard() {
                             </Button>
 
                             <Button
-                                type="submit"
+                                type="button"
                                 variant="contained"
                                 sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
                             >
@@ -247,7 +247,7 @@ export function Dashboard() {
                             </Button>
 
                             <Button
-                                type="submit"
+                                type="button"
                                 variant="contained"
                                 sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
                             >
