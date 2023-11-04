@@ -6,7 +6,7 @@ import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, Butto
 
 import ng_1 from "../images/ng_1.png";
 
-export function Dashboard() {
+export function Dashboard( {user} ) {
     const [ladderTournaments, setLadderTournaments] = useState([]);
 
     useEffect(() => {
@@ -47,6 +47,7 @@ export function Dashboard() {
                 <Typography component="h1" variant="h5">
                     Dashboard
                 </Typography>
+                <h1> Email: { user.username } </h1>
                 <ButtonGroup size="medium">
                         <Button
                                 type="submit"
@@ -94,20 +95,16 @@ export function Dashboard() {
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
                         {ladderTournaments.map((tournament, i) =>
-                            <ListItem
-                                key={i}
-                                
-                            >
+                            <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
-                                <ListItemButton selected={0}>
+                                <ListItemButton selected={false}>
                                     <Link to="/Ladder">
                                         <ListItemText>
                                             View
                                         </ListItemText>
                                     </Link>
                                 </ListItemButton>
-
                             </ListItem>
                         )}
                     </List>

@@ -7,7 +7,6 @@ import { CssBaseline, TextField, Checkbox, Link, Grid, Box, Container, Typograph
 import Popup from "../components/Popup";
 import ng_1 from "../images/ng_1.png";
 
-
 export const Register = () => {
     // useState initally empty
     const [firstName, setFirstName] = useState('');
@@ -22,8 +21,8 @@ export const Register = () => {
 
     async function insertUser(e, pw, un, fn, ln) {
         const { error } = await supabase
-            .from('users')
-            .insert({ email: e, password: pw, username: un, first_name: fn , last_name: ln});
+        .from('users')
+        .insert({ email: e, password: pw, username: un, first_name: fn , last_name: ln});
 
         return true;
     }
