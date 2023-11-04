@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton }from '@mui/material';
+import { CssBaseline, TextField, Grid, Box, Typography, 
+    Container, Button, ButtonGroup, Checkbox, FormGroup, 
+    FormControlLabel }from '@mui/material';
 import ng_1 from "../images/ng_1.png";
 
 export function Settings() {
@@ -13,7 +15,16 @@ export function Settings() {
 
     // Functionality
     const [modeLabel, setModeLabel] = useState("General");
-    const [switchMode, setSwitchMode] = useState(false);
+    const [notifyMode, setNotifyMode] = useState(false); // Used to change to General or Notification states
+    const [checkedResults, setCheckedResults] = useState(true);
+    const [checkboxes, setCheckboxes] = useState({
+        checkedResults: true,
+        checkedChallenge: true,
+        checkedMessages: true
+
+        //Add more checkboxes
+    });
+    
 
     // onSubmit display in console
     const handleSubmitChange = (e) => {
@@ -29,19 +40,26 @@ export function Settings() {
         });
     }
 
-    const handleModeChange = (event) => {
+    const handleNoteChange = (event) => {
 
-        setSwitchMode(true);
         const mode = event.target.name;
         //switch to Notificaiton
         setModeLabel(mode)
+        setNotifyMode(mode === "Notification");
+    }
+
+    const handledCheckChange = (name) => (event) => {
+        console.log(name, event.target.checked);
+        setCheckboxes({...checkboxes, [name]: event.target.checked})
     }
 
 
 
     return (
+        
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+
             <Box
                 sx={{
                     marginTop: 2,
@@ -59,7 +77,7 @@ export function Settings() {
                         paddingBottom: 2
                     }}
                     src= {ng_1} 
-                    alt="Northrop Grumman logo"
+                    alt="NG logo"
                 />
                     
                 {/* Top */}
@@ -69,13 +87,13 @@ export function Settings() {
 
                 {/* Switch */}
                 <Box noValidate align="center" sx={{ mt: 3}}>
-                    <ButtonGroup size="medium">
+                    <ButtonGroup size="large" fullWidth>
                     <Button
                             name="General"
                             type="button"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mr: 5}}
-                            onClick={handleModeChange}
+
+
+                            onClick={handleNoteChange}
                         >
                         General
                     </Button>
@@ -83,14 +101,14 @@ export function Settings() {
                     <Button
                             name="Notification"
                             type="button"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, ml:10}}
-                            onClick={handleModeChange}
+
+
+                            onClick={handleNoteChange}
                     >Notificaiton
                     </Button>
                     </ButtonGroup>
                 </Box>
-                <Box  sx={{ mt: 3 }}> 
+                <Box> 
                     <Grid container justifyContent="flex" flexDirection='column' alignItems="center">
                         <Grid item>
                             <Typography component="h1" align="center" variant="h6">
@@ -102,6 +120,22 @@ export function Settings() {
 
                 {/* Form */}
                 <Box component="form" noValidate onSubmit={handleSubmitChange} sx={{ mt: 1 }}>
+
+                {notifyMode ? (<>
+                          
+                    <FormGroup>
+                        <FormControlLabel control={<Checkbox />} label="Results" />
+                        <FormControlLabel control={<Checkbox />} label="Challenge" />
+                        <FormControlLabel control={<Checkbox />} label="Messages" />
+                    </FormGroup>                
+
+                </>
+                
+                
+                
+                ) : (<>
+
+
                     <Grid container spacing={2}>
                         {/*General Settings */}
 
@@ -173,33 +207,81 @@ export function Settings() {
                             {/*onChange={(e) => setNewPassword(e.target.value)} */}
                         </Grid>
                     </Grid>
+                    </>
+                    ) }
                     
                 </Box>
-                
-                <Box component="form" noValidate sx={{ mt: 3 }}>
-
-                    {/* Will update this later */}
-                <input type="checkbox"/>
-                <label htmlFor="results" className="note-label">
-                    Results</label>
-                    <input type="checkbox" />               
-                <label htmlFor="Challenges" className="note-label">
-                    Challenges</label>
-                    <input type="checkbox" />
-                <label htmlFor="message" className="note-label"> Messages</label>
+                {/*
+                <Box component="form" noValidate onSubmit={handleSubmitChange} sx={{ mt: 1 }}>
+                    <FormGroup>
+                        <FormControlLabel control={<Checkbox />} label="Results" />
+                        <FormControlLabel control={<Checkbox />} label="Challenge" />
+                        <FormControlLabel control={<Checkbox />} label="Messages" />
+                    </FormGroup>
                 </Box>
+                */}
+
+
+
+                {/* Back Button */}
                 <Box  sx={{ mt: 3 }}> 
                     <Grid container justifyContent="flex" flexDirection='column' alignItems="center">
                         <Grid item>
-                            <Link href="/Dashboard" color="Black" variant="body2">
+                            <Link to="/Dashboard" color="Black" variant="body2">
                                 <Button>Back</Button>
                             </Link>
                         </Grid>
                     </Grid>
                 </Box>
+/
             </Box>
 
 
         </Container>
     )
+
 }
+
+
+
+
+
+{/*
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} sm={6} >
+                        <Typography>Results</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <Checkbox 
+                            checked = {checkboxes.checkedResults}
+                            onChange= {handledCheckChange("Results")}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                    </Grid>
+
+                </Grid>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} sm={6} >
+                        <Typography>Challenges</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <Checkbox 
+                            checked = {checkboxes.checkedChallenge}
+                            onChange= {handledCheckChange("Challenge")}
+                        />
+                    </Grid>
+
+                </Grid>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} sm={6} >
+                        <Typography>Messages</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <Checkbox 
+                            checked = {checkboxes.checkedMessages}
+                            onChange= {handledCheckChange("Messages")}
+                        />
+                    </Grid>
+
+                </Grid>
+                */}

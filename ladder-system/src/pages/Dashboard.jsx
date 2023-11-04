@@ -191,7 +191,7 @@ export function Dashboard() {
                                 key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
-                                <ListItemButton selected={0}>
+                                <ListItemButton selected={false}>
                                     <Link to={ladderLink}>
                                         <button className = "ladder-btn"><h5>{joinLabel}</h5></button>
                                     </Link>
