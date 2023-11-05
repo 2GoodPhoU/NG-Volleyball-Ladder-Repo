@@ -95,9 +95,6 @@ export function Team() {
                             onClick={handleSubmit}
                     >
                         Create a Team
-                        {/* <Link to="/Ladder">
-                            Create a Team
-                        </Link> */}
                     </Button>
                 </ButtonGroup>
 
