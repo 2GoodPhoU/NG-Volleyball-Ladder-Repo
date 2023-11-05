@@ -11,7 +11,9 @@ import TablePagination from "@mui/material/TablePagination";
 
 import { Paper, styled, Typography, Container, Box, Button } from '@mui/material';
 
+import { supabase } from "../supabaseClient";
 
+import { useState, useEffect } from 'react';
 
 import IconButton from '@mui/material/IconButton';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -57,18 +59,27 @@ function createData(fName, lName, team, role) {
   return { fName, lName, team, role };
 }
 
-// Hardcoded Dummy Users
-const users = [
-  createData('first1', 'last1', 'Team1, Team6', 'Member'),
-  createData('first2', 'last2', 'Team2','Member, Team Leader, Moderator'),
-  createData('first3', 'last3', 'Team3','Team Leader'),
-  createData('first4', 'last4', 'Team4','Ladder Moderator'),
-  createData('first5', 'last5', 'Team5','Admin'),
-  createData('first6', 'last6', 'Team6','Team Leader'),
-];
-
 /* User Manager Page */
 export function UserManager() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  async function getUsers() {
+      const { data } = await supabase
+      .from('users')
+      .select();
+
+      let tempUsers = [];
+      data.forEach((user) => {
+        tempUsers.push(createData(user.first_name, user.last_name, 'Team 3', 'Member'));
+      });
+      
+      setUsers(tempUsers);
+
+  }
 
   // Table Pagination
   const [pg, setpg] = React.useState(0); 
@@ -116,7 +127,7 @@ export function UserManager() {
             </TableHead>
             {/* Table Body */}
             <TableBody>
-            {users.slice(pg * rpg, pg * rpg + rpg).map((user) => (
+            { users.slice(pg * rpg, pg * rpg + rpg).map((user) => (
                 <StyledTableRow key={user.name} sx={{ "&:last-child td,  &:last-child th": { border: 0 } }}>
                   <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.fName}</StyledTableCell>
                   <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.lName}</StyledTableCell>
