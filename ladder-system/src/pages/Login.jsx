@@ -19,8 +19,7 @@ function Copyright(props) {
         </Typography>
     );
 }
-
-// export const Login = ( { setUser } ) => {   
+ 
 export const Login = () => {
 
     const [username, setUsername] = useState('');
@@ -55,7 +54,6 @@ export const Login = () => {
             return;
 
         if (users[i].password === pass) {
-            // setUser(users[i]);
             window.localStorage.setItem('user', JSON.stringify(users[i]));
             navigate(`./Dashboard/`);
         }

@@ -17,7 +17,7 @@ export function Team() {
     const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
-        if (window.localStorage.getItem('user') === 'guest')
+        if (window.localStorage.getItem('user') === null)
             window.location.reload();
 
         getTeams();
@@ -37,9 +37,6 @@ export function Team() {
         .from('teams')
         .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
         .select();
-
-        console.log(data);
-        // if (data)
 
         window.location.reload();
     }
