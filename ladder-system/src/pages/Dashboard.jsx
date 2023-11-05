@@ -129,12 +129,13 @@ export function Dashboard() {
 
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
+                        { window.localStorage.removeItem('tournament') }
                         { ladderTournaments.map((tournament, i) =>
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
                                 <ListItemButton
-                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
+                                    onClick={ () => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
                                     <Link to="/Ladder">
                                         <ListItemText>
                                             View
