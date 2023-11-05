@@ -253,6 +253,9 @@ export function Settings() {
                             <Link to="/Dashboard" color="Black" variant="body2">
                                 <Button>Back</Button>
                             </Link>
+                            <Link to="/UserManager" color="Black" variant="body2">
+                                <Button>User Manager</Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Box>
