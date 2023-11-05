@@ -21,9 +21,12 @@ User Manager (v.1)
   - delete user
   - edit user
   - Ladder Moderator and Admin only
+  - alphabetical sort users 
 User Manager (v.2)
   - (Admin) switch between tournaments
   - (Ladder Moderator) restricted to their tournament
+User Manager (v.3)
+  - Story for user setting functionality 
 */
 
 /* Cell and Row Styling */
@@ -50,20 +53,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 /* Testing Data */
 
 // return data
-function createData(name, team, role) {
-  return { name, team, role };
+function createData(fName, lName, team, role) {
+  return { fName, lName, team, role };
 }
 
 // Hardcoded Dummy Users
 const users = [
-  createData('User1', 'Team1', 'Member'),
-  createData('User2', 'Team2', 'Member'),
-  createData('User3', 'Team3', 'Team Leader'),
-  createData('User4', 'Team4', 'Ladder Moderator'),
-  createData('User5', 'Team5', 'Admin'),
-  createData('User6', 'Team6', 'Team Leader'),
+  createData('first1', 'last1', 'Team1, Team6', 'Member'),
+  createData('first2', 'last2', 'Team2','Member, Team Leader, Moderator'),
+  createData('first3', 'last3', 'Team3','Team Leader'),
+  createData('first4', 'last4', 'Team4','Ladder Moderator'),
+  createData('first5', 'last5', 'Team5','Admin'),
+  createData('first6', 'last6', 'Team6','Team Leader'),
 ];
-
 
 /* User Manager Page */
 export function UserManager() {
@@ -105,9 +107,10 @@ export function UserManager() {
             {/* Table Header */}
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center"> Username </StyledTableCell>
-                <StyledTableCell align="center"> Team </StyledTableCell>
-                <StyledTableCell align="center">Role</StyledTableCell>
+                <StyledTableCell align="center"> First Name </StyledTableCell>
+                <StyledTableCell align="center"> Last Name </StyledTableCell>
+                <StyledTableCell align="center"> Team(s) </StyledTableCell>
+                <StyledTableCell align="center"> Role(s) </StyledTableCell>
                 <StyledTableCell align="center"></StyledTableCell>
               </TableRow>
             </TableHead>
@@ -115,12 +118,13 @@ export function UserManager() {
             <TableBody>
             {users.slice(pg * rpg, pg * rpg + rpg).map((user) => (
                 <StyledTableRow key={user.name} sx={{ "&:last-child td,  &:last-child th": { border: 0 } }}>
-                  <StyledTableCell align="center" sx={{ width: '30%' }} scope="user">{user.name}</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width: '30%' }}>{user.team}</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width: '30%' }}>{user.role}</StyledTableCell>
-                  <StyledTableCell align="right" sx={{ width: '10%' }}>
+                  <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.fName}</StyledTableCell>
+                  <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.lName}</StyledTableCell>
+                  <StyledTableCell align="center" sx={{ width: '20%' }}>{user.team}</StyledTableCell>
+                  <StyledTableCell align="center" sx={{ width: '20%' }}>{user.role}</StyledTableCell>
+                  <StyledTableCell align="right" sx={{ width: '5%' }}>
                     {/* Edit User */}
-                    <IconButton>
+                    <IconButton  sx={{ width: '25%', height: '10%', marginRight: 4 }}>
                       <ManageAccountsIcon />
                     </IconButton>
 
