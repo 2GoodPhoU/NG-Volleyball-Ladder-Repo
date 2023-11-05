@@ -20,7 +20,8 @@ function Copyright(props) {
     );
 }
 
-export const Login = ( { setUser } ) => {   
+// export const Login = ( { setUser } ) => {   
+export const Login = () => {
 
     const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
@@ -53,7 +54,8 @@ export const Login = ( { setUser } ) => {
             return;
 
         if (users[i].password === pass) {
-            setUser(users[i]);
+            // setUser(users[i]);
+            window.localStorage.setItem('user', JSON.stringify(users[i]));
             navigate(`./Dashboard/`);
         }
     }

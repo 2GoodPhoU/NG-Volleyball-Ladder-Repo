@@ -6,7 +6,8 @@ import { CssBaseline, TextField, Grid, Box, Typography, Container, Button, Butto
 
 import ng_1 from "../images/ng_1.png";
 
-export function Dashboard( {user} ) {
+// export function Dashboard( {user} ) {
+export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
 
     useEffect(() => {
@@ -47,7 +48,7 @@ export function Dashboard( {user} ) {
                 <Typography component="h1" variant="h5">
                     Dashboard
                 </Typography>
-                <h1> Email: { user.username } </h1>
+                <h1> Email: { JSON.parse(window.localStorage.getItem('user')).email } </h1>
                 <ButtonGroup size="medium">
                         <Button
                                 type="submit"

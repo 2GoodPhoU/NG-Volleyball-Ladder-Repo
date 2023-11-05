@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton } from '@mui/material';
 
 import ng_1 from "../images/ng_1.png";
@@ -10,55 +12,39 @@ import { supabase } from "../supabaseClient";
 
 // export function Team( { user } ) {
 export function Team() {
-
-    const user = {username: "teamcaptain1", user_id: 30};
-
-    const [teamIdx, setTeamIdx] = useState([]);
-
     const [teams, setTeams] = useState([]);
 
+    const user = JSON.parse(window.localStorage.getItem('user'));
+
     useEffect(() => {
+        if (typeof(user) === 'undefined')
+            window.location.reload();
+
         getTeams();
     }, []);
 
     async function getTeams() {
         const { data } = await supabase
         .from('teams')
-        .select();
-        // .eq('team_captain_ids', TESTUSER);
+        .select()
+        .eq('team_captain_id', user.user_id);
+
+        if (data === null)
+            setTeams([]);
 
         setTeams(data);
-
-        setTeamIdx(-1);
-
-        console.log(`before team_idx is ${teamIdx}`);
-
-        data.forEach((team, iter) => {
-            // console.log(`the team's team captains: ${team.team_captain_ids}`);
-            team.team_captain_ids.forEach((id) => {
-                console.log(iter);
-                console.log(id);
-                if (id === user.user_id)
-                    setTeamIdx(iter);
-            });
-        });
-
-        // array1.forEach((element) => console.log(element));
-
-        console.log(`after team_idx is ${teamIdx}`);
-        // return teamIdx;
-        
-        // return (data.length === 1) ? setTeams(data) : false;
     }
 
-    async function insertTeam(tn, tci, atos, rm) {
-        const { error } = await supabase
+    async function insertTeam(tn, tci, atos, rm, pw) {
+        const { data, error } = await supabase
         .from('teams')
-        .insert({ team_name: tn, team_captain_ids: tci, agreed_ToS: atos, recruiting_members: rm });
+        .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
+        .select();
+
+        console.log(data);
+        // if (data)
 
         window.location.reload();
-
-        return true;
     }
 
     const handleSubmit = (e) => {
@@ -66,8 +52,7 @@ export function Team() {
 
         console.log(`${user.user_id} ${user.username} created team`);
 
-        var captains = [user.user_id];
-        insertTeam(`${user.username}'s TEAM`, captains, true, false);
+        insertTeam(`${user.username}'s TEAM`, user.user_id, true, false, 1234);
     }
 
     return (
@@ -98,8 +83,6 @@ export function Team() {
                     Teams
                 </Typography>
 
-                <h1> Username: { user.username } </h1>
-
                 <ButtonGroup size="medium">
                     <Button
                             type="submit"
@@ -128,25 +111,27 @@ export function Team() {
                     Team
                 </Typography>
 
+                <h1> Username: { user.username }</h1>
+
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                    { teamIdx === -1 ? (
+                    { teams.length === 0 ? (
                         <h1>NOTHING HERE</h1>
                     ) : (
-                        <h1>DATA HERE</h1>
-                        // <List>
-                        //     {teams.map((team, i) =>
-                        //         <ListItem key={i}>
-                        //             <ListItemText> {team.ladder_name} </ListItemText>
-                        //             <ListItemButton selected={false}>
-                        //                 <Link to="/Team">
-                        //                     <ListItemText>
-                        //                         View
-                        //                     </ListItemText>
-                        //                 </Link>
-                        //             </ListItemButton>
-                        //         </ListItem>
-                        //     )}
-                        // </List>
+                        <List>
+                            {teams.map((team, i) =>
+                                <ListItem key={ i }>
+                                    <ListItemText> { team.team_name }</ListItemText>
+                                    <ListItemText> { team.team_wins } . { team.team_losses } </ListItemText>
+                                    <ListItemButton selected={false}>
+                                        <Link to="/Team">
+                                            <ListItemText>
+                                                View
+                                            </ListItemText>
+                                        </Link>
+                                    </ListItemButton>
+                                </ListItem>
+                            )}
+                        </List>
                     )}
                 </Paper>
 

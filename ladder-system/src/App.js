@@ -11,7 +11,7 @@ import { Settings } from "./pages/Settings";
 import { useState } from "react";
 
 function App() {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState(-1);
 
   return (
     <BrowserRouter>
@@ -21,11 +21,14 @@ function App() {
           <Link to="/">Login</Link>
       </nav> */}
       <Routes>
-        <Route exact path="/" element={<Login setUser={ setUser } />} />
+        {/* <Route exact path="/" element={<Login setUser={ setUser } />} /> */}
+        <Route exact path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Dashboard" element={<Dashboard user={ user } />} />
+        {/* <Route path="/Dashboard" element={<Dashboard user={ user } />} /> */}
+        <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Ladder" element={<Ladder />} />
-        <Route path="/Team" element={<Team user={ user } />} />
+        {/* <Route path="/Team" element={<Team user={ user } />} /> */}
+        <Route path="/Team" element={<Team />} />
         <Route path="/Settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
