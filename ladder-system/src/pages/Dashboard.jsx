@@ -56,25 +56,29 @@ export function Dashboard() {
                     <h1> Username: { user.username } </h1>
                 )}
                 <ButtonGroup size="medium">
+                    <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                    >
+                        <Link to="/">
+                            Ladder Rules/Info
+                        </Link>
+                    </Button>
+
+                    { window.localStorage.getItem('user') === null ? (
+                        <div></div>
+                    ) : (
                         <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/">
-                                Ladder Rules/Info
-                            </Link>
-                        </Button>
-                    
-                        <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
                         >
                             <Link to="/Ladder">
                                 Join a Ladder
                             </Link>
                         </Button>
+                    )}
                 </ButtonGroup>
 
                 {/* can be used in the individual tournaments */}
@@ -116,8 +120,21 @@ export function Dashboard() {
                         )}
                     </List>
                 </Paper>
-
-                <ButtonGroup size="medium">
+                
+                { window.localStorage.getItem('user') === null ? (
+                    <ButtonGroup size="medium">
+                            <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                            >
+                                <Link to="/">
+                                    Back
+                                </Link>
+                            </Button>
+                    </ButtonGroup>
+                ) : (
+                    <ButtonGroup size="medium">
                         <Button
                                 type="submit"
                                 variant="contained"
@@ -147,7 +164,8 @@ export function Dashboard() {
                                 Log Out
                             </Link>
                         </Button>
-                </ButtonGroup>
+                    </ButtonGroup>
+                )}
                 </Box>
         </Container>
     )

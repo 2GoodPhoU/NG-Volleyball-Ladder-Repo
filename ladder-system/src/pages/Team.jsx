@@ -17,7 +17,7 @@ export function Team() {
     const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
-        if (window.localStorage.getItem('user') === null)
+        if (window.localStorage.getItem('user') === 'guest')
             window.location.reload();
 
         getTeams();
@@ -28,9 +28,6 @@ export function Team() {
         .from('teams')
         .select()
         .eq('team_captain_id', user.user_id);
-
-        if (data === null)
-            setTeams([]);
 
         setTeams(data);
     }
