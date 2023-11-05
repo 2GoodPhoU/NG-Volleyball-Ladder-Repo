@@ -31,6 +31,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        window.localStorage.clear();
         getUsers();
     }, []);
 

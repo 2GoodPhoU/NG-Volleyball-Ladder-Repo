@@ -10,6 +10,8 @@ import ng_1 from "../images/ng_1.png";
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
 
+    const user = JSON.parse(window.localStorage.getItem('user'));
+
     useEffect(() => {
         getLadderTournaments();
     }, []);
@@ -48,7 +50,11 @@ export function Dashboard() {
                 <Typography component="h1" variant="h5">
                     Dashboard
                 </Typography>
-                <h1> Email: { JSON.parse(window.localStorage.getItem('user')).email } </h1>
+                { window.localStorage.getItem('user') === null ? (
+                    <h1> Guest Mode </h1>
+                ) : (
+                    <h1> Username: { user.username } </h1>
+                )}
                 <ButtonGroup size="medium">
                         <Button
                                 type="submit"

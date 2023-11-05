@@ -17,7 +17,7 @@ export function Team() {
     const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
-        if (typeof(user) === 'undefined')
+        if (window.localStorage.getItem('user') === null)
             window.location.reload();
 
         getTeams();
