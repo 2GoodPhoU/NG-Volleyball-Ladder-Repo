@@ -14,8 +14,8 @@ export function Settings() {
     const [newPassword, setNewPassword] = useState('');
 
     // Functionality
-    const [modeLabel, setModeLabel] = useState("General");
-    const [notifyMode, setNotifyMode] = useState(false); // Used to change to General or Notification states
+    const [modeLabel, setModeLabel] = useState("Profile");
+    const [notifyMode, setNotifyMode] = useState(false); // Used to change to Profile or Notification states
     const [checkedResults, setCheckedResults] = useState(true);
     const [checkboxes, setCheckboxes] = useState({
         checkedResults: true,
@@ -89,13 +89,13 @@ export function Settings() {
                 <Box noValidate align="center" sx={{ mt: 3}}>
                     <ButtonGroup size="large" fullWidth>
                     <Button
-                            name="General"
+                            name="Profile"
                             type="button"
 
 
                             onClick={handleNoteChange}
                         >
-                        General
+                        Profile
                     </Button>
 
                     <Button
@@ -146,7 +146,7 @@ export function Settings() {
 
 
                     <Grid container spacing={2}>
-                        {/*General Settings */}
+                        {/*Profile Settings */}
 
                         <Grid item xs={12}>
                             <TextField
