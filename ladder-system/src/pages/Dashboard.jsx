@@ -56,20 +56,31 @@ export function Dashboard() {
                 ) : (
                     <h1> Username: { user.username } </h1>
                 )}
-                <ButtonGroup size="medium">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                    >
-                        <Link to="/">
-                            Ladder Rules/Info
-                        </Link>
-                    </Button>
 
-                    { window.localStorage.getItem('user') === null ? (
-                        <div></div>
-                    ) : (
+                { window.localStorage.getItem('user') === null ? (
+                    <ButtonGroup size="medium">
+                       <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Ladder Rules/Info
+                            </Link>
+                        </Button>
+                    </ButtonGroup>
+                ) : (
+                    <ButtonGroup size="medium">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Ladder Rules/Info
+                            </Link>
+                        </Button>
+
                         <Button
                             type="submit"
                             variant="contained"
@@ -79,8 +90,18 @@ export function Dashboard() {
                                 Join a Ladder
                             </Link>
                         </Button>
-                    )}
-                </ButtonGroup>
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/Ladder">
+                                Create a Ladder
+                            </Link>
+                        </Button>
+                    </ButtonGroup>
+                )}
 
                 <Typography component="h3">
                     Ladder
