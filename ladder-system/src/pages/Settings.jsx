@@ -127,7 +127,16 @@ export function Settings() {
                         <FormControlLabel control={<Checkbox />} label="Results" />
                         <FormControlLabel control={<Checkbox />} label="Challenge" />
                         <FormControlLabel control={<Checkbox />} label="Messages" />
-                    </FormGroup>                
+                    </FormGroup>
+                    {/* Submit */}
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ mb: 2, mt: 5 }}
+                        fullWidth
+                        >
+                        Save Notification Setting
+                    </Button>
 
                 </>
                 
@@ -141,7 +150,7 @@ export function Settings() {
 
                         <Grid item xs={12}>
                             <TextField
-                                    value={newUsername}
+                                    
                                     
                                     id="username"
                                     label="Username"
@@ -150,11 +159,12 @@ export function Settings() {
                                     required
                                     fullWidth
                                 />
+                                {/* value={newUsername} */}
                                 {/* onChange={(e) => setNewUsername(e.target.value)*/}
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                    value={newFirstName}
+                                    
                                     
                                     autoComplete="given-name"
                                     name="firstName"
@@ -164,11 +174,12 @@ export function Settings() {
                                     fullWidth
                                     autoFocus
                                 />
+                                {/* value={newFirstName} */}
                                 {/* onChange={(e) => setNewFirstName(e.target.value)*/}
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                    value={newLastName}
+                                    
                                     
                                     autoComplete="family-name"
                                     id="lastName"
@@ -177,11 +188,12 @@ export function Settings() {
                                     required
                                     fullWidth
                                 />
+                                {/* value={newLastName} */}
                                 {/* onChange={(e) => setNewLastName(e.target.value)*/}
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                value={newEmail}
+                                
                                 
                                 id="email"
                                 label="Email Address"
@@ -190,11 +202,12 @@ export function Settings() {
                                 required
                                 fullWidth
                             />
+                            {/* value={newEmail} */}
                             {/*onChange={(e) => setNewEmail(e.target.value)} */}
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                value={newPassword}
+                                
                                 
                                 name="password"
                                 label="Password"
@@ -204,9 +217,19 @@ export function Settings() {
                                 required
                                 fullWidth
                             />
+                            {/* value={newPassword} */}
                             {/*onChange={(e) => setNewPassword(e.target.value)} */}
                         </Grid>
                     </Grid>
+                    {/* Submit */}
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ mb: 2, mt: 5 }}
+                        fullWidth
+                        >
+                        Save Changes
+                    </Button>
                     </>
                     ) }
                     
@@ -233,7 +256,6 @@ export function Settings() {
                         </Grid>
                     </Grid>
                 </Box>
-/
             </Box>
 
 
