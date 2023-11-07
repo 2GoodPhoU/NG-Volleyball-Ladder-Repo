@@ -8,10 +8,12 @@ import ng_1 from "../images/ng_1.png";
 
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
+        isAdmin();
         getLadderTournaments();
     }, []);
 
@@ -21,6 +23,21 @@ export function Dashboard() {
         .select();
         
         setLadderTournaments(data);
+    }
+
+    async function isAdmin(){
+        const { data } = await supabase
+            .from('admin')
+            .select()
+            
+
+        console.log(user.user_id)
+        console.log(data);
+
+        if (data.length === 0)
+            console.log("User is not an admin");
+        else
+            setIsUserAdmin(true);
     }
 
     async function insertLadder(ln, ts, atos, ui) {
@@ -112,7 +129,8 @@ export function Dashboard() {
                             </Link>
                         </Button>
 
-                        <Button
+                        { isUserAdmin ? (
+                            <Button
                             type="submit"
                             variant="contained"
                             sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
@@ -120,6 +138,7 @@ export function Dashboard() {
                         >
                             Create a Ladder
                         </Button>
+                        ) : (null)}
                     </ButtonGroup>
                 )}
 
@@ -129,13 +148,12 @@ export function Dashboard() {
 
                 <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                     <List>
-                        { window.localStorage.removeItem('tournament') }
                         { ladderTournaments.map((tournament, i) =>
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
                                 <ListItemButton
-                                    onClick={ () => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
+                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
                                     <Link to="/Ladder">
                                         <ListItemText>
                                             View
