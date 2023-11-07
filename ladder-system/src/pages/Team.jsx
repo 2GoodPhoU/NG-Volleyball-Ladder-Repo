@@ -1,20 +1,45 @@
-import { Link } from "react-router-dom";
-
+import * as React from 'react';
 import { useState, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
-import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton } from '@mui/material';
+import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, TextField, IconButton } from '@mui/material';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import InputAdornment from '@mui/material/InputAdornment';
+import PersonIcon from '@mui/icons-material/Person';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import ng_1 from "../images/ng_1.png";
 
 import { supabase } from "../supabaseClient";
+import PersonAddAlt1 from '@mui/icons-material/PersonAddAlt1';
 
 // export function Team( { user } ) {
 export function Team() {
     const [teams, setTeams] = useState([]);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
+
+    // Dialog State
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    // init Create Team values
+    const [team, setTeam] = useState('');
+    const [member, addMember] = useState('');
+    const [password, setPass] = useState('');
+
 
     useEffect(() => {
         if (window.localStorage.getItem('user') === null)
@@ -25,28 +50,41 @@ export function Team() {
 
     async function getTeams() {
         const { data } = await supabase
-        .from('teams')
-        .select()
-        .eq('team_captain_id', user.user_id);
+            .from('teams')
+            .select()
+            .eq('team_captain_id', user.user_id);
 
         setTeams(data);
     }
 
     async function insertTeam(tn, tci, atos, rm, pw) {
         const { data, error } = await supabase
-        .from('teams')
-        .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
-        .select();
+            .from('teams')
+            .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
+            .select();
 
         window.location.reload();
     }
 
+    /* handleSubmit (old)
     const handleSubmit = (e) => {
         e.preventDefault();
 
         console.log(`${user.user_id} ${user.username} created team`);
 
         insertTeam(`${user.username}'s TEAM`, user.user_id, true, false, 1234);
+    }
+    */
+
+    /* handleSubmit (new) */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        console.log({
+            team: "team",
+            member: "member",
+            password: "password",
+        });
     }
 
     return (
@@ -69,7 +107,7 @@ export function Team() {
                         maxWidth: { xs: 400, md: 400 },
                         paddingBottom: 2
                     }}
-                    src= {ng_1} 
+                    src={ng_1}
                     alt="Northrop Grumman logo"
                 />
 
@@ -79,15 +117,91 @@ export function Team() {
 
                 <ButtonGroup size="medium">
                     <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        type="submit"
+                        variant="contained"
+                        sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
                     >
                         <Link to="/">
                             Team Rules/Info
                         </Link>
                     </Button>
-                
+
+                    {/* Create a Team (new) */}
+                    <Button
+                        onClick={handleClickOpen}
+                        variant="contained"
+                        sx={{ width: '150%', mt: 3, mb: 2 }}
+                    >
+                        Create a Team
+                    </Button>
+                    <Dialog open={open} onClose={handleClose} onSubmit={handleSubmit}>
+                        <DialogTitle align="center">Create a Team</DialogTitle>
+                        <DialogContent>
+                            {/* Team */}
+                            <TextField
+                                value={team}
+                                onChange={(e) => setTeam(e.target.value)}
+                                label="Team Name"
+                                name='team'
+                                id="team"
+                                variant="outlined"
+                                margin="dense"
+                                fullWidth
+                                required
+                                autoFocus
+                            />
+
+                            {/* Add Member */}
+                            <TextField
+                                value={member}
+                                onChange={(e) => addMember(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <PersonIcon />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                label="Add Member"
+                                name='member'
+                                id="member"
+                                variant="standard"
+                                margin="dense"
+                                sx={{ width: "75%" }}
+                                required
+                            />
+                            <Button sx={{ width: "12%", marginTop: 2, float: "right", }}>
+                                <PersonAddAlt1/>
+                            </Button>
+
+
+                            {/* Password */}
+                            <TextField
+                                value={password}
+                                onChange={(e) => setPass(e.target.value)}
+                                label="Password"
+                                name="password"
+                                id="password"
+                                variant="outlined"
+                                margin="dense"
+                                fullWidth
+                                required
+                            />
+
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button
+                                type="submit"
+                                onClick={handleClose}>
+                            Create Team
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+
+
+                    {/* Create a Team (Old)
                     <Button
                             type="submit"
                             variant="contained"
@@ -95,27 +209,26 @@ export function Team() {
                             onClick={handleSubmit}
                     >
                         Create a Team
-                        {/* <Link to="/Ladder">
-                            Create a Team
-                        </Link> */}
                     </Button>
+                    */}
+
                 </ButtonGroup>
 
                 <Typography component="h3">
                     Team
                 </Typography>
 
-                <h1> Username: { user.username }</h1>
+                <h1> Username: {user.username}</h1>
 
-                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                    { teams.length === 0 ? (
+                <Paper style={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
+                    {teams.length === 0 ? (
                         <h1>NOTHING HERE</h1>
                     ) : (
                         <List>
                             {teams.map((team, i) =>
-                                <ListItem key={ i }>
-                                    <ListItemText> { team.team_name }</ListItemText>
-                                    <ListItemText> { team.team_wins } . { team.team_losses } </ListItemText>
+                                <ListItem key={i}>
+                                    <ListItemText> {team.team_name}</ListItemText>
+                                    <ListItemText> {team.team_wins} . {team.team_losses} </ListItemText>
                                     <ListItemButton selected={false}>
                                         <Link to="/Team">
                                             <ListItemText>
