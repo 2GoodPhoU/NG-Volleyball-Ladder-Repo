@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 
-import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, TextField, IconButton } from '@mui/material';
+import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, TextField } from '@mui/material';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,7 +13,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import InputAdornment from '@mui/material/InputAdornment';
 import PersonIcon from '@mui/icons-material/Person';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import ng_1 from "../images/ng_1.png";
 
@@ -35,10 +34,15 @@ export function Team() {
         setOpen(false);
     };
 
-    // init Create Team values
+    
+    // init Create a Team values
     const [team, setTeam] = useState('');
     const [member, addMember] = useState('');
+    const [members, setMembers] = useState([]);
     const [password, setPass] = useState('');
+
+    // Check if Form is Filled
+    const formValid = (team != "") && (password != "");
 
 
     useEffect(() => {
@@ -81,10 +85,32 @@ export function Team() {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         console.log({
-            team: "team",
-            member: "member",
-            password: "password",
+            team: data.get("team"),
+            members: data.get("members"),
+            password: data.get("password"),
         });
+        // Reset Fields
+        resetForm();
+    }
+
+    // Reset Form
+    const resetForm = () => {
+        setTeam("");
+        addMember("");
+        setMembers([]);
+        setPass("");
+    }
+
+    // Add Member
+    const addUser = (e) => {
+        e.preventDefault();
+        
+        // Add User to Members array
+        
+        console.log("user added");
+
+        // Reset Member Field onClick
+        //addMember("");
     }
 
     return (
@@ -134,7 +160,7 @@ export function Team() {
                     >
                         Create a Team
                     </Button>
-                    <Dialog open={open} onClose={handleClose} onSubmit={handleSubmit}>
+                    <Dialog component="form" open={open} onClose={() => { handleClose(); resetForm();}} onSubmit={handleSubmit}>
                         <DialogTitle align="center">Create a Team</DialogTitle>
                         <DialogContent>
                             {/* Team */}
@@ -151,10 +177,10 @@ export function Team() {
                                 autoFocus
                             />
 
-                            {/* Add Member */}
+                            {/* Add Members */}
                             <TextField
-                                value={member}
-                                onChange={(e) => addMember(e.target.value)}
+                                value={members}
+                                onChange={(e) => setMembers(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -168,10 +194,14 @@ export function Team() {
                                 variant="standard"
                                 margin="dense"
                                 sx={{ width: "75%" }}
-                                required
                             />
-                            <Button sx={{ width: "12%", marginTop: 2, float: "right", }}>
-                                <PersonAddAlt1/>
+                            {/* Add Member */}
+                            <Button
+                                sx={{ width: "12%", marginTop: 2, float: "right", }}
+                                value={member}
+                                onChange={(e) => addMember(e.target.value)}
+                                onClick={addUser}>
+                                <PersonAddAlt1 />
                             </Button>
 
 
@@ -179,7 +209,7 @@ export function Team() {
                             <TextField
                                 value={password}
                                 onChange={(e) => setPass(e.target.value)}
-                                label="Password"
+                                label="Team Password"
                                 name="password"
                                 id="password"
                                 variant="outlined"
@@ -190,15 +220,16 @@ export function Team() {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button onClick={() => { handleClose(); resetForm();}}>Cancel</Button>
+
                             <Button
                                 type="submit"
+                                disabled={!formValid}
                                 onClick={handleClose}>
-                            Create Team
+                                Create Team
                             </Button>
                         </DialogActions>
                     </Dialog>
-
 
 
                     {/* Create a Team (Old)
