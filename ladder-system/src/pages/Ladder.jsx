@@ -176,7 +176,7 @@ export function Ladder() {
         var winner_id = 0;
         var winner_team_name = 0;
 
-        if(challenger_score > opponent_score){
+        if(+challenger_score > +opponent_score){
             winner_id = challenger_id;
             winner_team_name = challenger_team_name;
         }
@@ -382,34 +382,26 @@ export function Ladder() {
                     <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                         <List>
                             <ListItem>
-                                <ListItemText>
-                                    {challenger_team_name}
-                                </ListItemText>
                                 <TextField
+                                    //sx= {{marginLeft: 2}}
                                     value={challenger_score}
                                     onChange={(e) => setChallengerScore(e.target.value)}
-                                    label="challenger_score"
+                                    label={challenger_team_name + ' score'}
                                     id="challenger_score"
                                     name="challenger_score"
-                                    autoComplete="challenger_score"
-                                    margin="challenger_score"
                                     autoFocus
                                     required
                                     fullWidth
                                 />
                             </ListItem>
                             <ListItem>
-                                <ListItemText>
-                                    {opponent_team_name}
-                                </ListItemText>
                                 <TextField
+                                    // sx= {{marginLeft: 2}}
                                     value={opponent_score}
                                     onChange={(e) => setOpponentScore(e.target.value)}
-                                    label="opponent_score"
+                                    label={opponent_team_name + ' score'}
                                     id="opponent_score"
                                     name="opponent_score"
-                                    autoComplete="opponent_score"
-                                    margin="opponent_score"
                                     autoFocus
                                     required
                                     fullWidth
