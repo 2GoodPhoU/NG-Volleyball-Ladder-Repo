@@ -19,6 +19,9 @@ import ng_1 from "../images/ng_1.png";
 import { supabase } from "../supabaseClient";
 import PersonAddAlt1 from '@mui/icons-material/PersonAddAlt1';
 
+// Increment Members Array
+let nextId = 0;
+
 // export function Team( { user } ) {
 export function Team() {
     const [teams, setTeams] = useState([]);
@@ -86,7 +89,7 @@ export function Team() {
         const data = new FormData(e.currentTarget);
         console.log({
             team: data.get("team"),
-            members: data.get("members"),
+            members,
             password: data.get("password"),
         });
         // Reset Fields
@@ -99,18 +102,25 @@ export function Team() {
         addMember("");
         setMembers([]);
         setPass("");
+        nextId = 0;
     }
 
-    // Add Member
-    const addUser = (e) => {
+    // Add Member to Members
+    function addToTeam(e) {
         e.preventDefault();
-        
-        // Add User to Members array
-        
-        console.log("user added");
 
-        // Reset Member Field onClick
-        //addMember("");
+        // Add Member to Array
+        setMembers([
+            ...members,
+            { id: nextId++, member: member }
+        ]);
+
+        // Testing (WARNING: FIRST ADD IS EMPTY)
+        console.log(members);
+
+        // Reset Member Form Field (FIX)
+        document.getElementById("member").value = "";
+        addMember("");
     }
 
     return (
@@ -161,7 +171,7 @@ export function Team() {
                         Create a Team
                     </Button>
                     <Dialog component="form" open={open} onClose={() => { handleClose(); resetForm();}} onSubmit={handleSubmit}>
-                        <DialogTitle align="center">Create a Team</DialogTitle>
+                        <DialogTitle variant="h4" align="center">Create a Team</DialogTitle>
                         <DialogContent>
                             {/* Team */}
                             <TextField
@@ -177,10 +187,10 @@ export function Team() {
                                 autoFocus
                             />
 
-                            {/* Add Members */}
+                            {/* Add Member */}
                             <TextField
-                                value={members}
-                                onChange={(e) => setMembers(e.target.value)}
+                                value={member}
+                                onChange={(e) => addMember(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -194,13 +204,12 @@ export function Team() {
                                 variant="standard"
                                 margin="dense"
                                 sx={{ width: "75%" }}
+                                
                             />
-                            {/* Add Member */}
+                            {/* Member Array */}
                             <Button
                                 sx={{ width: "12%", marginTop: 2, float: "right", }}
-                                value={member}
-                                onChange={(e) => addMember(e.target.value)}
-                                onClick={addUser}>
+                                onClick={ addToTeam }>
                                 <PersonAddAlt1 />
                             </Button>
 
