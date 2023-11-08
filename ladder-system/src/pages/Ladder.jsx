@@ -1,7 +1,7 @@
 // import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, Link }from '@mui/material';
+import { CssBaseline, Box, Typography, Container, TextField, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, Link }from '@mui/material';
 
 import ng_1 from "../images/ng_1.png";
 
@@ -11,122 +11,205 @@ export function Ladder() {
     const thisLadder = JSON.parse(window.localStorage.getItem('tournament'));
 
     const [teamMap, setTeamMap] = useState('');
+    const [ongoingMatchMap, setOngoingMatchMap] = useState('');
     const [matchMap, setMatchMap] = useState('');
-    const [userTeamData, setUserTeamData] = useState();
+    const [userTeamCaptainData, setUserTeamCaptainData] = useState();
 
-    const matchMap2 = [
-        { id: 'Challenger Id' , name: 'Challenger Team Name', score: 'Challenger Score' },
-        { id: 'Opponent Id' , name: 'Opponent Team Name', score: 'Opponent Score'},
-    ];
+    const [challenger_id, setChallengerId] = useState();
+    const [challenger_score, setChallengerScore] = useState();
+    const [challenger_team_name, setChallengerTeamName] = useState('');
 
+    const [opponent_id, setOpponentId] = useState();
+    const [opponent_score, setOpponentScore] = useState();
+    const [opponent_team_name, setOpponentTeamName] = useState('');
+    
+    const [completed, setCompleted] = useState('');
 
-    const [challengerTeamId, setChallengerTeamId] = useState('');
-    const [opponentTeamId, setOpponentTeamId] = useState('');
-    const [challengerName, setChallengerName] = useState('');
-    const [opponentName, setOpponentName] = useState('');
-    const [challengerScore, setChallengerScore] = useState('');
-    const [opponentScore, setOpponentScore] = useState('');
-
-    const [formError, setFormError] = useState('');
     const [isUserTeamCaptain, setIsUserTeamCaptain] = useState(false);
     const [isUserLadderModerator, setIsUserLadderModerator] = useState(false);
 
 
     const [isShowMatechesToggled, setIsShowMatchesToggled] = useState(false);
-    const [isUpdateButtonToggled, setIsUpdateButtonToggled] = useState(false);
+    const [showUpdateSection, setShowUpateSection] = useState(false);
 
     useEffect(() => {
-        isLadderModerator();
         isTeamCaptain();
+        isLadderModerator();
         getMatches();
         getTeamMap();
-        getUserTeamData();
+        //getAllLadderInfo();
     }, []);
 
+    // async function getAllLadderInfo() {
+    //     const { data } = await supabase
+    //         .from('ladder_tournaments')
+    //         .select('ladder_id, ladder_name, ladder_moderators(user_id), ladder_teams(wins, teams(team_id, team_name, team_captain_id))')
+    //         .eq('ladder_id', thisLadder.ladder_id);
+
+    //     console.log('Ladder Info');
+    //     console.log(data);
+
+    //     // Check if user is a ladder moderator
+    //     for(var index = 0; index < data[0].ladder_moderators.length; index++){
+    //         if(data[0].ladder_moderators[index].user_id === thisUser.user_id){
+    //             setIsUserLadderModerator(true);
+    //         }
+    //     }
+
+    //     // Check if user is a team captain
+    //     for(var index = 0; index < data[0].ladder_teams.length; index++){
+    //         if(data[0].ladder_teams[index].teams.team_captain_id === thisUser.user_id){
+    //             setIsUserTeamCaptain(true);
+    //             setUserCaptainTeamData(data[0].ladder_teams[index].teams);
+    //             console.log(data[0].ladder_teams[index].teams);
+    //             break;
+    //         }
+    //     }
+        
+    // }
+
     async function isLadderModerator() {
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('ladder_moderators')
             .select('user_id')
             .eq('user_id', thisUser.user_id);
 
-        if (data.length === 0)
-            console.log('User is not a ladder moderator');
-        else
+        if (data.length !== 0){
             setIsUserLadderModerator(true);
+            console.log('User is a ladder moderator');
+        }
+        else
+            console.log('User is not a ladder moderator');
     }
 
-    async function isTeamCaptain() { 
-        const { data, error } = await supabase
-            .from('teams')
-            .select('team_captain_id')
-            .eq('team_captain_id', thisUser.user_id);
+    async function isTeamCaptain() {
+        const { data } = await supabase
+            .from('ladder_teams')
+            .select('wins, teams(team_captain_id)')
+            .eq('ladder_id', thisLadder.ladder_id)
+            .eq('teams.team_captain_id', thisUser.user_id);
 
-        if (data.length === 0)
-            console.log('User is not a team captain in this ladder');
-        else 
-            setIsUserTeamCaptain(true);
-    }
+        console.log('Team Captain Id');
+        console.log(data);
+        setUserTeamCaptainData(data[0]);
 
-    async function getUserTeamData() {
-        const{data, error} = await supabase
-            .from('teams')
-            .select('team_id, team_captain_id, team_name')
-            .eq('team_captain_id', thisUser.user_id);
-
-        setUserTeamData(data);
+        setIsUserTeamCaptain(true);
+        console.log('User Team Captain Data');
+        console.log(userTeamCaptainData);
     }
 
     async function getTeamMap() {
         const { data } = await supabase
             .from('ladder_teams')
-            .select('ladder_id, teams(team_id, team_name)');
+            .select('ladder_id, wins, teams(team_id, team_captain_id, team_name)')
+            .eq('ladder_id', thisLadder.ladder_id)
+            .order('wins', { ascending: false });
+
         
         setTeamMap(data);
+        // console.log('Team Map');
+        // console.log(teamMap);
     }
 
-    // Create a match
-    // attempted to make something like this
-    // SELECT m.ladder_id, m.challenger_id, c.teams.team_name AS "challenger_name", m.challenger_score, o.teams.teams.team_name AS "opponent_name", m.opponent_score
-    // FROM match_history m, teams c , teams o
-    // WHERE m.challenger_id = c.teams.team_id
-    //   AND m.opponent_id = o.teams.team_id;
     async function getMatches() {
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('match_history')
-            .select('ladder_id, challenger_id, opponent_id, challenger_score, opponent_score')
-            .eq('ladder_id', thisLadder.ladder_id);
+            .select('challenger_id, opponent_id, challenger_score, opponent_score, completed, challenger_team:challenger_id(team_name), opponent_team:opponent_id(team_name)')
+            .eq('ladder_id', thisLadder.ladder_id)
+            .order('match_created_at', { ascending: false });
 
-        console.log('Match History');
-        console.log(data);
         setMatchMap(data);
+        // console.log('Match History');
+        // console.log(matchMap);
+
+        setOngoingMatchMap(data.filter(match => match.completed === false));
+        // console.log('Ongoing Match History');
+        // console.log(ongoingMatchMap);
     }
 
     const handleCreateMatch = async (e) => {
-        console.log('User Captain Team Id: ' + userTeamData[0].team_id);
+        console.log('User Captain Team Id: ' + userTeamCaptainData.teams.team_id);
         console.log(e);
         console.log(e.i);
         console.log(thisLadder.ladder_id);;
         console.log(teamMap[e.i].teams.team_id);
 
-        const{data, error} = await supabase
+        const{error} = await supabase
             .from('match_history')
             .insert({ 
                 ladder_id: thisLadder.ladder_id,
-                challenger_id: userTeamData[0].team_id, 
+                challenger_id: userTeamCaptainData.teams.team_id, 
                 opponent_id: teamMap[e.i].teams.team_id
-            })
-            .select();
-
-    
+            });
+            
         if(error) {
             console.log(error);
-            setFormError('Match not created');
         }
+    };
+
+    // Update a match score
+    const handleUpdateMatchScore = async (e) => {
+        console.log('After');
+        console.log(challenger_id);
+        console.log(challenger_score);
+        console.log(challenger_team_name);
+        console.log(opponent_id);
+        console.log(opponent_score);
+        console.log(opponent_team_name);
+        console.log(completed);
+
+
+        const{ data } = await supabase
+            .from('match_history')
+            .update({challenger_score: challenger_score, opponent_score: opponent_score, completed: 'true'})
+            .eq('ladder_id', thisLadder.ladder_id)
+            .eq('challenger_id', challenger_id)
+            .eq('opponent_id', opponent_id)
+            .select();
+        
+        // data[0].challenger_team = {team_name: challenger_team_name};
+        // data[0].opponent_team = {team_name: opponent_team_name};
+
+        console.log(data);
+        
+
+        var winner_id = 0;
+        var winner_team_name = 0;
+
+        if(challenger_score > opponent_score){
+            winner_id = challenger_id;
+            winner_team_name = challenger_team_name;
+        }
+        else{
+            winner_id = opponent_id;
+            winner_team_name = opponent_team_name;
+        }
+
+        console.log('Winner Id: ' + winner_id);
+        console.log('Winner Team Name ' + winner_team_name);
+
+
+        for(var index = 0; index < teamMap.length; index++){
+            if(teamMap[index].teams.team_id === winner_id){
+                console.log(teamMap[index].wins);
+                console.log(teamMap[index].teams.team_id);
+                console.log(teamMap[index].teams.team_name);
+                break;
+            }
+        }
+
+        const{ error } = await supabase
+            .from('ladder_teams')
+            .update({wins: teamMap[index].wins + 1})
+            .eq('ladder_id', thisLadder.ladder_id)
+            .eq('team_id', winner_id);
+
+        if(error) {
+            console.log(error);
+        }
+
+        setShowUpateSection(!showUpdateSection);
     
-        if(data) {
-            console.log(data);
-            setFormError('Match created');
-        }
     };
 
     const handleShowMatches = async (e) => {
@@ -134,40 +217,32 @@ export function Ladder() {
         setIsShowMatchesToggled(!isShowMatechesToggled);
     }
 
-    const handleUpateButton = async (e) => {
-        setIsUpdateButtonToggled(!isUpdateButtonToggled);
+    const setShowUpdateSection = async (e) => {
+        setShowUpateSection(!showUpdateSection);
 
-        // Update matchMap2
-        matchMap2[0].id = matchMap[e.i].challenger_id;
-        matchMap2[0].score = matchMap[e.i].challenger_score;
-        console.log(matchMap2[0].id);
-        console.log(matchMap2[0].score);
-        matchMap2[1].id = matchMap[e.i].opponent_id;
-        matchMap2[1].score = matchMap[e.i].opponent_score;
-        console.log(matchMap2[1].id);
-        console.log(matchMap2[1].score);
+        console.log('Before');
+        console.log(e);
+        console.log(e.i);
+        console.log(matchMap);
+        console.log(matchMap[e.i]);
+        console.log(matchMap[e.i].challenger_id);
+        console.log(matchMap[e.i].challenger_score);
+        console.log(matchMap[e.i].challenger_team.team_name);
+        console.log(matchMap[e.i].opponent_id);
+        console.log(matchMap[e.i].opponent_score);
+        console.log(matchMap[e.i].challenger_score);
+        console.log(matchMap[e.i].completed);
 
-        // const { data, error } = await supabase
-        //     .from('teams')
-        //     .select('team_id, team_name')
-        //     .or(`team_id.eq.${matchMap2[0].id},team_id.eq.${matchMap2[1].id}`);
-        // console.log(data);
-        console.log(teamMap);
+        setChallengerId(parseInt(matchMap[e.i].challenger_id));
+        setChallengerTeamName(matchMap[e.i].challenger_team.team_name);
+        setChallengerScore(parseInt(matchMap[e.i].challenger_score));
 
-        for(var teamMapIndex = 0; teamMapIndex < teamMap.length; teamMapIndex++){
-            for(var matchMap2Index = 0; matchMap2Index < matchMap2.length; matchMap2Index++){
-                if(teamMap[teamMapIndex].teams.team_id === matchMap2[matchMap2Index].id){
-                    matchMap2[matchMap2Index].name = teamMap[teamMapIndex].teams.team_name;
-                    break;
-                }
-            }   
-        }
+        setOpponentId(parseInt(matchMap[e.i].opponent_id));
+        setOpponentTeamName(matchMap[e.i].opponent_team.team_name);
+        setOpponentScore(parseInt(matchMap[e.i].opponent_score));
 
-        console.log(matchMap2[0].name);
-        console.log(matchMap2[1].name);
-        console.log(matchMap2);
+        setCompleted(matchMap[e.i].completed);
 
-        
     }
 
     // // Delete a match
@@ -194,33 +269,6 @@ export function Ladder() {
     //     if(data) {
     //         console.log(data);
     //         setFormError('Match deleted');
-    //     }
-    // };
-
-    // // Update a match score
-    // const handleUpdateMatchScore = async (e) => {
-    //     e.preventDefault();
-    
-    //     if(!challengerTeamId || !opponentTeamId) {
-    //         setFormError('Missing Credentials');
-    //         return;
-    //     }
-    
-    //     const{data, error} = await supabase
-    //         .from('match_history')
-    //         .update({challenger_score: challengerScore, opponent_score: opponentScore})
-    //         .eq('ladder_id', ladderId)
-    //         .eq('challenger_id', challengerTeamId)
-    //         .eq('opponent_id', opponentTeamId);
-    
-    //     if(error) {
-    //         console.log(error);
-    //         setFormError('Match not updated');
-    //     }
-    
-    //     if(data) {
-    //         console.log(data);
-    //         setFormError('Match updated');
     //     }
     // };
 
@@ -267,14 +315,17 @@ export function Ladder() {
                     <List>
                         { teamMap && teamMap.map((team, i) =>
                             <ListItem key={i}>
-                                <ListItemText> {i + 1} </ListItemText>
+                                {/* display team wins */}
+                                <ListItemText> {team.wins}</ListItemText>
                                 <ListItemButton
                                     onClick={() => window.localStorage.setItem('team', JSON.stringify(team)) }>
                                     <ListItemText> 
                                         {team.teams.team_name} 
                                     </ListItemText>
                                 </ListItemButton>
-                                { isUserTeamCaptain ? (
+                                { isUserTeamCaptain &&
+                                    thisUser.user_id !== team.teams.team_captain_id &&
+                                    userTeamCaptainData.wins < team.wins ? (
                                     <ListItemButton
                                     onClick = {() => handleCreateMatch({i})}>
                                     <ListItemText>
@@ -301,12 +352,12 @@ export function Ladder() {
                 </ButtonGroup>
 
                 { isShowMatechesToggled ? (
-                        <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                    <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
                         {matchMap.length !== 0 ? (
                             <List>
                                 { matchMap && matchMap.map((match, i) =>
                                     <ListItem key={i}>
-                                        <ListItemText> {i + 1} </ListItemText>
+                                        <ListItemText> {match.challenger_team.team_name} vs { match.opponent_team.team_name}</ListItemText>
                                         <ListItemButton>
                                             <ListItemText>
                                                 {match.challenger_score} - {match.opponent_score}
@@ -314,7 +365,7 @@ export function Ladder() {
                                         </ListItemButton>
                                         { isUserLadderModerator ? (
                                             <ListItemButton
-                                                onClick = {() => handleUpateButton({i})}>
+                                                onClick = {() => setShowUpdateSection({i})}>
                                                 <ListItemText>
                                                     Update
                                                 </ListItemText>
@@ -327,8 +378,55 @@ export function Ladder() {
                     </Paper>
                     ) : (null)}
 
-                { isUpdateButtonToggled ? (
-                    null
+                { showUpdateSection ? (
+                    <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                        <List>
+                            <ListItem>
+                                <ListItemText>
+                                    {challenger_team_name}
+                                </ListItemText>
+                                <TextField
+                                    value={challenger_score}
+                                    onChange={(e) => setChallengerScore(e.target.value)}
+                                    label="challenger_score"
+                                    id="challenger_score"
+                                    name="challenger_score"
+                                    autoComplete="challenger_score"
+                                    margin="challenger_score"
+                                    autoFocus
+                                    required
+                                    fullWidth
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText>
+                                    {opponent_team_name}
+                                </ListItemText>
+                                <TextField
+                                    value={opponent_score}
+                                    onChange={(e) => setOpponentScore(e.target.value)}
+                                    label="opponent_score"
+                                    id="opponent_score"
+                                    name="opponent_score"
+                                    autoComplete="opponent_score"
+                                    margin="opponent_score"
+                                    autoFocus
+                                    required
+                                    fullWidth
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                                    onClick = {handleUpdateMatchScore}
+                                    >
+                                    Update
+                                </Button>
+                            </ListItem>
+                        </List>
+                    </Paper>
                     ) : (null) }
                 </Box>
         </Container>
