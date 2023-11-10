@@ -8,10 +8,12 @@ import ng_1 from "../images/ng_1.png";
 
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
+        isAdmin();
         getLadderTournaments();
     }, []);
 
@@ -21,6 +23,42 @@ export function Dashboard() {
         .select();
         
         setLadderTournaments(data);
+    }
+
+    async function isAdmin(){
+        const { data } = await supabase
+            .from('admin')
+            .select()
+            
+
+        console.log(user.user_id)
+        console.log(data);
+
+        if (data.length === 0)
+            console.log("User is not an admin");
+        else
+            setIsUserAdmin(true);
+    }
+
+    async function insertLadder(ln, ts, atos, ui) {
+        const { data: ladder_tournaments_data, error: ladder_tournaments_error } = await supabase
+        .from('ladder_tournaments')
+        .insert({ ladder_name: ln, agreed_ToS: atos, team_size: ts, ladder_size: ts })
+        .select();
+
+        const { data: ladder_moderators_data, error: ladder_moderators_error } = await supabase
+        .from('ladder_moderators')
+        .insert({ ladder_id: ladder_tournaments_data[0].ladder_id, user_id: user.user_id });
+
+        window.location.reload();
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(`${user.user_id} ${user.username} created ladder`);
+
+        insertLadder(`${user.username}'s ladder`, 2, true, user.user_id);
     }
 
     return (
@@ -56,20 +94,31 @@ export function Dashboard() {
                 ) : (
                     <h1> Username: { user.username } </h1>
                 )}
-                <ButtonGroup size="medium">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                    >
-                        <Link to="/">
-                            Ladder Rules/Info
-                        </Link>
-                    </Button>
 
-                    { window.localStorage.getItem('user') === null ? (
-                        <div></div>
-                    ) : (
+                { window.localStorage.getItem('user') === null ? (
+                    <ButtonGroup size="medium">
+                       <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Ladder Rules/Info
+                            </Link>
+                        </Button>
+                    </ButtonGroup>
+                ) : (
+                    <ButtonGroup size="medium">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                        >
+                            <Link to="/">
+                                Ladder Rules/Info
+                            </Link>
+                        </Button>
+
                         <Button
                             type="submit"
                             variant="contained"
@@ -79,8 +128,19 @@ export function Dashboard() {
                                 Join a Ladder
                             </Link>
                         </Button>
-                    )}
-                </ButtonGroup>
+
+                        { isUserAdmin ? (
+                            <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
+                            onClick={handleSubmit}
+                        >
+                            Create a Ladder
+                        </Button>
+                        ) : (null)}
+                    </ButtonGroup>
+                )}
 
                 <Typography component="h3">
                     Ladder
@@ -92,7 +152,8 @@ export function Dashboard() {
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
-                                <ListItemButton selected={false}>
+                                <ListItemButton
+                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
                                     <Link to="/Ladder">
                                         <ListItemText>
                                             View
