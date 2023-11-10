@@ -122,7 +122,7 @@ export function Ladder() {
         // console.log('Match History');
         // console.log(matchMap);
 
-        setOngoingMatchMap(data.filter(match => match.completed === false));
+        // setOngoingMatchMap(data.filter(match => match.completed === false));
         // console.log('Ongoing Match History');
         // console.log(ongoingMatchMap);
     }
