@@ -105,7 +105,7 @@ export function Ladder() {
 
 		const { data, error } = await supabase
 			.from("ladder_teams")
-			.select("ladder_id, wins, teams!inner(team_captain_id)")
+			.select("ladder_id, wins, teams!inner(team_id, team_captain_id)")
 			.eq("ladder_id", thisLadder.ladder_id)
 			.eq("teams.team_captain_id", thisUser.user_id);
 
@@ -115,6 +115,8 @@ export function Ladder() {
 			console.log("User is a team captain");
 			console.log(data);
 			setUserTeamCaptainData(data[0]);
+            console.log(data[0]);
+            console.log(userTeamCaptainData);
 			setIsUserTeamCaptain(true);
 		}
 	}
@@ -163,6 +165,7 @@ export function Ladder() {
 		console.log(e);
 		console.log(e.i);
 		console.log(thisLadder.ladder_id);
+        console.log(userTeamCaptainData.teams.team_id);
 		console.log(teamMap[e.i].teams.team_id);
 
 		const { error } = await supabase.from("match_history").insert({
