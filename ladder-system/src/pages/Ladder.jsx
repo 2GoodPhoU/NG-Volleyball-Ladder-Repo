@@ -69,6 +69,11 @@ export function Ladder() {
     // }
 
     async function isLadderModerator() {
+        if (thisUser === null){
+            console.log('User is not logged in');
+            return;
+        }
+
         const { data } = await supabase
             .from('ladder_moderators')
             .select('user_id')
@@ -83,13 +88,19 @@ export function Ladder() {
     }
 
     async function isTeamCaptain() {
+        if (thisUser === null){
+            console.log('User is not logged in');
+            return;
+        }
+
         const { data } = await supabase
             .from('ladder_teams')
-            .select('wins, teams(team_captain_id)')
+            .select('ladder_id, wins, teams!inner(team_captain_id)')
             .eq('ladder_id', thisLadder.ladder_id)
             .eq('teams.team_captain_id', thisUser.user_id);
 
         console.log('Team Captain Id');
+        console.log(thisUser.user_id);
         console.log(data);
         setUserTeamCaptainData(data[0]);
 
@@ -99,26 +110,36 @@ export function Ladder() {
     }
 
     async function getTeamMap() {
-        const { data } = await supabase
+        const { data , error } = await supabase
             .from('ladder_teams')
             .select('ladder_id, wins, teams(team_id, team_captain_id, team_name)')
             .eq('ladder_id', thisLadder.ladder_id)
             .order('wins', { ascending: false });
 
-        
-        setTeamMap(data);
+        if(error) 
+            console.log(error);
+
+        if( data )
+            setTeamMap(data);
         // console.log('Team Map');
         // console.log(teamMap);
     }
 
     async function getMatches() {
-        const { data } = await supabase
+        const { data, error } = await supabase
             .from('match_history')
             .select('challenger_id, opponent_id, challenger_score, opponent_score, completed, challenger_team:challenger_id(team_name), opponent_team:opponent_id(team_name)')
             .eq('ladder_id', thisLadder.ladder_id)
-            .order('match_created_at', { ascending: false });
+            .order('created_at', { ascending: false });
 
-        setMatchMap(data);
+        if(error) 
+            console.log(error);
+        
+        if( data ){
+            setMatchMap(data);
+            console.log('Match History');
+        }
+        
         // console.log('Match History');
         // console.log(matchMap);
 

@@ -26,24 +26,38 @@ export function Dashboard() {
     }
 
     async function isAdmin(){
-        const { data } = await supabase
+        if (user === null){
+            console.log("User is not logged in");
+            return;
+        }
+
+        const { data , error } = await supabase
             .from('admin')
             .select()
+            .eq('admin_user_id', user.user_id)
+            .eq('still_admin', true);
             
-
-        console.log(user.user_id)
         console.log(data);
+        console.log(user.user_id);
 
-        if (data.length === 0)
+        if( error )
+            console.log(error);
+        else if( data === null || data.length === 0 )
             console.log("User is not an admin");
-        else
+        else{
             setIsUserAdmin(true);
+            console.log("User is an admin");
+        } 
     }
 
     async function insertLadder(ln, ts, atos, ui) {
+
+        if( !isAdmin )
+            return;
+        
         const { data: ladder_tournaments_data, error: ladder_tournaments_error } = await supabase
         .from('ladder_tournaments')
-        .insert({ ladder_name: ln, agreed_ToS: atos, team_size: ts, ladder_size: ts })
+        .insert({ ladder_name: ln, agreed_ToS: atos, team_size: ts})
         .select();
 
         const { data: ladder_moderators_data, error: ladder_moderators_error } = await supabase
@@ -151,7 +165,7 @@ export function Dashboard() {
                         { ladderTournaments.map((tournament, i) =>
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
-                                <ListItemText> {tournament.ladder_size} vs {tournament.ladder_size} </ListItemText>
+                                <ListItemText> {tournament.team_size} vs {tournament.team_size} </ListItemText>
                                 <ListItemButton
                                     onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
                                     <Link to="/Ladder">
