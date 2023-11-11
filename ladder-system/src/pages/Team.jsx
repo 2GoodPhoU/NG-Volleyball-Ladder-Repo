@@ -76,16 +76,25 @@ export function Team() {
             .select()
             .eq('team_captain_id', user.user_id);
 
-        setTeams(data);
+        setTeams(data || []);
     }
 
     async function insertTeam(tn, tci, atos, rm, pw) {
-        const { data, error } = await supabase
-            .from('teams')
-            .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
-            .select();
-
-        window.location.reload();
+        try {
+            const { data, error } = await supabase
+                .from('teams')
+                .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
+                .select();
+    
+            if (error) {
+                console.error('Error inserting team:', error);
+            } else {
+                // Update state to include the new team
+                setTeams((prevTeams) => [...prevTeams, data[0]]);
+            }
+        } catch (error) {
+            console.error('Error inserting team:', error);
+        }
     }
 
     /* handleSubmit (old)
@@ -101,15 +110,20 @@ export function Team() {
     /* handleSubmit (new) */
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget);
+    
         console.log({
-            team: data.get("team"),
+            team,
             members,
-            password: data.get("password"),
+            password,
         });
+
+        
+    
+        // Insert team logic here
+    
         // Reset Fields
         resetForm();
-    }
+    };
 
     // Reset Form
     const resetForm = () => {
@@ -119,6 +133,9 @@ export function Team() {
         setPass("");
         nextId = 0;
     }
+
+
+
 
     // Add Member to Members
     function addToTeam(e) {
