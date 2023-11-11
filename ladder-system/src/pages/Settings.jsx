@@ -48,7 +48,7 @@ export function Settings() {
         setNotifyMode(mode === "Notification");
     }
 
-    const handledCheckChange = (name) => (event) => {
+    const handledAccessChange = (name) => (event) => {
         console.log(name, event.target.checked);
         setCheckboxes({...checkboxes, [name]: event.target.checked})
     }
@@ -105,6 +105,14 @@ export function Settings() {
 
                             onClick={handleNoteChange}
                     >Notificaiton
+                    </Button>
+                    <Button
+                            name="Accessibility"
+                            type="button"
+
+
+                            onClick={handleNoteChange}
+                    >Accessibility
                     </Button>
                     </ButtonGroup>
                 </Box>
