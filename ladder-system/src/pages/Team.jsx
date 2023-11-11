@@ -86,34 +86,6 @@ export function Team() {
 	// var [exists, setExists] = useState(false);
 	var [addTeammateClicked, setAddTeammateClicked] = useState(false);
 
-	// useEffect(() => {
-	//     let isSubscribed = true;
-
-	// 	const idExists = async (un) => {
-	// 		const { data } = await supabase.from("users").select().eq("username", un);
-
-	// 		setId(data);
-
-	// 		console.log(data);
-
-	// 		setAddTeammateClicked(false);
-
-	// 		if (data.length === 1) setExists(true);
-	// 	};
-
-	// 	if (isSubscribed && addTeammateClicked) {
-	// 		idExists(memberInput);
-	// 		console.log("what is exists?", exists);
-	// 		console.log("what is member?", memberInput);
-	// 	}
-
-	//     if (exists) {
-	//         console.log('exists');
-	//     }
-
-	//     return () => isSubscribed = false;
-	// }, [addTeammateClicked]);
-
 	async function getTeams() {
 		const { data } = await supabase
 			.from("teams")
@@ -124,7 +96,7 @@ export function Team() {
 	}
 
 	async function insertTeam(tn, tci, atos, rm, pw) {
-		const { data, error } = await supabase
+		const { data: teams_data, error: teams_error } = await supabase
 			.from("teams")
 			.insert({
 				team_name: tn,
@@ -135,29 +107,21 @@ export function Team() {
 			})
 			.select();
 
-		// const { data, error } = await supabase
-		// 	.from("teams")
-		// 	.insert({
-		// 		team_name: tn,
-		// 		team_captain_id: tci,
-		// 		agreed_ToS: atos,
-		// 		recruiting_members: rm,
-		// 		team_password: pw,
-		// 	})
-		// 	.select();
+		const add_members = JSON.stringify(JSON.parse(window.sessionStorage.getItem('teamMembers')).members);
+
+		console.log(JSON.parse(add_members));
+
+		for (let i = 0; i < JSON.parse(add_members).length; i++) {
+			const { data: team_members_data, error: team_members_error } = await supabase
+			.from("team_members")
+			.insert({
+				team_id: teams_data[0].team_id,
+				user_id: JSON.parse(add_members)[i]
+			});
+		}
 
 		window.location.reload();
 	}
-
-	/* handleSubmit (old)
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        console.log(`${user.user_id} ${user.username} created team`);
-
-        insertTeam(`${user.username}'s TEAM`, user.user_id, true, false, 1234);
-    }
-    */
 
 	/* handleSubmit (new) */
 	const handleSubmit = (e) => {
@@ -207,17 +171,6 @@ export function Team() {
 
 		return (data.length === 1) ? true : false;
 	};
-
-	// var exists;
-
-	// useEffect(() => {
-	// 	if (exists) console.log(`exists is ${exists}`);
-	// 	exists = false;
-	// });
-
-	// function timeout(delay: number) {
-	// 	return new Promise( res => setTimeout(res, delay) );
-	// }
 
 	// Add Member to Members
 	const addToTeam = async (e) => {
