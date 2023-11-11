@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
-//import { useNavigate } from "react-router-dom";
 
 import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton, TextField } from '@mui/material';
 
@@ -33,6 +32,7 @@ export function Team() {
     const [teams, setTeams] = useState([]);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
+	let teamM = window.sessionStorage.setItem("teamMembers", [user.user_id]);
 
     // Dialog State (Create Team)
     const [open, setOpen] = React.useState(false);
@@ -53,10 +53,12 @@ export function Team() {
     };
 
 
+	const [id, setId] = useState([]);
+
     // init Create a Team values
     const [team, setTeam] = useState('');
-    const [member, addMember] = useState('');
-    const [members, setMembers] = useState([]);
+	const [memberInput, setMemberInput] = useState("");
+	const [members, setMembers] = useState([user.user_id]);
     const [password, setPass] = useState('');
 
     // Check if Form is Filled
@@ -69,6 +71,37 @@ export function Team() {
 
         getTeams();
     }, []);
+
+	var [exists, setExists] = useState(false);
+	var [addTeammateClicked, setAddTeammateClicked] = useState(false);
+
+	// useEffect(() => {
+    //     let isSubscribed = true;
+
+	// 	const idExists = async (un) => {
+	// 		const { data } = await supabase.from("users").select().eq("username", un);
+
+	// 		setId(data);
+
+	// 		console.log(data);
+
+	// 		setAddTeammateClicked(false);
+
+	// 		if (data.length === 1) setExists(true);
+	// 	};
+
+	// 	if (isSubscribed && addTeammateClicked) {
+	// 		idExists(memberInput);
+	// 		console.log("what is exists?", exists);
+	// 		console.log("what is member?", memberInput);
+	// 	}
+
+    //     if (exists) {
+    //         console.log('exists');
+    //     }
+
+    //     return () => isSubscribed = false;
+	// }, [addTeammateClicked]);
 
     async function getTeams() {
         const { data } = await supabase
@@ -99,44 +132,70 @@ export function Team() {
     */
 
     /* handleSubmit (new) */
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget);
-        console.log({
-            team: data.get("team"),
-            members,
-            password: data.get("password"),
-        });
-        // Reset Fields
-        resetForm();
-    }
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const data = new FormData(e.currentTarget);
+		console.log({
+			team: data.get("team"),
+			members,
+			password: data.get("password"),
+		});
+
+		console.log(`${user.user_id} ${user.username} created team`);
+
+		insertTeam(
+			data.get("team"),
+			user.user_id,
+			true,
+			false,
+			data.get("password")
+		);
+
+		// Reset Fields
+		resetForm();
+	};
 
     // Reset Form
     const resetForm = () => {
         setTeam("");
-        addMember("");
+        setMemberInput("");
         setMembers([]);
         setPass("");
         nextId = 0;
     }
 
-    // Add Member to Members
-    function addToTeam(e) {
-        e.preventDefault();
+	// Add Member to Members
+	const addToTeam = (e) => {
+		e.preventDefault();
 
-        // Add Member to Array
-        setMembers([
-            ...members,
-            { id: nextId++, member: member }
-        ]);
+		// console.log("contents", member);
 
-        // Testing (WARNING: FIRST ADD IS EMPTY)
-        console.log(members);
+		setAddTeammateClicked(true);
 
-        // Reset Member Form Field (FIX)
-        document.getElementById("member").value = "";
-        addMember("");
-    }
+        console.log('clicked');
+
+		// // Add Member to Array
+		// if (exists) {
+		// 	console.log("what is exists inside addToTeam?", exists);
+		// 	console.log("what is id inside addToTeam?", id);
+		// 	// console.log(`${id[0].username} is added and has user_id of ${id[0].user_id}`);
+		// 	// var grabMembers = window.localStorage.getItem('user');
+		// 	// grabMembers.append(0);
+		// 	// window.sessionStorage.setItem('user', grabMembers);
+
+		// 	// setMembers([
+		// 	//     ...members,
+		// 	//     id[0].user_id
+		// 	// ]);
+		// } else console.log("user does not exist");
+
+		// // Testing (WARNING: FIRST ADD IS EMPTY)
+		// console.log(members);
+
+		// // Reset Member Form Field (FIX)
+		document.getElementById("member").value = "";
+		setMemberInput("");
+	};
 
     return (
         <Container component="main" maxWidth="xs">
@@ -220,8 +279,8 @@ export function Team() {
 
                                 {/* Add Member */}
                                 <TextField
-                                    value={member}
-                                    onChange={(e) => addMember(e.target.value)}
+                                    value={memberInput}
+                                    onChange={(e) => setMemberInput(e.target.value)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
