@@ -93,20 +93,22 @@ export function Ladder() {
             return;
         }
 
-        const { data } = await supabase
+        const { data, error } = await supabase
             .from('ladder_teams')
             .select('ladder_id, wins, teams!inner(team_captain_id)')
             .eq('ladder_id', thisLadder.ladder_id)
             .eq('teams.team_captain_id', thisUser.user_id);
 
-        console.log('Team Captain Id');
-        console.log(thisUser.user_id);
-        console.log(data);
-        setUserTeamCaptainData(data[0]);
-
-        setIsUserTeamCaptain(true);
-        console.log('User Team Captain Data');
-        console.log(userTeamCaptainData);
+        if(error)
+            console.log(error);
+        else if(data.length === 0)
+            console.log('User is not a team captain');
+        else{
+            console.log('User is a team captain');
+            console.log(data);
+            setUserTeamCaptainData(data[0]);
+            setIsUserTeamCaptain(true);
+        }
     }
 
     async function getTeamMap() {
@@ -148,6 +150,7 @@ export function Ladder() {
         // console.log(ongoingMatchMap);
     }
 
+    // Create a match if user is team captain
     const handleCreateMatch = async (e) => {
         console.log('User Captain Team Id: ' + userTeamCaptainData.teams.team_id);
         console.log(e);
