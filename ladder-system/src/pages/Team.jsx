@@ -9,7 +9,9 @@ import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, Li
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 import InputAdornment from '@mui/material/InputAdornment';
 import PersonIcon from '@mui/icons-material/Person';
@@ -22,13 +24,17 @@ import PersonAddAlt1 from '@mui/icons-material/PersonAddAlt1';
 // Increment Members Array
 let nextId = 0;
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 // export function Team( { user } ) {
 export function Team() {
     const [teams, setTeams] = useState([]);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
 
-    // Dialog State
+    // Dialog State (Create Team)
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,7 +43,16 @@ export function Team() {
         setOpen(false);
     };
 
-    
+    // Dialog State (Ladder Info)
+    const [open2, setOpen2] = React.useState(false);
+    const handleClickOpen2 = () => {
+        setOpen2(true);
+    };
+    const handleClose2 = () => {
+        setOpen2(false);
+    };
+
+
     // init Create a Team values
     const [team, setTeam] = useState('');
     const [member, addMember] = useState('');
@@ -151,97 +166,113 @@ export function Team() {
                     Teams
                 </Typography>
 
-                <ButtonGroup size="medium">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                    >
-                        <Link to="/">
+                <Box>
+                    <ButtonGroup
+                        size="medium"
+                        sx={{ width: '150%', mt: 1, mb: 2 }}>
+
+                        {/* Ladder Rules / Info */}
+                        <Button
+                            variant="contained"
+                            onClick={handleClickOpen2}>
                             Team Rules/Info
-                        </Link>
-                    </Button>
-
-                    {/* Create a Team (new) */}
-                    <Button
-                        onClick={handleClickOpen}
-                        variant="contained"
-                        sx={{ width: '150%', mt: 3, mb: 2 }}
-                    >
-                        Create a Team
-                    </Button>
-                    <Dialog component="form" open={open} onClose={() => { handleClose(); resetForm();}} onSubmit={handleSubmit}>
-                        <DialogTitle variant="h4" align="center">Create a Team</DialogTitle>
-                        <DialogContent>
-                            {/* Team */}
-                            <TextField
-                                value={team}
-                                onChange={(e) => setTeam(e.target.value)}
-                                label="Team Name"
-                                name='team'
-                                id="team"
-                                variant="outlined"
-                                margin="dense"
-                                fullWidth
-                                required
-                                autoFocus
-                            />
-
-                            {/* Add Member */}
-                            <TextField
-                                value={member}
-                                onChange={(e) => addMember(e.target.value)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <PersonIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                label="Add Member"
-                                name='member'
-                                id="member"
-                                variant="standard"
-                                margin="dense"
-                                sx={{ width: "75%" }}
-                                
-                            />
-                            {/* Member Array */}
-                            <Button
-                                sx={{ width: "12%", marginTop: 2, float: "right", }}
-                                onClick={ addToTeam }>
-                                <PersonAddAlt1 />
-                            </Button>
+                        </Button>
+                        <Dialog
+                            open={open2}
+                            TransitionComponent={Transition}
+                            keepMounted
+                            onClose={handleClose2}
+                        >
+                            <DialogTitle> Team Rules/Info </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    *insert team rules/info*
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose2}>Close</Button>
+                            </DialogActions>
+                        </Dialog>
 
 
-                            {/* Password */}
-                            <TextField
-                                value={password}
-                                onChange={(e) => setPass(e.target.value)}
-                                label="Team Password"
-                                name="password"
-                                id="password"
-                                variant="outlined"
-                                margin="dense"
-                                fullWidth
-                                required
-                            />
+                        {/* Create a Team (new) */}
+                        <Button
+                            onClick={handleClickOpen}
+                            variant="contained">
+                            Create a Team
+                        </Button>
+                        <Dialog component="form" open={open} onClose={() => { handleClose(); resetForm(); }} onSubmit={handleSubmit}>
+                            <DialogTitle variant="h4" align="center">Create a Team</DialogTitle>
+                            <DialogContent>
+                                {/* Team */}
+                                <TextField
+                                    value={team}
+                                    onChange={(e) => setTeam(e.target.value)}
+                                    label="Team Name"
+                                    name='team'
+                                    id="team"
+                                    variant="outlined"
+                                    margin="dense"
+                                    fullWidth
+                                    required
+                                    autoFocus
+                                />
 
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => { handleClose(); resetForm();}}>Cancel</Button>
+                                {/* Add Member */}
+                                <TextField
+                                    value={member}
+                                    onChange={(e) => addMember(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <PersonIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    label="Add Member"
+                                    name='member'
+                                    id="member"
+                                    variant="standard"
+                                    margin="dense"
+                                    sx={{ width: "75%" }}
 
-                            <Button
-                                type="submit"
-                                disabled={!formValid}
-                                onClick={handleClose}>
-                                Create Team
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                                />
+                                {/* Member Array */}
+                                <Button
+                                    sx={{ width: "12%", marginTop: 2, float: "right", }}
+                                    onClick={addToTeam}>
+                                    <PersonAddAlt1 />
+                                </Button>
 
 
-                    {/* Create a Team (Old)
+                                {/* Password */}
+                                <TextField
+                                    value={password}
+                                    onChange={(e) => setPass(e.target.value)}
+                                    label="Team Password"
+                                    name="password"
+                                    id="password"
+                                    variant="outlined"
+                                    margin="dense"
+                                    fullWidth
+                                    required
+                                />
+
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => { handleClose(); resetForm(); }}>Cancel</Button>
+
+                                <Button
+                                    type="submit"
+                                    disabled={!formValid}
+                                    onClick={handleClose}>
+                                    Create Team
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
+
+                        {/* Create a Team (Old)
                     <Button
                             type="submit"
                             variant="contained"
@@ -252,7 +283,8 @@ export function Team() {
                     </Button>
                     */}
 
-                </ButtonGroup>
+                    </ButtonGroup>
+                </Box>
 
                 <Typography component="h3">
                     Team

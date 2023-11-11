@@ -1,16 +1,48 @@
+import * as React from 'react';
+
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
-import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton }from '@mui/material';
+import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 import ng_1 from "../images/ng_1.png";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
+
+    // Dialog States (Create Ladder)
+    //const [open, setOpen] = React.useState(false);
+    //const handleClickOpen = () => {
+    //    setOpen(true);
+    //};
+    //const handleClose = () => {
+    //    setOpen(false);
+    //};
+
+    // Dialog States (Ladder Info)
+    const [open2, setOpen2] = React.useState(false);
+    const handleClickOpen2 = () => {
+        setOpen2(true);
+    };
+    const handleClose2 = () => {
+        setOpen2(false);
+    };
+
 
     useEffect(() => {
         isAdmin();
@@ -19,50 +51,50 @@ export function Dashboard() {
 
     async function getLadderTournaments() {
         const { data } = await supabase
-        .from('ladder_tournaments')
-        .select();
-        
+            .from('ladder_tournaments')
+            .select();
+
         setLadderTournaments(data);
     }
 
-    async function isAdmin(){
-        if (user === null){
+    async function isAdmin() {
+        if (user === null) {
             console.log("User is not logged in");
             return;
         }
 
-        const { data , error } = await supabase
+        const { data, error } = await supabase
             .from('admin')
             .select()
             .eq('admin_user_id', user.user_id)
             .eq('still_admin', true);
-            
+
         console.log(data);
         console.log(user.user_id);
 
-        if( error )
+        if (error)
             console.log(error);
-        else if( data === null || data.length === 0 )
+        else if (data === null || data.length === 0)
             console.log("User is not an admin");
-        else{
+        else {
             setIsUserAdmin(true);
             console.log("User is an admin");
-        } 
+        }
     }
 
     async function insertLadder(ln, ts, atos, ui) {
 
-        if( !isAdmin )
+        if (!isAdmin)
             return;
-        
+
         const { data: ladder_tournaments_data, error: ladder_tournaments_error } = await supabase
-        .from('ladder_tournaments')
-        .insert({ ladder_name: ln, agreed_ToS: atos, team_size: ts})
-        .select();
+            .from('ladder_tournaments')
+            .insert({ ladder_name: ln, agreed_ToS: atos, team_size: ts })
+            .select();
 
         const { data: ladder_moderators_data, error: ladder_moderators_error } = await supabase
-        .from('ladder_moderators')
-        .insert({ ladder_id: ladder_tournaments_data[0].ladder_id, user_id: user.user_id });
+            .from('ladder_moderators')
+            .insert({ ladder_id: ladder_tournaments_data[0].ladder_id, user_id: user.user_id });
 
         window.location.reload();
     }
@@ -95,7 +127,7 @@ export function Dashboard() {
                         maxWidth: { xs: 400, md: 400 },
                         paddingBottom: 2
                     }}
-                    src= {ng_1} 
+                    src={ng_1}
                     alt="Northrop Grumman logo"
                 />
 
@@ -103,71 +135,104 @@ export function Dashboard() {
                     Dashboard
                 </Typography>
 
-                { window.localStorage.getItem('user') === null ? (
+                {window.localStorage.getItem('user') === null ? (
                     <h1> Guest Mode </h1>
                 ) : (
-                    <h1> Username: { user.username } </h1>
+                    <h1> Username: {user.username} </h1>
                 )}
 
-                { window.localStorage.getItem('user') === null ? (
-                    <ButtonGroup size="medium">
-                       <Button
-                            type="submit"
+                {window.localStorage.getItem('user') === null ? (
+
+                    /* Dashboard (Guest) */
+                    <>
+                        <Button
                             variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/">
-                                Ladder Rules/Info
-                            </Link>
+                            onClick={handleClickOpen2}
+                            sx={{ width: '50%', mt: 1, mb: 2 }}>
+                            Ladder Rules/Info
                         </Button>
-                    </ButtonGroup>
+                        <Dialog
+                            open={open2}
+                            TransitionComponent={Transition}
+                            keepMounted
+                            onClose={handleClose2}
+                        >
+                            <DialogTitle> Ladder Rules/Info </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    *insert ladder rules/info*
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose2}>Close</Button>
+                            </DialogActions>
+                        </Dialog>
+                    </>
                 ) : (
-                    <ButtonGroup size="medium">
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/">
-                                Ladder Rules/Info
-                            </Link>
-                        </Button>
 
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/Ladder">
-                                Join a Ladder
-                            </Link>
-                        </Button>
+                    /* Dashboard (Member) */
+                    <Box>
+                        <ButtonGroup
+                            size="small"
+                            sx={{ width: '150%', mt: 1, mb: 2 }}>
 
-                        { isUserAdmin ? (
+                            {/* Ladder Rules / Info */}
                             <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                            onClick={handleSubmit}
-                        >
-                            Create a Ladder
-                        </Button>
-                        ) : (null)}
-                    </ButtonGroup>
+                                variant="contained"
+                                onClick={handleClickOpen2}>
+                                Ladder Rules/Info
+                            </Button>
+                            <Dialog
+                                open={open2}
+                                TransitionComponent={Transition}
+                                keepMounted
+                                onClose={handleClose2}
+                            >
+                                <DialogTitle> Ladder Rules/Info </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        *insert ladder rules/info*
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClose2}>Close</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            {/* Join a Ladder */}
+                            <Button type="submit" variant="contained">
+                                <Link to="/Ladder">
+                                    Join a Ladder
+                                </Link>
+                            </Button>
+
+                            {/* Create a Ladder */}
+                            {isUserAdmin ? (
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+
+                                    onClick={handleSubmit}
+                                >
+                                    Create a Ladder
+                                </Button>
+                            ) : (null)}
+                        </ButtonGroup>
+                    </Box>
                 )}
 
                 <Typography component="h3">
                     Ladder
                 </Typography>
 
-                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
+                <Paper style={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
                     <List>
-                        { ladderTournaments.map((tournament, i) =>
+                        {ladderTournaments.map((tournament, i) =>
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.team_size} vs {tournament.team_size} </ListItemText>
                                 <ListItemButton
-                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament)) }>
+                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament))}>
                                     <Link to="/Ladder">
                                         <ListItemText>
                                             View
@@ -178,13 +243,15 @@ export function Dashboard() {
                         )}
                     </List>
                 </Paper>
-                
-                { window.localStorage.getItem('user') === null ? (
+
+                {window.localStorage.getItem('user') === null ? (
+
+                    /* Dashboard (Guest) */
                     <ButtonGroup size="medium">
                         <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: '100%', height: '50%', mt: 3, mb: 2 }}
                         >
                             <Link to="/">
                                 Back
@@ -192,37 +259,47 @@ export function Dashboard() {
                         </Button>
                     </ButtonGroup>
                 ) : (
-                    <ButtonGroup size="medium">
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/Team">
-                                My Teams
-                            </Link>
-                        </Button>
-                    
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/Settings">
-                                Settings
-                            </Link>
-                        </Button>
 
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
-                        >
-                            <Link to="/">
-                                Log Out
-                            </Link>
-                        </Button>
-                    </ButtonGroup>
+                    /* Dashboard (Member) */
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}>
+                        <ButtonGroup
+                            size="large"
+                            sx={{ width: '80%', mt: 2, mb: 2 }}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                            >
+                                <Link to="/Team">
+                                    My Teams
+                                </Link>
+                            </Button>
+
+                            <Button
+                                type="submit"
+                                variant="contained"
+                            >
+                                <Link to="/Settings">
+                                    Settings
+                                </Link>
+                            </Button>
+
+                            <Button
+                                type="submit"
+                                variant="contained"
+                            >
+
+                                <Link to="/">
+                                    Log Out
+                                </Link>
+
+                            </Button>
+                        </ButtonGroup>
+                    </Box>
                 )}
             </Box>
         </Container>
