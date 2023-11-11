@@ -169,6 +169,8 @@ export function Ladder() {
         if(error) {
             console.log(error);
         }
+
+        window.location.reload();
     };
 
     // Update a match score
@@ -234,6 +236,7 @@ export function Ladder() {
 
         setShowUpateSection(!showUpdateSection);
     
+        window.location.reload();
     };
 
     const handleShowMatches = async (e) => {
