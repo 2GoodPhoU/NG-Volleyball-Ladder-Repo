@@ -22,6 +22,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export function Dashboard() {
     const [ladderTournaments, setLadderTournaments] = useState([]);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [isUserTeamCaptain, setIsUserTeamCaptain] = useState(false);
+    const [userTeamCaptainData, setUserTeamCaptainData] = useState();
+    const [joinLadderButtonToggle, setJoinLadderButtonToggle] = useState(false);
 
     const user = JSON.parse(window.localStorage.getItem('user'));
 
@@ -46,6 +49,7 @@ export function Dashboard() {
 
     useEffect(() => {
         isAdmin();
+        isTeamCaptain();
         getLadderTournaments();
     }, []);
 
@@ -82,6 +86,29 @@ export function Dashboard() {
         }
     }
 
+    async function isTeamCaptain() {
+        if (user === null){
+            console.log('User is not logged in');
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('teams')
+            .select('team_id, team_captain_id')
+            .eq('team_captain_id', user.user_id);
+
+        if(error)
+            console.log(error);
+        else if(data.length === 0)
+            console.log('User is not a team captain');
+        else{
+            console.log('User is a team captain');
+            console.log(data);
+            setIsUserTeamCaptain(true);
+            setUserTeamCaptainData(data);
+        }
+    }
+
     async function insertLadder(ln, ts, atos, ui) {
 
         if (!isAdmin)
@@ -98,6 +125,40 @@ export function Dashboard() {
 
         window.location.reload();
     }
+
+    async function joinLadder(e){
+
+        // console.log('User Captain Team Id: ' + userTeamCaptainData.teams.team_id);
+        console.log(e.i);
+        console.log(ladderTournaments[e.i].ladder_id);;
+        console.log(userTeamCaptainData[0].team_id);
+
+        const { data, error } = await supabase
+            .from('ladder_teams')
+            .select('ladder_id, wins, teams!inner(team_captain_id)')
+            .eq('ladder_id', ladderTournaments[e.i].ladder_id)
+            .eq('teams.team_captain_id', user.user_id);
+
+        if(error)
+            console.log(error);
+        else if(data.length !== 0)
+            console.log('Team is already in Ladder');
+        else{
+            const { data2, error2 } = await supabase
+                .from('ladder_teams')
+                .insert({ ladder_id: ladderTournaments[e.i].ladder_id, team_id: userTeamCaptainData[0].team_id})
+                .select();
+            
+            console.log('Team has been added to Ladder')
+            console.log(data2);
+        }
+    }
+
+
+    const handleJoinLadder = (e) => {
+        setJoinLadderButtonToggle(!joinLadderButtonToggle);
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -200,9 +261,16 @@ export function Dashboard() {
                             </Dialog>
 
                             {/* Join a Ladder */}
-                            <Button variant="contained">
+                            {isUserTeamCaptain ? (
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+
+                                    onClick={handleJoinLadder}
+                                >
                                     Join a Ladder
-                            </Button>
+                                </Button>
+                            ) : (null)}
 
                             {/* Create a Ladder */}
                             {isUserAdmin ? (
@@ -229,14 +297,22 @@ export function Dashboard() {
                             <ListItem key={i}>
                                 <ListItemText> {tournament.ladder_name} </ListItemText>
                                 <ListItemText> {tournament.team_size} vs {tournament.team_size} </ListItemText>
-                                <ListItemButton
-                                    onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament))}>
-                                    <Link to="/Ladder">
-                                        <ListItemText>
-                                            View
-                                        </ListItemText>
-                                    </Link>
-                                </ListItemButton>
+                                {joinLadderButtonToggle ? (
+                                    <ListItemButton
+                                        onClick={() => joinLadder({i})}>
+                                            <ListItemText>
+                                                Join
+                                            </ListItemText>
+                                    </ListItemButton>) 
+                                    : (
+                                        <ListItemButton
+                                            onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament))}>
+                                            <Link to="/Ladder">
+                                                <ListItemText>
+                                                    View
+                                                </ListItemText>
+                                            </Link>
+                                </ListItemButton>)}
                             </ListItem>
                         )}
                     </List>
