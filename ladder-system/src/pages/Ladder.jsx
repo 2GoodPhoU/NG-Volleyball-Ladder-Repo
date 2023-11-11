@@ -152,11 +152,11 @@ export function Ladder() {
 
     // Create a match if user is team captain
     const handleCreateMatch = async (e) => {
-        console.log('User Captain Team Id: ' + userTeamCaptainData.teams.team_id);
-        console.log(e);
-        console.log(e.i);
-        console.log(thisLadder.ladder_id);;
-        console.log(teamMap[e.i].teams.team_id);
+        // console.log('User Captain Team Id: ' + userTeamCaptainData.teams.team_id);
+        // console.log(e);
+        // console.log(e.i);
+        // console.log(thisLadder.ladder_id);;
+        // console.log(teamMap[e.i].teams.team_id);
 
         const{error} = await supabase
             .from('match_history')
@@ -175,14 +175,14 @@ export function Ladder() {
 
     // Update a match score
     const handleUpdateMatchScore = async (e) => {
-        console.log('After');
-        console.log(challenger_id);
-        console.log(challenger_score);
-        console.log(challenger_team_name);
-        console.log(opponent_id);
-        console.log(opponent_score);
-        console.log(opponent_team_name);
-        console.log(completed);
+        // console.log('After');
+        // console.log(challenger_id);
+        // console.log(challenger_score);
+        // console.log(challenger_team_name);
+        // console.log(opponent_id);
+        // console.log(opponent_score);
+        // console.log(opponent_team_name);
+        // console.log(completed);
 
 
         const{ data } = await supabase
@@ -247,18 +247,18 @@ export function Ladder() {
     const setShowUpdateSection = async (e) => {
         setShowUpateSection(!showUpdateSection);
 
-        console.log('Before');
-        console.log(e);
-        console.log(e.i);
-        console.log(matchMap);
-        console.log(matchMap[e.i]);
-        console.log(matchMap[e.i].challenger_id);
-        console.log(matchMap[e.i].challenger_score);
-        console.log(matchMap[e.i].challenger_team.team_name);
-        console.log(matchMap[e.i].opponent_id);
-        console.log(matchMap[e.i].opponent_score);
-        console.log(matchMap[e.i].challenger_score);
-        console.log(matchMap[e.i].completed);
+        // console.log('Before');
+        // console.log(e);
+        // console.log(e.i);
+        // console.log(matchMap);
+        // console.log(matchMap[e.i]);
+        // console.log(matchMap[e.i].challenger_id);
+        // console.log(matchMap[e.i].challenger_score);
+        // console.log(matchMap[e.i].challenger_team.team_name);
+        // console.log(matchMap[e.i].opponent_id);
+        // console.log(matchMap[e.i].opponent_score);
+        // console.log(matchMap[e.i].challenger_score);
+        // console.log(matchMap[e.i].completed);
 
         setChallengerId(parseInt(matchMap[e.i].challenger_id));
         setChallengerTeamName(matchMap[e.i].challenger_team.team_name);
