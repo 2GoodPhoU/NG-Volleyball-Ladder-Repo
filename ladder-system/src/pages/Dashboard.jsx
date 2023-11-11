@@ -200,10 +200,8 @@ export function Dashboard() {
                             </Dialog>
 
                             {/* Join a Ladder */}
-                            <Button type="submit" variant="contained">
-                                <Link to="/Ladder">
+                            <Button onClick={join_a_ladder_view}>
                                     Join a Ladder
-                                </Link>
                             </Button>
 
                             {/* Create a Ladder */}
