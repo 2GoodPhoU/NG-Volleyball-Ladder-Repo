@@ -47,7 +47,7 @@ export const Register = () => {
         const { data, error } = await supabase
         .from('users')
         .select()
-        .eq('username', un)
+        .eq('username', un);
 
         return (data.length === 1) ? true : false;
     }
