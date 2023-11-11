@@ -1,16 +1,10 @@
-<<<<<<< Updated upstream
 import { Link } from "react-router-dom";
 
-=======
 import * as React from "react";
->>>>>>> Stashed changes
 import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-<<<<<<< Updated upstream
-import { CssBaseline, Box, Typography, Container, Button, ButtonGroup, Paper, List, ListItem, ListItemText, ListSubheader, ListItemButton } from '@mui/material';
-=======
 import {
 	CssBaseline,
 	Box,
@@ -33,18 +27,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonIcon from "@mui/icons-material/Person";
->>>>>>> Stashed changes
 
 import ng_1 from "../images/ng_1.png";
 
 import { supabase } from "../supabaseClient";
-<<<<<<< Updated upstream
-=======
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
 
 // Increment Members Array
 let nextId = 0;
->>>>>>> Stashed changes
 
 // export function Team( { user } ) {
 export function Team() {
@@ -53,11 +43,6 @@ export function Team() {
 	const user = JSON.parse(window.localStorage.getItem("user"));
 	let teamM = window.sessionStorage.setItem("teamMembers", [user.user_id]);
 
-<<<<<<< Updated upstream
-    useEffect(() => {
-        if (window.localStorage.getItem('user') === null)
-            window.location.reload();
-=======
 	// Dialog State
 	const [open, setOpen] = React.useState(false);
 	const handleClickOpen = () => {
@@ -80,75 +65,25 @@ export function Team() {
 
 	useEffect(() => {
 		if (window.localStorage.getItem("user") === null) window.location.reload();
->>>>>>> Stashed changes
 
 		getTeams();
 	}, []);
 
-<<<<<<< Updated upstream
-    async function getTeams() {
-        const { data } = await supabase
-        .from('teams')
-        .select()
-        .eq('team_captain_id', user.user_id);
-=======
 	var [exists, setExists] = useState(false);
 	var [addTeammateClicked, setAddTeammateClicked] = useState(false);
->>>>>>> Stashed changes
 
 	// useEffect(() => {
     //     let isSubscribed = true;
 
-<<<<<<< Updated upstream
-    async function insertTeam(tn, tci, atos, rm, pw) {
-        const { data, error } = await supabase
-        .from('teams')
-        .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
-        .select();
-=======
 	// 	const idExists = async (un) => {
 	// 		const { data } = await supabase.from("users").select().eq("username", un);
->>>>>>> Stashed changes
 
 	// 		setId(data);
 
-<<<<<<< Updated upstream
-    const handleSubmit = (e) => {
-        e.preventDefault();
-=======
 	// 		console.log(data);
->>>>>>> Stashed changes
 
 	// 		setAddTeammateClicked(false);
 
-<<<<<<< Updated upstream
-        insertTeam(`${user.username}'s TEAM`, user.user_id, true, false, 1234);
-    }
-
-    return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Box
-                    component="img"
-                    sx={{
-                        height: 150,
-                        width: 400,
-                        maxHeight: { xs: 150, md: 150 },
-                        maxWidth: { xs: 400, md: 400 },
-                        paddingBottom: 2
-                    }}
-                    src= {ng_1} 
-                    alt="Northrop Grumman logo"
-                />
-=======
 	// 		if (data.length === 1) setExists(true);
 	// 	};
 
@@ -188,7 +123,6 @@ export function Team() {
 
 		window.location.reload();
 	}
->>>>>>> Stashed changes
 
 	/* handleSubmit (new) */
 	const handleSubmit = (e) => {
@@ -200,19 +134,6 @@ export function Team() {
 			password: data.get("password"),
 		});
 
-<<<<<<< Updated upstream
-                <ButtonGroup size="medium">
-                    <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ width: '150%', height: '200%', mt: 3, mb: 2 }}
-                    >
-                        <Link to="/">
-                            Team Rules/Info
-                        </Link>
-                    </Button>
-                
-=======
 		console.log(`${user.user_id} ${user.username} created team`);
 
 		insertTeam(
@@ -397,7 +318,6 @@ export function Team() {
 					</Dialog>
 
 					{/* Create a Team (Old)
->>>>>>> Stashed changes
                     <Button
                             type="submit"
                             variant="contained"
@@ -406,58 +326,13 @@ export function Team() {
                     >
                         Create a Team
                     </Button>
-<<<<<<< Updated upstream
-                </ButtonGroup>
-=======
                     */}
 				</ButtonGroup>
 
 				<Typography component="h3">Team</Typography>
->>>>>>> Stashed changes
 
 				<h1> Username: {user.username}</h1>
 
-<<<<<<< Updated upstream
-                <h1> Username: { user.username }</h1>
-
-                <Paper style={{width: '100%', maxHeight: 300, overflow: 'auto'}}>
-                    { teams.length === 0 ? (
-                        <h1>NOTHING HERE</h1>
-                    ) : (
-                        <List>
-                            {teams.map((team, i) =>
-                                <ListItem key={ i }>
-                                    <ListItemText> { team.team_name }</ListItemText>
-                                    <ListItemText> { team.team_wins } . { team.team_losses } </ListItemText>
-                                    <ListItemButton selected={false}>
-                                        <Link to="/Team">
-                                            <ListItemText>
-                                                View
-                                            </ListItemText>
-                                        </Link>
-                                    </ListItemButton>
-                                </ListItem>
-                            )}
-                        </List>
-                    )}
-                </Paper>
-
-                <ButtonGroup size="medium">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ width: '150%', height: '50%', mt: 3, mb: 2 }}
-                    >
-                        <Link to="/Dashboard">
-                            Back
-                        </Link>
-                    </Button>
-                </ButtonGroup>
-            </Box>
-        </Container>
-    )
-}
-=======
 				<Paper style={{ width: "100%", maxHeight: 300, overflow: "auto" }}>
 					{teams.length === 0 ? (
 						<h1>NOTHING HERE</h1>
@@ -494,4 +369,3 @@ export function Team() {
 		</Container>
 	);
 }
->>>>>>> Stashed changes

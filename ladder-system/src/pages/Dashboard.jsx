@@ -44,10 +44,7 @@ export function Dashboard() {
     const formValid = (team != "") && (password != "");
 
     useEffect(() => {
-<<<<<<< Updated upstream
-=======
         if (window.localStorage.getItem('user') !== null) isAdmin();
->>>>>>> Stashed changes
         getLadderTournaments();
     }, []);
 
@@ -59,8 +56,6 @@ export function Dashboard() {
         setLadderTournaments(data);
     }
 
-<<<<<<< Updated upstream
-=======
     async function isAdmin(){
         const { data } = await supabase
         .from('admin')
@@ -76,7 +71,6 @@ export function Dashboard() {
             setIsUserAdmin(true);
     }
 
->>>>>>> Stashed changes
     async function insertLadder(ln, ts, atos, ui) {
         const { data: ladder_tournaments_data, error: ladder_tournaments_error } = await supabase
         .from('ladder_tournaments')
@@ -204,21 +198,13 @@ export function Dashboard() {
                                 Join a Ladder
                             </Link>
                         </Button>
-<<<<<<< Updated upstream
-
-                        <Button
-                            type="submit"
-=======
                         <Button
                             onClick={handleClickOpen}
->>>>>>> Stashed changes
                             variant="contained"
                             sx={{ width: '150%', mt: 3, mb: 2 }}
                         >
                             Create a Ladder
                         </Button>
-<<<<<<< Updated upstream
-=======
                         <Dialog component="form" open={open} onClose={() => { handleClose(); resetForm();}} onSubmit={handleSubmit}>
                             <DialogTitle variant="h4" align="center">Create a Team</DialogTitle>
                             <DialogContent>
@@ -310,7 +296,6 @@ export function Dashboard() {
                                 Join a Ladder
                             </Link>
                         </Button>
->>>>>>> Stashed changes
                     </ButtonGroup>
                     )}
                     </>
