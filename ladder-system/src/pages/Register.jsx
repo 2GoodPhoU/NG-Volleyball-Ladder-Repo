@@ -1,22 +1,16 @@
 import React, { useState } from "react";
+//import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
 import { CssBaseline, TextField, Checkbox, Link, Grid, Box, Container, Typography, FormControlLabel, Button } from '@mui/material';
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-
 import ng_1 from "../images/ng_1.png";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+    const navigate = useNavigate();
+
     // useState initally empty
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -24,19 +18,14 @@ export const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
 
-    // Dialog State
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // Popup State
+    const [isPopupOpen, togglePopup] = useState(false);
+
 
     async function insertUser(e, pw, un, fn, ln) {
         const { error } = await supabase
-            .from('users')
-            .insert({ email: e, password: pw, username: un, first_name: fn, last_name: ln });
+        .from('users')
+        .insert({ email: e, password: pw, username: un, first_name: fn , last_name: ln});
 
         return true;
     }
@@ -53,15 +42,17 @@ export const Register = () => {
         });
 
         const unExists = await usernameExists(data.get('username'));
-        if (!unExists)
+        if (!unExists) {
             insertUser(data.get('email'), data.get('password'), data.get('username'), data.get('firstName'), data.get('lastName'));
+            navigate('/');
+        }
     }
 
     async function usernameExists(un) {
         const { data, error } = await supabase
-            .from('users')
-            .select()
-            .eq('username', un)
+        .from('users')
+        .select()
+        .eq('username', un)
 
         return (data.length === 1) ? true : false;
     }
@@ -173,35 +164,20 @@ export const Register = () => {
                     </Grid>
 
                     {/* Terms & Conditions */}
-                    <Grid
+
+                    <Grid 
                         container
                         direction="row"
                         justifyContent="center"
                         alignItems="center"
                         spacing={1}
                     >
-                        <Button 
-                            onClick={handleClickOpen}
-                            sx={{ width: '150%', mt: 3, mb: 2 }}>
-                        Terms and Conditions
-                        </Button>
-                        <Dialog
-                            open={open}
-                            TransitionComponent={Transition}
-                            keepMounted
-                            onClose={handleClose}
-                        >
-                            <DialogTitle variant="h5" align="center">Terms and Conditions</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    *insert terms*
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClose}>Disagree</Button>
-                                <Button onClick={handleClose}>Agree</Button>
-                            </DialogActions>
-                        </Dialog>
+                        <Grid Grid item >
+                            <FormControlLabel
+                                control={<Checkbox />}
+                                required
+                            />
+                        </Grid>
                     </Grid>
 
 
