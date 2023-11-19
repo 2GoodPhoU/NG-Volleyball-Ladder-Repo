@@ -5,6 +5,7 @@ import { CssBaseline, TextField, Grid, Box, Typography,
     FormControlLabel }from '@mui/material';
 import ng_1 from "../images/ng_1.png";
 
+
 export function Settings() {
     // User settings
     const [newUsername, setNewUsername] = useState('');
@@ -272,49 +273,7 @@ export function Settings() {
 
         </Container>
     )
+    
 
 }
 
-
-
-
-
-{/*
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Results</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedResults}
-                            onChange= {handledCheckChange("Results")}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    </Grid>
-
-                </Grid>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Challenges</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedChallenge}
-                            onChange= {handledCheckChange("Challenge")}
-                        />
-                    </Grid>
-
-                </Grid>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Messages</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedMessages}
-                            onChange= {handledCheckChange("Messages")}
-                        />
-                    </Grid>
-
-                </Grid>
-                */}

@@ -13,3 +13,20 @@ In it's current state the Volleyball Ladder System can only be run locally. Here
 If you get an error:
 1. rm package-lock.json
 2. npm install
+
+
+///
+/////Add Jasmine to your package.json/////
+npm install --save-dev jasmine
+
+/////Initialize Jasmine in your project/////
+npx jasmine init
+
+/////Set jasmine as your test script in your package.json/////
+
+"scripts": { "test": "jasmine" }
+
+/////Run your tests/////
+npm test
+
+////
