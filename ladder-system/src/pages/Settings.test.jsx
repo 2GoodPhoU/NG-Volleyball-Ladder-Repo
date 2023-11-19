@@ -20,8 +20,8 @@ describe("Settings Function Test", ()=>{
                 return 'Doe';
               } else if (key === 'newFirstName') {
                 return 'John';
-              } else if (key === 'newPassword') {
-                return 'John';
+              } else if (key === 'newEmail') {
+                return 'JohnDoe@example.com';
               }
               // Handle other form keys as needed
             },
