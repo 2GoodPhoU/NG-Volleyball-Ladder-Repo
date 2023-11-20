@@ -1,13 +1,13 @@
-import {handleSubmitChange, handleNoteChange} from "./Settings.jsx";
+import {handleSubmitChange, handleNoteChange} from "../src/pages/Settings.jsx";
 
-describe("Settings Function Test", ()=>{
+describe("Settings Function Test", function(){
 
     /* Inilitize setters */
     const setModeLabel = jasmine.createSpy('setModeLabel');
     const setNotifyMode = jasmine.createSpy('setNotifyMode');
 
     /* test for handleSubmitChange function */
-    it("should handle submit change function correctly", () => {
+    it("should handle submit change function correctly", function() {
         const mockFormData = {
             get: (key) => {
               // Simulate form data retrieval based on the key
@@ -36,7 +36,7 @@ describe("Settings Function Test", ()=>{
     });
     
     /* tst for handleNoteChange function */
-    it("Should update vars for handleNoteChange function", () =>{
+    it("Should update vars for handleNoteChange function", function(){
         const event = {
             target:{ name: "Notification"}
         };
