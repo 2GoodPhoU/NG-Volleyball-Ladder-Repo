@@ -15,6 +15,7 @@ import {
 	ListItemText,
 	ListItemButton,
 	Link,
+	Stack
 } from "@mui/material";
 
 import ng_1 from "../images/ng_1.png";
@@ -115,8 +116,8 @@ export function Ladder() {
 			console.log("User is a team captain");
 			console.log(data);
 			setUserTeamCaptainData(data[0]);
-            console.log(data[0]);
-            console.log(userTeamCaptainData);
+			console.log(data[0]);
+			console.log(userTeamCaptainData);
 			setIsUserTeamCaptain(true);
 		}
 	}
@@ -165,7 +166,7 @@ export function Ladder() {
 		console.log(e);
 		console.log(e.i);
 		console.log(thisLadder.ladder_id);
-        console.log(userTeamCaptainData.teams.team_id);
+		console.log(userTeamCaptainData.teams.team_id);
 		console.log(teamMap[e.i].teams.team_id);
 
 		const { error } = await supabase.from("match_history").insert({
@@ -357,8 +358,8 @@ export function Ladder() {
 										<ListItemText>{team.teams.team_name}</ListItemText>
 									</ListItemButton>
 									{isUserTeamCaptain &&
-									thisUser.user_id !== team.teams.team_captain_id &&
-									userTeamCaptainData.wins < team.wins ? (
+										thisUser.user_id !== team.teams.team_captain_id &&
+										userTeamCaptainData.wins < team.wins ? (
 										<ListItemButton onClick={() => handleCreateMatch({ i })}>
 											<ListItemText>Challenge</ListItemText>
 										</ListItemButton>
@@ -453,6 +454,12 @@ export function Ladder() {
 					</Paper>
 				) : null}
 			</Box>
+
+			{/* Back to Dashboard */}
+			<Stack direction="row" justifyContent="center">
+				<Button href="/Dashboard">Back</Button>
+			</Stack>
+
 		</Container>
 	);
 }

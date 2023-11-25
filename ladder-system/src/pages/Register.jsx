@@ -15,7 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="down" ref={ref} {...props} />;
 });
 
 export const Register = () => {
@@ -199,7 +199,7 @@ export const Register = () => {
                                 underline="hover"
                                 onClick={handleClickOpen}
                                 style={{ cursor: 'grab' }}
-                                sx={{ width: '100%', mt: 1, mb: 2 , color: "#000000"}}>
+                                sx={{ mt: 1, mb: 2 , color: "#000000"}}>
                                 Terms and Conditions
                             </Link>
                             <Dialog

@@ -16,7 +16,7 @@ import Slide from '@mui/material/Slide';
 import ng_1 from "../images/ng_1.png";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="down" ref={ref} {...props} />;
 });
 
 export function Dashboard() {

@@ -33,7 +33,7 @@ User Manager (functionality)
 
 /* Dialog Transition */
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 /* Cell and Row Styling */
