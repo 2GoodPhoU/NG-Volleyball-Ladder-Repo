@@ -9,27 +9,32 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from "@mui/material/TablePagination";
 
-import { Paper, styled, Typography, Container, Box, Button } from '@mui/material';
+import { styled, Typography, Container, Box, Button } from '@mui/material';
 
 import { supabase } from "../supabaseClient";
 
 import { useState, useEffect } from 'react';
 
 import IconButton from '@mui/material/IconButton';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 /*
-User Manager (v.1)
-  - delete user
-  - edit user
-  - Ladder Moderator and Admin only
-  - alphabetical sort users 
-User Manager (v.2)
-  - (Admin) switch between tournaments
-  - (Ladder Moderator) restricted to their tournament
-User Manager (v.3)
-  - Story for user setting functionality 
+User Manager (functionality)
+  - Admin Only
+  - View / Delete Users
 */
+
+/* Dialog Transition */
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 /* Cell and Row Styling */
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -61,6 +66,16 @@ function createData(fName, lName, team, role) {
 
 /* User Manager Page */
 export function UserManager() {
+
+  // Dialog States (Terms and Conditions)
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -68,22 +83,22 @@ export function UserManager() {
   }, []);
 
   async function getUsers() {
-      const { data } = await supabase
+    const { data } = await supabase
       .from('users')
       .select();
 
-      let tempUsers = [];
-      data.forEach((user) => {
-        tempUsers.push(createData(user.first_name, user.last_name, 'Team 3', 'Member'));
-      });
-      
-      setUsers(tempUsers);
+    let tempUsers = [];
+    data.forEach((user) => {
+      tempUsers.push(createData(user.first_name, user.last_name));
+    });
+
+    setUsers(tempUsers);
 
   }
 
   // Table Pagination
-  const [pg, setpg] = React.useState(0); 
-  const [rpg, setrpg] = React.useState(5); 
+  const [pg, setpg] = React.useState(0);
+  const [rpg, setrpg] = React.useState(5);
 
   function handleChangePage(event, newpage) {
     setpg(newpage);
@@ -94,12 +109,18 @@ export function UserManager() {
     setpg(0);
   }
 
+  // Delete User
+  const deleteUser = () => {
+    // delete user from database
+    // reload page?
+  }
+
 
   return (
     <Container component="main" maxWidth="md">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'
@@ -113,31 +134,47 @@ export function UserManager() {
         </Typography>
 
         {/* Table */}
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table>
             {/* Table Header */}
             <TableHead>
               <TableRow>
                 <StyledTableCell align="center"> First Name </StyledTableCell>
                 <StyledTableCell align="center"> Last Name </StyledTableCell>
-                <StyledTableCell align="center"> Team(s) </StyledTableCell>
-                <StyledTableCell align="center"> Role(s) </StyledTableCell>
+
                 <StyledTableCell align="center"></StyledTableCell>
               </TableRow>
             </TableHead>
             {/* Table Body */}
             <TableBody>
-            { users.slice(pg * rpg, pg * rpg + rpg).map((user) => (
+              {users.slice(pg * rpg, pg * rpg + rpg).map((user) => (
                 <StyledTableRow key={user.name} sx={{ "&:last-child td,  &:last-child th": { border: 0 } }}>
                   <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.fName}</StyledTableCell>
                   <StyledTableCell align="center" sx={{ width: '20%' }} scope="user">{user.lName}</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width: '20%' }}>{user.team}</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width: '20%' }}>{user.role}</StyledTableCell>
-                  <StyledTableCell align="right" sx={{ width: '5%' }}>
-                    {/* Edit User */}
-                    <IconButton  sx={{ width: '25%', height: '10%', marginRight: 4 }}>
-                      <ManageAccountsIcon />
+
+                  <StyledTableCell align="right" sx={{ width: '0%' }}>
+                    {/* Delete User */}
+                    <IconButton sx={{ width: '25%', height: '10%', marginRight: 4 }} onClick={handleClickOpen}>
+                      <DeleteIcon />
                     </IconButton>
+                    <Dialog
+                      open={open}
+                      TransitionComponent={Transition}
+                      keepMounted
+                      onClose={handleClose}
+                      BackdropProps ={{ style: { backgroundColor: 'transparent' } }}
+                      sx = {{ position: 'absolute', bottom: '20%'}}>
+                      <DialogTitle align="center"> Delete Forever </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText align="center">
+                          Are you sure you wish to delete this user?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={() => { handleClose(); deleteUser();}}>Delete</Button>
+                        <Button onClick={handleClose}>Cancel</Button>
+                      </DialogActions>
+                    </Dialog>
 
                   </StyledTableCell>
                 </StyledTableRow>
@@ -145,17 +182,19 @@ export function UserManager() {
             </TableBody>
           </Table>
         </TableContainer>
-         {/* Table Footer */}
-         <TablePagination 
-                rowsPerPageOptions={[5, 10, 25]} 
-                component="div"
-                count={users.length} 
-                rowsPerPage={rpg} 
-                page={pg}
-                onPageChange={handleChangePage} 
-                onRowsPerPageChange={handleChangeRowsPerPage} 
-          />
-          
+
+        {/* Table Footer */}
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={users.length}
+          rowsPerPage={rpg}
+          page={pg}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+
+
         {/* Return */}
         <Link to="/Settings">
           <Button variant="text" sx={{ marginTop: 2 }}>Back</Button>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
 
-import { CssBaseline, TextField, Checkbox, Link, Grid, Box, Container, Typography, FormControlLabel, Button } from '@mui/material';
+import { CssBaseline, TextField, Link, Grid, Box, Container, Typography,  Button } from '@mui/material';
 
 import ng_1 from "../images/ng_1.png";
 
@@ -39,10 +39,9 @@ export const Register = () => {
     };
 
     // Check if Form is Filled
-	const formValid = firstName != "" && lastName != "" 
-        && email != "" && username != "" && password != ""
-        && terms != false;
-
+	const formValid = firstName !== "" && lastName !== "" 
+        && email !== "" && username !== "" && password !== ""
+        && terms !== false;
 
 
     async function insertUser(e, pw, un, fn, ln) {
@@ -200,7 +199,7 @@ export const Register = () => {
                                 underline="hover"
                                 onClick={handleClickOpen}
                                 style={{ cursor: 'grab' }}
-                                sx={{ width: '100%', mt: 1, mb: 2 , color: "#000000" }}>
+                                sx={{ width: '100%', mt: 1, mb: 2 , color: "#000000"}}>
                                 Terms and Conditions
                             </Link>
                             <Dialog
@@ -208,7 +207,7 @@ export const Register = () => {
                                 TransitionComponent={Transition}
                                 keepMounted
                                 onClose={handleClose}
-                            >
+                                sx = {{ position: 'absolute', bottom: '20%'}}>
                                 <DialogTitle align="center"> Terms and Conditions </DialogTitle>
                                 <DialogContent>
                                     <DialogContentText align="center">
