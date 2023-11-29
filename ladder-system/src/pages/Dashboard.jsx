@@ -308,7 +308,7 @@ export function Dashboard() {
                                         <ListItemButton
                                             onClick={() => window.localStorage.setItem('tournament', JSON.stringify(tournament))}>
                                             <Link to="/Ladder">
-                                                <ListItemText>
+                                                <ListItemText sx={{ color: "#000" }} >
                                                     View
                                                 </ListItemText>
                                             </Link>

@@ -199,8 +199,8 @@ export const Register = () => {
                                 underline="hover"
                                 onClick={handleClickOpen}
                                 style={{ cursor: 'grab' }}
-                                sx={{ mt: 1, mb: 2 , color: "#000000"}}>
-                                Terms and Conditions
+                                sx={{ mt: 1, mb: 2 }}>
+                                Accept Terms and Conditions
                             </Link>
                             <Dialog
                                 open={open}

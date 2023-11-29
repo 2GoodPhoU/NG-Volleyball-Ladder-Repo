@@ -38,7 +38,7 @@ let nextId = 0;
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
+	return <Slide direction="down" ref={ref} {...props} />;
 });
 
 // export function Team( { user } ) {
@@ -75,7 +75,7 @@ export function Team() {
 	const [password, setPass] = useState("");
 
 	// Check if Form is Filled
-	const formValid = team != "" && password != "";
+	const formValid = team !== "" && password !== "";
 
 	useEffect(() => {
 		if (window.localStorage.getItem("user") === null) window.location.reload();

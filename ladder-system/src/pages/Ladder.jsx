@@ -14,7 +14,6 @@ import {
 	ListItem,
 	ListItemText,
 	ListItemButton,
-	Link,
 	Stack
 } from "@mui/material";
 
@@ -51,7 +50,7 @@ export function Ladder() {
 		getMatches();
 		getTeamMap();
 		//getAllLadderInfo();
-	}, []);
+	});
 
 	// async function getAllLadderInfo() {
 	//     const { data } = await supabase
