@@ -1,10 +1,17 @@
-import {handleSubmitChange, handleNoteChange} from "../src/pages/Settings.jsx";
+//import {Settings} from "../src/pages/Settings.jsx";
 
 describe("Settings Function Test", function(){
+  let setModeLabel, setNotifyMode, MySettingsClass, React;
 
     /* Inilitize setters */
-    const setModeLabel = jasmine.createSpy('setModeLabel');
-    const setNotifyMode = jasmine.createSpy('setNotifyMode');
+    beforeAll(()=> {
+      React = require("react");
+      setModeLabel = jasmine.createSpy('setModeLabel');
+      setNotifyMode = jasmine.createSpy('setNotifyMode');
+      MySettingsClass = require("../src/pages/Settings.jsx");
+
+    })
+    
 
     /* test for handleSubmitChange function */
     it("should handle submit change function correctly", function() {
