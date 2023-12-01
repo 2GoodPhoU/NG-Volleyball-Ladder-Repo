@@ -1,19 +1,35 @@
+//import {Dashboard} from "../src/pages/Dashboard.jsx";
+//import {Ladder} from "../src/pages/Ladder.jsx";
+//import {Login} from "../src/pages/Login.jsx";
+//import {Register} from "../src/pages/Register.jsx";
 //import {Settings} from "../src/pages/Settings.jsx";
+//import {Team} from "../src/pages/Team.jsx";
+//import {UserManager} from "../src/pages/UserManager.jsx";
 
 describe("Settings Function Test", function(){
-  let setModeLabel, setNotifyMode, MySettingsClass, React;
+  let setModeLabel, setNotifyMode, react;
+  let myDashboardClass, myLadderClass, myLoginClass, myRegisterClass, mySettingsClass, myTeamClass, myUserManagerClass;
+  var utils;
 
     /* Inilitize setters */
     beforeAll(()=> {
-      React = require("react");
+      react = require("react");
+      utils = require("react-dom/test-utils");
       setModeLabel = jasmine.createSpy('setModeLabel');
       setNotifyMode = jasmine.createSpy('setNotifyMode');
-      MySettingsClass = require("../src/pages/Settings.jsx");
+
+      myDashboardClass = jasmine.createSpy("../src/pages/Dashboard.jsx");
+      myLadderClass = jasmine.createSpy("../src/pages/Ladder.jsx");
+      myLoginClass = jasmine.createSpy("../src/pages/Login.jsx");
+      myRegisterClass = jasmine.createSpy("../src/pages/Register.jsx");
+      mySettingsClass = jasmine.createSpy("../src/pages/Settings.jsx");
+      myTeamClass = jasmine.createSpy("../src/pages/Team.jsx");
+      myUserManagerClass = jasmine.createSpy("../src/pages/UserManager.jsx");
 
     })
     
 
-    /* test for handleSubmitChange function */
+    /* test for handleSubmitChnge function */
     it("should handle submit change function correctly", function() {
         const mockFormData = {
             get: (key) => {
