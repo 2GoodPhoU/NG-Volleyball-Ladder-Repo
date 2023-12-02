@@ -6,6 +6,8 @@
 //import {Team} from "../src/pages/Team.jsx";
 //import {UserManager} from "../src/pages/UserManager.jsx";
 
+//import * as settings from "../src/pages/Settings.jsx";
+
 describe("Settings Function Test", function(){
   let setModeLabel, setNotifyMode, react;
   let myDashboardClass, myLadderClass, myLoginClass, myRegisterClass, mySettingsClass, myTeamClass, myUserManagerClass;

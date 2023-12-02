@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "jasmine",
     "eject": "react-scripts eject",
-    "type" : "module"
+    "type": "module"
   },
   "eslintConfig": {
     "extends": [
@@ -43,8 +43,11 @@
     ]
   },
   "devDependencies": {
-    "jasmine": "^5.1.0"
+    "@babel/core": "^7.23.5",
+    "@babel/register": "^7.22.15",
+    "babel-preset-react-app": "^10.0.1",
+    "cross-env": "^7.0.3",
+    "jasmine": "^5.1.0",
+    "jsdom": "^23.0.1"
   }
-
-
 }
