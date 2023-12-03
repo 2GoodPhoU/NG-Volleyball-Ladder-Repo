@@ -31,8 +31,8 @@ export function Settings() {
     const handleSubmitChange = (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log('Form submitted');
-        
+        //console.log('Form submitted');
+        // log the new user names for testing purposes
         console.log({
             newUsername: data.get("newUsername"),
             newPassword: data.get("newPassword"),
@@ -41,6 +41,7 @@ export function Settings() {
         });
     }
 
+    // change between settings and notificaiton modes
     const handleNoteChange = (event) => {
 
         const mode = event.target.name;
@@ -49,10 +50,13 @@ export function Settings() {
         setNotifyMode(mode === "Notification");
     }
 
+    // not used, but may use for accessibility settings
+    /*
     const handledAccessChange = (name) => (event) => {
         console.log(name, event.target.checked);
         setCheckboxes({...checkboxes, [name]: event.target.checked})
     }
+    */
 
 
 
