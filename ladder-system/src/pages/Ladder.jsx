@@ -49,36 +49,7 @@ export function Ladder() {
 		isLadderModerator();
 		getMatches();
 		getTeamMap();
-		//getAllLadderInfo();
 	});
-
-	// async function getAllLadderInfo() {
-	//     const { data } = await supabase
-	//         .from('ladder_tournaments')
-	//         .select('ladder_id, ladder_name, ladder_moderators(user_id), ladder_teams(wins, teams(team_id, team_name, team_captain_id))')
-	//         .eq('ladder_id', thisLadder.ladder_id);
-
-	//     console.log('Ladder Info');
-	//     console.log(data);
-
-	//     // Check if user is a ladder moderator
-	//     for(var index = 0; index < data[0].ladder_moderators.length; index++){
-	//         if(data[0].ladder_moderators[index].user_id === thisUser.user_id){
-	//             setIsUserLadderModerator(true);
-	//         }
-	//     }
-
-	//     // Check if user is a team captain
-	//     for(var index = 0; index < data[0].ladder_teams.length; index++){
-	//         if(data[0].ladder_teams[index].teams.team_captain_id === thisUser.user_id){
-	//             setIsUserTeamCaptain(true);
-	//             setUserCaptainTeamData(data[0].ladder_teams[index].teams);
-	//             console.log(data[0].ladder_teams[index].teams);
-	//             break;
-	//         }
-	//     }
-
-	// }
 
 	async function isLadderModerator() {
 		if (thisUser === null) {

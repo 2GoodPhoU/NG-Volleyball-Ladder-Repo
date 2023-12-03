@@ -60,8 +60,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 /* Testing Data */
 
 // return data
-function createData(fName, lName, team, role) {
-  return { fName, lName, team, role };
+function createData(fName, lName, email) {
+  return { fName, lName, email };
 }
 
 /* User Manager Page */
@@ -85,11 +85,12 @@ export function UserManager() {
   async function getUsers() {
     const { data } = await supabase
       .from('users')
-      .select();
+      .select()
+      .eq('activated', true);
 
     let tempUsers = [];
     data.forEach((user) => {
-      tempUsers.push(createData(user.first_name, user.last_name));
+      tempUsers.push(createData(user.first_name, user.last_name, user.email));
     });
 
     setUsers(tempUsers);
@@ -110,9 +111,24 @@ export function UserManager() {
   }
 
   // Delete User
-  const deleteUser = () => {
+  const deleteUser = async (e) => {
     // delete user from database
-    // reload page?
+
+    console.log(e);
+    console.log(e.email);
+
+    const { data, error } = await supabase
+      .from('users')
+      .update({ activated: false})
+      .eq('email', e.email);
+
+    if (error) {
+      console.log(error);
+    }
+    else {
+      console.log(data);
+      window.location.reload();
+    }
   }
 
 
@@ -171,7 +187,7 @@ export function UserManager() {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button onClick={() => { handleClose(); deleteUser();}}>Delete</Button>
+                        <Button onClick={() => { handleClose(); deleteUser(user);}}>Delete</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                       </DialogActions>
                     </Dialog>
