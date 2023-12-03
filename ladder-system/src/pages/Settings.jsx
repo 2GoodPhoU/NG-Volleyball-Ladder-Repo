@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom";
 import { CssBaseline, TextField, Grid, Box, Typography, 
     Container, Button, ButtonGroup, Checkbox, FormGroup, 
@@ -12,6 +13,38 @@ export function Settings() {
     const [newLastName, setNewLastName] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
+
+    useEffect(() => {
+        isAdmin();
+    })
+
+    // CHeck if user is admin
+    async function isAdmin() {
+        if (user === null) {
+            console.log("User is not logged in");
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('admin')
+            .select()
+            .eq('admin_user_id', user.user_id)
+            .eq('still_admin', true);
+
+        console.log(data);
+        console.log(user.user_id);
+
+        if (error)
+            console.log(error);
+        else if (data === null || data.length === 0)
+            console.log("User is not an admin");
+        else {
+            setIsUserAdmin(true);
+            console.log("User is an admin");
+        }
+    }
 
     // Functionality
     const [modeLabel, setModeLabel] = useState("Profile");
@@ -24,7 +57,6 @@ export function Settings() {
 
         //Add more checkboxes
     });
-    
 
     // onSubmit display in console
     const handleSubmitChange = (e) => {
@@ -253,9 +285,11 @@ export function Settings() {
                             <Link to="/Dashboard" color="Black" variant="body2">
                                 <Button>Back</Button>
                             </Link>
+                            {isUserAdmin ? (
                             <Link to="/UserManager" color="Black" variant="body2">
                                 <Button>User Manager</Button>
-                            </Link>
+                            </Link>) :
+                            (null)}
                         </Grid>
                     </Grid>
                 </Box>
