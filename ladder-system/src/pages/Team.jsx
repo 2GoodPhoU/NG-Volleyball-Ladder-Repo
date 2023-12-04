@@ -233,10 +233,6 @@ export function Team() {
 					alt="Northrop Grumman logo"
 				/>
 
-				<Typography component="h1" variant="h5">
-					Teams
-				</Typography>
-
 				<Box>
 					<ButtonGroup size="medium" sx={{ width: "150%", mt: 1, mb: 2 }}>
 						{/* Ladder Rules / Info */}

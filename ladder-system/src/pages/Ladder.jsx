@@ -301,17 +301,12 @@ export function Ladder() {
 					src={ng_1}
 					alt="Northrop Grumman logo"
 				/>
-				<Typography component="h1" variant="h5">
-					Ladder
-				</Typography>
-
+				
 				{window.localStorage.getItem("tournament") === null ? (
 					<h1> Guest Mode </h1>
 				) : (
 					<h1> {thisLadder.ladder_name} </h1>
 				)}
-
-				<Typography component="h3">Ladder</Typography>
 
 				<Paper style={{ width: "100%", maxHeight: 300, overflow: "auto" }}>
 					<List>
@@ -359,12 +354,12 @@ export function Ladder() {
 									matchMap.map((match, i) => (
 										<ListItem key={i}>
 											<ListItemText>
-												{" "}
-												{match.challenger_team.team_name} vs{" "}
-												{match.opponent_team.team_name}
+													{" "}
+													{match.challenger_team.team_name} vs{" "}
+													{match.opponent_team.team_name}
 											</ListItemText>
 											<ListItemButton>
-												<ListItemText>
+												<ListItemText style={{display:'flex', justifyContent:'flex-end'}}>
 													{match.challenger_score} - {match.opponent_score}
 												</ListItemText>
 											</ListItemButton>

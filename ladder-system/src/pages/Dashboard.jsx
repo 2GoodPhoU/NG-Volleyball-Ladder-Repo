@@ -192,14 +192,10 @@ export function Dashboard() {
                     alt="Northrop Grumman logo"
                 />
 
-                <Typography component="h1" variant="h5">
-                    Dashboard
-                </Typography>
-
                 {window.localStorage.getItem('user') === null ? (
                     <h1> Guest Mode </h1>
                 ) : (
-                    <h1> Username: {user.username} </h1>
+                    <h1>{user.username}'s Dashboard </h1>
                 )}
 
                 {window.localStorage.getItem('user') === null ? (
