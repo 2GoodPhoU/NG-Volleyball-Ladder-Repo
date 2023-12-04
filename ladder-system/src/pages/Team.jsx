@@ -368,8 +368,8 @@ export function Team() {
 						<List>
 							{teams.map((team, i) => (
 								<ListItem key={i}>
-									<ListItemText> {team.team_name}</ListItemText>
-									<ListItemText>
+									<ListItemText style={{display:'flex', justifyContent:'flex-start'}}> {team.team_name}</ListItemText>
+									<ListItemText style={{display:'flex', justifyContent:'flex-end'}}>
 										{" "}
 										{team.team_wins} . {team.team_losses}{" "}
 									</ListItemText>
