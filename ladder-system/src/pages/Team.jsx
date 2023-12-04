@@ -357,9 +357,7 @@ export function Team() {
 					</ButtonGroup>
 				</Box>
 
-				<Typography component="h3">Team</Typography>
-
-				<h1> Username: {user.username}</h1>
+				<h1>{user.username}'s Teams</h1>
 
 				<Paper style={{ width: "100%", maxHeight: 300, overflow: "auto" }}>
 					{teams.length === 0 ? (
