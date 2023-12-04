@@ -78,7 +78,7 @@ export function Dashboard() {
 	const [teamSize, setTeamSize] = useState(0);
 	const [adminInput, setAdminInput] = useState("");
 	const [admins, setAdmins] = useState();
-	const [calendar, setCalendar] = useState();
+	const [dateTimePicker, setDateTimePicker] = useState('2022-04-17T15:30');
 	const [password, setPass] = useState("");
 
 	// Reset Form
@@ -269,11 +269,11 @@ export function Dashboard() {
 
 		console.log(`${user.user_id} ${user.username} created a ladder`);
 
-		console.log(JSON.stringify(data.get("calendar")));
+		// console.log(JSON.stringify(data.get("calendar")));
 
-		window.sessionStorage.setItem("calendar", JSON.stringify(value));
+		window.sessionStorage.setItem("datetimepicker", JSON.stringify(dateTimePicker));
 
-		console.log(`tournament ends ${data.get("calendar")}`);
+		console.log(`tournament ends ${dateTimePicker}`);
 
 		insertLadder(
 			`${data.get("ladder")}`,
@@ -492,7 +492,10 @@ export function Dashboard() {
 											</Button>
 
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
-												<DateTimePicker value={value} onChange={handleChange} />
+												<DateTimePicker
+													onChange={val => {
+														setDateTimePicker(val);
+												}}/>
 											</LocalizationProvider>
 
 											{/* Password */}
