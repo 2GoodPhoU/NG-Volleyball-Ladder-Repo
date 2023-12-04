@@ -327,9 +327,10 @@ export function Ladder() {
 									>
 										<ListItemText>{team.teams.team_name}</ListItemText>
 									</ListItemButton>
+									{/* display challenge button for team captains*/}
 									{isUserTeamCaptain &&
 										thisUser.user_id !== team.teams.team_captain_id &&
-										userTeamCaptainData.wins < team.wins ? (
+										userTeamCaptainData.wins <= team.wins ? (
 										<ListItemButton onClick={() => handleCreateMatch({ i })}>
 											<ListItemText>Challenge</ListItemText>
 										</ListItemButton>
