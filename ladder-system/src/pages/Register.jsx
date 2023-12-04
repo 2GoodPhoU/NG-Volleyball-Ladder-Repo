@@ -210,11 +210,15 @@ export const Register = () => {
                                 sx = {{ position: 'absolute', bottom: '20%'}}>
                                 <DialogTitle align="center"> Terms and Conditions </DialogTitle>
                                 <DialogContent>
-                                    <DialogContentText align="center">
-                                        *insert terms and conditions*
+                                    <DialogContentText>
+                                        By accepting these terms and conditions you agree to our policies and prodedures on the collection, use and 
+                                        disclosure of your information when you use the services provided by the Volleyball Ladder System.
+                                        We use your personal data to provide and improve the service. By using the service, you agree to
+                                        the collection and use of information in accordance with this privacy policy. We may update our
+                                        privacy policy in the future when required and users will be notified via the provided email upon change.
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions>
+                                <DialogActions style={{display:'flex', justifyContent:'center'}} >
                                     <Button onClick={ () => {handleClose(); setTerms(true);}}>Accept</Button>
                                     <Button onClick={ () => {handleClose(); setTerms(false);}}>Decline</Button>
                                 </DialogActions>

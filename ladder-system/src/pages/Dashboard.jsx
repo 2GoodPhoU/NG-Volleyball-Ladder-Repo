@@ -217,7 +217,10 @@ export function Dashboard() {
                             <DialogTitle> Ladder Rules/Info </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    *insert ladder rules/info*
+                                    In a ladder tournament, a higher position team cannot challenge a lower position team. 
+                                    A lower position team can only challenge those 2 positions higher than them. If for some
+                                    reason a is not able to be challenged, they are able to challenge a team higher, as long
+                                    as the team is not able to be challenged.
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -245,13 +248,16 @@ export function Dashboard() {
                                 keepMounted
                                 onClose={handleClose2}
                             >
-                                <DialogTitle> Ladder Rules/Info </DialogTitle>
+                                <DialogTitle style={{display:'flex', justifyContent:'center'}}> Ladder Rules/Info </DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        *insert ladder rules/info*
+                                        In a ladder tournament, a higher position team cannot challenge a lower position team. 
+                                        A lower position team can only challenge those 2 positions higher than them. If for some
+                                        reason a is not able to be challenged, they are able to challenge a team higher, as long
+                                        as the team is not able to be challenged.
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions>
+                                <DialogActions style={{display:'flex', justifyContent:'center'}}>
                                     <Button onClick={handleClose2}>Close</Button>
                                 </DialogActions>
                             </Dialog>

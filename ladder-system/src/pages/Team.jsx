@@ -245,11 +245,13 @@ export function Team() {
 							keepMounted
 							onClose={handleClose2}
 						>
-							<DialogTitle> Team Rules/Info </DialogTitle>
-							<DialogContent>
-								<DialogContentText>*insert team rules/info*</DialogContentText>
+							<DialogTitle style={{display:'flex', justifyContent:'center'}}> Team Rules/Info </DialogTitle>
+							<DialogContent >
+								<DialogContentText>
+									This is where you can find team descriptions and any special rules.
+								</DialogContentText>
 							</DialogContent>
-							<DialogActions>
+							<DialogActions style={{display:'flex', justifyContent:'center'}}>
 								<Button onClick={handleClose2}>Close</Button>
 							</DialogActions>
 						</Dialog>
