@@ -49,7 +49,7 @@ export function Ladder() {
 		isLadderModerator();
 		getMatches();
 		getTeamMap();
-	});
+	}, []);
 
 	async function isLadderModerator() {
 		if (thisUser === null) {
