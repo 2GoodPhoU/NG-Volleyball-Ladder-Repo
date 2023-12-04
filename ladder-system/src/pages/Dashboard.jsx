@@ -214,7 +214,7 @@ export function Dashboard() {
                             keepMounted
                             onClose={handleClose2}
                         >
-                            <DialogTitle> Ladder Rules/Info </DialogTitle>
+                            <DialogTitle  style={{display:'flex', justifyContent:'center'}} > Ladder Rules/Info </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                     In a ladder tournament, a higher position team cannot challenge a lower position team. 
@@ -223,7 +223,7 @@ export function Dashboard() {
                                     as the team is not able to be challenged.
                                 </DialogContentText>
                             </DialogContent>
-                            <DialogActions>
+                            <DialogActions  style={{display:'flex', justifyContent:'center'}} >
                                 <Button onClick={handleClose2}>Close</Button>
                             </DialogActions>
                         </Dialog>
