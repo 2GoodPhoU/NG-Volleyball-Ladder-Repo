@@ -183,6 +183,26 @@ export function Team() {
 		console.log(`member is ${memberInput}`);
 
 		const exists = await idExists(memberInput);
+        setTeams(data || []);
+    }
+
+    async function insertTeam(tn, tci, atos, rm, pw) {
+        try {
+            const { data, error } = await supabase
+                .from('teams')
+                .insert({ team_name: tn, team_captain_id: tci, agreed_ToS: atos, recruiting_members: rm, team_password: pw })
+                .select();
+    
+            if (error) {
+                console.error('Error inserting team:', error);
+            } else {
+                // Update state to include the new team
+                setTeams((prevTeams) => [...prevTeams, data[0]]);
+            }
+        } catch (error) {
+            console.error('Error inserting team:', error);
+        }
+    }
 
 		console.log('does it exist?', exists);
 
@@ -196,10 +216,33 @@ export function Team() {
 			console.log(`ssAddMember is ${ssAddMember}`);
 
 			ssMembers.members.push(ssAddMember);
+    /* handleSubmit (new) */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        console.log({
+            team,
+            members,
+            password,
+        });
+
+        
+    
+        // Insert team logic here
+    
+        // Reset Fields
+        resetForm();
+    };
 
 			window.sessionStorage.setItem('teamMembers', JSON.stringify(ssMembers));
 
 			let newSSMembers = JSON.parse(window.sessionStorage.getItem('teamMembers'));
+
+
+
+    // Add Member to Members
+    function addToTeam(e) {
+        e.preventDefault();
 
 			console.log(`newSSMembers is ${JSON.stringify(newSSMembers.members)}`);		
 

@@ -6,6 +6,7 @@ import { CssBaseline, TextField, Grid, Box, Typography,
     FormControlLabel }from '@mui/material';
 import ng_1 from "../images/ng_1.png";
 
+
 export function Settings() {
     // User settings
     const [newUsername, setNewUsername] = useState('');
@@ -62,8 +63,8 @@ export function Settings() {
     const handleSubmitChange = (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log('Form submitted');
-        
+        //console.log('Form submitted');
+        // log the new user names for testing purposes
         console.log({
             newUsername: data.get("newUsername"),
             newPassword: data.get("newPassword"),
@@ -72,6 +73,7 @@ export function Settings() {
         });
     }
 
+    // change between settings and notificaiton modes
     const handleNoteChange = (event) => {
 
         const mode = event.target.name;
@@ -80,10 +82,13 @@ export function Settings() {
         setNotifyMode(mode === "Notification");
     }
 
-    const handledCheckChange = (name) => (event) => {
+    // not used, but may use for accessibility settings
+    /*
+    const handledAccessChange = (name) => (event) => {
         console.log(name, event.target.checked);
         setCheckboxes({...checkboxes, [name]: event.target.checked})
     }
+    */
 
 
 
@@ -137,6 +142,14 @@ export function Settings() {
 
                             onClick={handleNoteChange}
                     >Notificaiton
+                    </Button>
+                    <Button
+                            name="Accessibility"
+                            type="button"
+
+
+                            onClick={handleNoteChange}
+                    >Accessibility
                     </Button>
                     </ButtonGroup>
                 </Box>
@@ -298,49 +311,7 @@ export function Settings() {
 
         </Container>
     )
+    
 
 }
 
-
-
-
-
-{/*
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Results</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedResults}
-                            onChange= {handledCheckChange("Results")}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    </Grid>
-
-                </Grid>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Challenges</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedChallenge}
-                            onChange= {handledCheckChange("Challenge")}
-                        />
-                    </Grid>
-
-                </Grid>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={6} >
-                        <Typography>Messages</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                        <Checkbox 
-                            checked = {checkboxes.checkedMessages}
-                            onChange= {handledCheckChange("Messages")}
-                        />
-                    </Grid>
-
-                </Grid>
-                */}
