@@ -6,12 +6,64 @@
 //import {Team} from "../src/pages/Team.jsx";
 //import {UserManager} from "../src/pages/UserManager.jsx";
 
-//import * as settings from "../src/pages/Settings.jsx";
+//import { handleSubmitChange, handleNoteChange } from './Settings';
 
-describe("Settings Function Test", function(){
+describe("NGVball Function Tests", function(){
   let setModeLabel, setNotifyMode, react;
   let myDashboardClass, myLadderClass, myLoginClass, myRegisterClass, mySettingsClass, myTeamClass, myUserManagerClass;
   var utils;
+  const [users, setUsers] = useState([]);
+  /* Settings,jsx */
+  const handleSubmitChange = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    //console.log('Form submitted');
+    // log the new user names for testing purposes
+    console.log({
+        newUsername: data.get("newUsername"),
+        newPassword: data.get("newPassword"),
+        newName: data.get("newName"),
+        enewEmailmail: data.get("newEmail"),
+    });
+  }
+  const handleNoteChange = (event) => {
+
+    const mode = event.target.name;
+    //switch to Notificaiton
+    setModeLabel(mode)
+    setNotifyMode(mode === "Notification");
+  }
+
+  /* Login.jsx */
+
+  useEffect(() => {
+      window.localStorage.clear();
+      getUsers();
+  }, []);
+
+  async function getUsers() {
+      const { data } = await supabase
+      .from('users')
+      .select();
+      
+      setUsers(data);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    for (var i = 0; i < users.length; i++)
+        if (users[i].username === username)
+            break;
+
+    if (i >= users.length && users[i - 1].username !== username)
+        return;
+
+    if (users[i].password === pass) {
+        window.localStorage.setItem('user', JSON.stringify(users[i]));
+        navigate(`./Dashboard/`);
+    }
+}
 
     /* Inilitize setters */
     beforeAll(()=> {
@@ -19,14 +71,8 @@ describe("Settings Function Test", function(){
       utils = require("react-dom/test-utils");
       setModeLabel = jasmine.createSpy('setModeLabel');
       setNotifyMode = jasmine.createSpy('setNotifyMode');
-
-      myDashboardClass = jasmine.createSpy("../src/pages/Dashboard.jsx");
-      myLadderClass = jasmine.createSpy("../src/pages/Ladder.jsx");
-      myLoginClass = jasmine.createSpy("../src/pages/Login.jsx");
-      myRegisterClass = jasmine.createSpy("../src/pages/Register.jsx");
-      mySettingsClass = jasmine.createSpy("../src/pages/Settings.jsx");
-      myTeamClass = jasmine.createSpy("../src/pages/Team.jsx");
-      myUserManagerClass = jasmine.createSpy("../src/pages/UserManager.jsx");
+      users = [
+        { username: "user1", password: "password1" }];
 
     })
     
@@ -71,5 +117,21 @@ describe("Settings Function Test", function(){
         expect(setNotifyMode).toHaveBeenCalledWith(true);
 
     });
+/*
+    it("Should handleSubmit", function(){
+      const username = "user1";
+      const pass = "password1";
 
+      const event = {
+          preventDefault: jasmine.createSpy('preventDefault')
+      };
+
+      handleSubmit(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(localStorageSpy).toHaveBeenCalledWith('user', JSON.stringify(users[0]));
+      expect(navigateSpy).toHaveBeenCalledWith(`./Dashboard/`)
+
+    });
+*/
 })
