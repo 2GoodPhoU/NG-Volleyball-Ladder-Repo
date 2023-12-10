@@ -76,7 +76,13 @@ describe("NGVball Function Tests", function(){
 
     })
     
-
+    afterEach(() => {
+      /*
+      delete window.navigate;
+      localStorageSpy.and.callThrough(); // Restore the original behavior of localStorageSpy
+      */
+    });
+    
     /* test for handleSubmitChnge function */
     it("should handle submit change function correctly", function() {
         const mockFormData = {
